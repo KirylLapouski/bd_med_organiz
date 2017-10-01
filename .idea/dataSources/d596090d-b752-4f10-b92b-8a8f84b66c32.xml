@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="medicine@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="medicine">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="mysql"/>
+    <schema id="5" parent="1" name="performance_schema"/>
+    <schema id="6" parent="1" name="sakila"/>
+    <schema id="7" parent="1" name="sys"/>
+    <schema id="8" parent="1" name="test"/>
+    <schema id="9" parent="1" name="world"/>
+    <table id="10" parent="2" name="analysis"/>
+    <table id="11" parent="2" name="department"/>
+    <table id="12" parent="2" name="department_specialization"/>
+    <table id="13" parent="2" name="disease"/>
+    <table id="14" parent="2" name="free_beds"/>
+    <table id="15" parent="2" name="hospital_laboratory"/>
+    <table id="16" parent="2" name="housing"/>
+    <table id="17" parent="2" name="laboratory"/>
+    <table id="18" parent="2" name="laboratory_analysis"/>
+    <table id="19" parent="2" name="laboratory_spec"/>
+    <table id="20" parent="2" name="medical_facility"/>
+    <table id="21" parent="2" name="place_of_work"/>
+    <table id="22" parent="2" name="position_"/>
+    <table id="23" parent="2" name="room"/>
+    <table id="24" parent="2" name="room_department"/>
+    <table id="25" parent="2" name="specialty"/>
+    <table id="26" parent="2" name="staff"/>
+    <table id="27" parent="2" name="staff_specialization"/>
+    <column id="28" parent="10" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="29" parent="10" name="name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="30" parent="10" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="31" parent="11" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="32" parent="11" name="name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="33" parent="11" name="housing_id">
+      <Position>3</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="34" parent="11" name="fk_housing_id">
+      <ColNames>housing_id</ColNames>
+    </index>
+    <key id="35" parent="11" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="36" parent="11" name="fk_housing_id">
+      <ColNames>housing_id</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>housing</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="37" parent="12" name="id_department">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="38" parent="12" name="id_disease">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="39" parent="12" name="fk_disease">
+      <ColNames>id_disease</ColNames>
+    </index>
+    <key id="40" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_department
+id_disease</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="41" parent="12" name="fk_department">
+      <ColNames>id_department</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>department</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="42" parent="12" name="fk_disease">
+      <ColNames>id_disease</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>disease</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="43" parent="13" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="44" parent="13" name="name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="45" parent="13" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="46" parent="14" name="id_room">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="47" parent="14" name="free_beds">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="48" parent="14" name="since">
+      <Position>3</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="49" parent="14" name="to_">
+      <Position>4</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="50" parent="14" name="fk_room_id">
+      <ColNames>id_room</ColNames>
+    </index>
+    <foreign-key id="51" parent="14" name="fk_room_id">
+      <ColNames>id_room</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>room</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="52" parent="15" name="id_hospital">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="53" parent="15" name="id_laboratory">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="54" parent="15" name="contract_number">
+      <Position>3</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="55" parent="15" name="since">
+      <Position>4</Position>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="56" parent="15" name="to_">
+      <Position>5</Position>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="57" parent="15" name="fk_hospital_laboratory_laboratory">
+      <ColNames>id_laboratory</ColNames>
+    </index>
+    <key id="58" parent="15" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_hospital
+id_laboratory</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="59" parent="15" name="fk_hospital_laboratory_hospital">
+      <ColNames>id_hospital</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>medical_facility</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="60" parent="15" name="fk_hospital_laboratory_laboratory">
+      <ColNames>id_laboratory</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>laboratory</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="61" parent="16" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="62" parent="16" name="name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="63" parent="16" name="address">
+      <Position>3</Position>
+      <DataType>varchar(200)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="64" parent="16" name="medical_facility_id">
+      <Position>4</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="65" parent="16" name="fk_hospital_id">
+      <ColNames>medical_facility_id</ColNames>
+    </index>
+    <key id="66" parent="16" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="67" parent="16" name="fk_hospital_id">
+      <ColNames>medical_facility_id</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>medical_facility</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="68" parent="17" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="69" parent="17" name="name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="70" parent="17" name="address">
+      <Position>3</Position>
+      <DataType>varchar(200)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="71" parent="17" name="id_spec">
+      <Position>4</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="72" parent="17" name="fk_spec_id">
+      <ColNames>id_spec</ColNames>
+    </index>
+    <key id="73" parent="17" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="74" parent="17" name="fk_spec_id">
+      <ColNames>id_spec</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>laboratory_spec</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="75" parent="18" name="id_laboratory">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="76" parent="18" name="id_analysis">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="77" parent="18" name="fk_analysis">
+      <ColNames>id_analysis</ColNames>
+    </index>
+    <key id="78" parent="18" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_laboratory
+id_analysis</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="79" parent="18" name="fk_laboratory">
+      <ColNames>id_laboratory</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>laboratory</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="80" parent="18" name="fk_analysis">
+      <ColNames>id_analysis</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>analysis</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="81" parent="19" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="82" parent="19" name="name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="83" parent="19" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="84" parent="20" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="85" parent="20" name="name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="86" parent="20" name="address">
+      <Position>3</Position>
+      <DataType>varchar(200)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="87" parent="20" name="superior_medical_facility">
+      <Position>4</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <index id="88" parent="20" name="fk_superior_medical_facility">
+      <ColNames>superior_medical_facility</ColNames>
+    </index>
+    <key id="89" parent="20" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="90" parent="20" name="fk_superior_medical_facility">
+      <ColNames>superior_medical_facility</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>medical_facility</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="91" parent="21" name="id_staff">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="92" parent="21" name="id_medical_facility">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="93" parent="21" name="id_position">
+      <Position>3</Position>
+      <DataType>smallint(5) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="94" parent="21" name="rate">
+      <Position>4</Position>
+      <DataType>enum(&apos;1&apos;, &apos;0.25&apos;, &apos;0.5&apos;, &apos;0.75&apos;)|0</DataType>
+    </column>
+    <index id="95" parent="21" name="fk_place_of_work_medical_facility">
+      <ColNames>id_medical_facility</ColNames>
+    </index>
+    <index id="96" parent="21" name="fk_place_of_work_position">
+      <ColNames>id_position</ColNames>
+    </index>
+    <key id="97" parent="21" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_staff
+id_medical_facility
+id_position</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="98" parent="21" name="fk_place_of_work_staff">
+      <ColNames>id_staff</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>staff</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="99" parent="21" name="fk_place_of_work_medical_facility">
+      <ColNames>id_medical_facility</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>medical_facility</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="100" parent="21" name="fk_place_of_work_position">
+      <ColNames>id_position</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>position_</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="101" parent="22" name="id">
+      <Position>1</Position>
+      <DataType>smallint(5) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="102" parent="22" name="name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="103" parent="22" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="104" parent="23" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="105" parent="23" name="room_number">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="106" parent="23" name="number_of_beds">
+      <Position>3</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <key id="107" parent="23" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="108" parent="24" name="id_department">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="109" parent="24" name="id_room">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="110" parent="24" name="since">
+      <Position>3</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="111" parent="24" name="to_">
+      <Position>4</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="112" parent="24" name="fk_room_department_room">
+      <ColNames>id_room</ColNames>
+    </index>
+    <key id="113" parent="24" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_department
+id_room
+since
+to_</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="114" parent="24" name="fk_room_department_department">
+      <ColNames>id_department</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>department</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="115" parent="24" name="fk_room_department_room">
+      <ColNames>id_room</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>room</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="116" parent="25" name="id">
+      <Position>1</Position>
+      <DataType>smallint(5) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="117" parent="25" name="name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="118" parent="25" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="119" parent="26" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="120" parent="26" name="FIO">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="121" parent="26" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="122" parent="27" name="id_staff">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="123" parent="27" name="id_specialty">
+      <Position>2</Position>
+      <DataType>smallint(5) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="124" parent="27" name="fk_specialty">
+      <ColNames>id_specialty</ColNames>
+    </index>
+    <key id="125" parent="27" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_staff
+id_specialty</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="126" parent="27" name="fk_staff">
+      <ColNames>id_staff</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>staff</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="127" parent="27" name="fk_specialty">
+      <ColNames>id_specialty</ColNames>
+      <RefSchemaName>medicine</RefSchemaName>
+      <RefTableName>specialty</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+  </database-model>
+</dataSource>

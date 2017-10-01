@@ -40,17 +40,17 @@ CREATE TABLE disease (
 
 CREATE TABLE department_specialization (
     id_department int unsigned not null,
-    id_desease int unsigned not NULL,
+    id_disease int unsigned not NULL,
 	
 	CONSTRAINT fk_department FOREIGN KEY(id_department) REFERENCES department(id),
-	CONSTRAINT fk_desease FOREIGN KEY(id_desease) REFERENCES desease(id),
-    CONSTRAINT pk_dep_spec PRIMARY KEY(id_department,id_desease)
+	CONSTRAINT fk_disease FOREIGN KEY(id_disease) REFERENCES disease(id),
+    CONSTRAINT pk_dep_spec PRIMARY KEY(id_department,id_disease)
 );
 
 CREATE TABLE staff (
     id int unsigned not null auto_increment,
     FIO VARCHAR(100) not null,
-    -- учёная степень --
+    /*-- учёная степень --*/
 
     CONSTRAINT pk_staff PRIMARY KEY (id)
 );
@@ -71,7 +71,7 @@ CREATE TABLE staff_specialization (
     CONSTRAINT pk_staff_specialization PRIMARY KEY(id_staff,id_specialty)
 );
 
-CREATE TABLE position (
+CREATE TABLE position_ (
     id SMALLINT unsigned not null,
     name VARCHAR(100) not null,
 
@@ -79,15 +79,15 @@ CREATE TABLE position (
 );
 
 CREATE TABLE place_of_work (
-	--свой ID? --
+	/*--свой ID? --*/
     id_staff int unsigned not null,
     id_medical_facility  int unsigned not null,
     id_position SMALLINT unsigned not NULL,
     rate ENUM('1','0.25','0.5','0.75'), 
 
-	CONSTRAINT fk_staff FOREIGN KEY(id_staff) REFERENCES staff(id),
-	CONSTRAINT fk_medical_facility FOREIGN KEY(id_medical_facility) REFERENCES medical_facility(id),
-	CONSTRAINT fk_position FOREIGN KEY(id_position) REFERENCES position(id),
+	CONSTRAINT fk_place_of_work_staff FOREIGN KEY(id_staff) REFERENCES staff(id),
+	CONSTRAINT fk_place_of_work_medical_facility FOREIGN KEY(id_medical_facility) REFERENCES medical_facility(id),
+	CONSTRAINT fk_place_of_work_position FOREIGN KEY(id_position) REFERENCES position_(id),
     CONSTRAINT pk_place_of_work PRIMARY KEY ( id_staff,id_medical_facility,id_position)
 );
 
@@ -97,19 +97,19 @@ CREATE TABLE room (
 	number_of_beds int unsigned,
 	
 	
-	CONSTANT pk_room PRIMARY KEY (id)
+	CONSTRAINT pk_room PRIMARY KEY (id)
 );
 
 CREATE TABLE room_department (
-	--свой ID? --
+	/*--свой ID? --*/
 	id_department int unsigned not null,
 	id_room int unsigned not null,
 	since datetime not null,
 	to_ datetime not null,
 		
-	CONSTRAINT fk_room FOREIGN KEY(id_room) REFERENCES room(id),
-	CONSTRAINT fk_department FOREIGN KEY(id_department) REFERENCES department(id),
-	CONSTANT pk_room_department PRIMARY KEY (id_department,id_room,since,to_)
+	CONSTRAINT fk_room_department_room FOREIGN KEY(id_room) REFERENCES room(id),
+	CONSTRAINT fk_room_department_department FOREIGN KEY(id_department) REFERENCES department(id),
+	CONSTRAINT pk_room_department PRIMARY KEY (id_department,id_room,since,to_)
 );
 
 CREATE TABLE free_beds (
@@ -118,16 +118,22 @@ CREATE TABLE free_beds (
 	since datetime not null,
 	to_ datetime not null,
 	
-	CONSTANT fk_room_id FOREIGN KEY(id_room) REFERENCES room(id)
-	-- PRIMARY KEY --
+	CONSTRAINT fk_room_id FOREIGN KEY(id_room) REFERENCES room(id)
+	/*-- PRIMARY KEY --*/
 );
 
---CREATE TABLE service_doctor (
+/*--CREATE TABLE service_doctor (
 --	id_department int unsigned not null,
 --	id_room int unsigned not null,
 --	since datetime not null,
 --	to_ datetime not null,
---)
+--)*/
+CREATE TABLE laboratory_spec (
+	id INT unsigned not null auto_increment,
+	name VARCHAR(100) not null,
+	
+	CONSTRAINT pk_laboratory PRIMARY KEY(id)
+);
 
 CREATE TABLE laboratory (
 	id INT unsigned not null auto_increment,
@@ -139,12 +145,7 @@ CREATE TABLE laboratory (
 	CONSTRAINT fk_spec_id FOREIGN KEY (id_spec) REFERENCES laboratory_spec(id)
 );
 
-CREATE TABLE laboratory_spec (
-	id INT unsigned not null auto_increment,
-	name VARCHAR(100) not null,
-	
-	CONSTRAINT pk_laboratory PRIMARY KEY(id)
-);
+
 
 CREATE TABLE analysis (
 	id INT unsigned not null auto_increment,
@@ -169,8 +170,8 @@ CREATE TABLE hospital_laboratory (
 	since DATE not null,
 	to_ DATE not null,
 	
-	CONSTRAINT fk_hospital FOREIGN KEY(id_hospital) REFERENCES medical_facility(id),
-	CONSTRAINT fk_laboratory FOREIGN KEY(id_laboratory) REFERENCES laboratory(id),
+	CONSTRAINT fk_hospital_laboratory_hospital FOREIGN KEY(id_hospital) REFERENCES medical_facility(id),
+	CONSTRAINT fk_hospital_laboratory_laboratory FOREIGN KEY(id_laboratory) REFERENCES laboratory(id),
 	CONSTRAINT pk_hospital_laboratory PRIMARY KEY(id_hospital, id_laboratory)
 )
 	

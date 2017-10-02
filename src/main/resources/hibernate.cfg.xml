@@ -7,7 +7,7 @@
         <property name="connection.url">jdbc:mysql://localhost:3306/medicine</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.username">root</property>
-        <property name="connection.password">1661</property>
+        <property name="connection.password">1331</property>
         <mapping resource="AnalysisEntity.hbm.xml"/>
         <mapping resource="DepartmentEntity.hbm.xml"/>
         <mapping resource="DiseaseEntity.hbm.xml"/>

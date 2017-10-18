@@ -83,25 +83,28 @@ CREATE TABLE place_of_work (
     id_staff int unsigned not null,
     id_medical_facility  int unsigned not null,
     id_position SMALLINT unsigned not NULL,
+    id_department INT unsigned not null,
     rate ENUM('1','0.25','0.5','0.75'), 
 
 	CONSTRAINT fk_place_of_work_staff FOREIGN KEY(id_staff) REFERENCES staff(id),
 	CONSTRAINT fk_place_of_work_medical_facility FOREIGN KEY(id_medical_facility) REFERENCES medical_facility(id),
 	CONSTRAINT fk_place_of_work_position FOREIGN KEY(id_position) REFERENCES position_(id),
-    CONSTRAINT pk_place_of_work PRIMARY KEY ( id_staff,id_medical_facility,id_position)
+    CONSTRAINT fk_place_of_work_department FOREIGN KEY(id_department) references department(id),
+    CONSTRAINT pk_place_of_work PRIMARY KEY ( id_staff,id_medical_facility,id_position, id_department)
 );
 
 CREATE TABLE room (
 	id int unsigned not null auto_increment,
 	room_number int unsigned not null,
 	number_of_beds int unsigned,
+	 id_department INT unsigned not null,
 	
-	
+    FOREIGN KEY (id_department) REFERENCES department(id),
 	CONSTRAINT pk_room PRIMARY KEY (id)
 );
 
-CREATE TABLE room_department (
-	/*--свой ID? --*/
+/*CREATE TABLE room_department (
+	/*--свой ID? --
 	id_department int unsigned not null,
 	id_room int unsigned not null,
 	since datetime not null,
@@ -110,7 +113,7 @@ CREATE TABLE room_department (
 	CONSTRAINT fk_room_department_room FOREIGN KEY(id_room) REFERENCES room(id),
 	CONSTRAINT fk_room_department_department FOREIGN KEY(id_department) REFERENCES department(id),
 	CONSTRAINT pk_room_department PRIMARY KEY (id_department,id_room,since,to_)
-);
+);*/
 
 CREATE TABLE free_beds (
 	id_room int unsigned not null,
@@ -173,18 +176,17 @@ CREATE TABLE hospital_laboratory (
 	CONSTRAINT fk_hospital_laboratory_hospital FOREIGN KEY(id_hospital) REFERENCES medical_facility(id),
 	CONSTRAINT fk_hospital_laboratory_laboratory FOREIGN KEY(id_laboratory) REFERENCES laboratory(id),
 	CONSTRAINT pk_hospital_laboratory PRIMARY KEY(id_hospital, id_laboratory)
-)
+);
 	
 CREATE TABLE orderly_doctor (
     id_department INT unsigned NOT NULL,
-    id_room INT unsigned NOT NULL,
     id_doctor INT unsigned NOT NULL,
     since_ DATE NOT NULL,
     to_ DATE NOT NULL,
     FOREIGN KEY(id_doctor)
         REFERENCES staff(id),
-    FOREIGN KEY(id_department , id_room)
-        REFERENCES room_department(id_department , id_room)
+    FOREIGN KEY(id_department )
+        REFERENCES department(id_department)
 );
 
 CREATE TABLE patience (
@@ -195,7 +197,6 @@ CREATE TABLE patience (
 );
 CREATE TABLE patiente_in_hospital (
     id_patience INT unsigned NOT NULL,
-    id_department INT unsigned NOT NULL,
     id_room INT unsigned NOT NULL,
     id_disease INT unsigned not null,
     since_ DATE NOT NULL,
@@ -204,7 +205,15 @@ CREATE TABLE patiente_in_hospital (
     
     FOREIGN KEY(id_patience)
         REFERENCES patience(id),
-    FOREIGN KEY(id_department , id_room)
-        REFERENCES room_department(id_department , id_room),
+    FOREIGN KEY( id_room)
+        REFERENCES room( id_room),
 	foreign key(id_disease) references disease(id)
+);
+
+CREATE TABLE patience_analysis(
+    id_patience int unsigned not null,
+    id_analysis int unsigned not null,
+
+    FOREIGN KEY(id_patience) references patience(id),
+    FOREIGN KEY(id_analysis) references analysis(id)
 );

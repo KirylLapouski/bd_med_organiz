@@ -175,4 +175,36 @@ CREATE TABLE hospital_laboratory (
 	CONSTRAINT pk_hospital_laboratory PRIMARY KEY(id_hospital, id_laboratory)
 )
 	
-	
+CREATE TABLE orderly_doctor (
+    id_department INT unsigned NOT NULL,
+    id_room INT unsigned NOT NULL,
+    id_doctor INT unsigned NOT NULL,
+    since_ DATE NOT NULL,
+    to_ DATE NOT NULL,
+    FOREIGN KEY(id_doctor)
+        REFERENCES staff(id),
+    FOREIGN KEY(id_department , id_room)
+        REFERENCES room_department(id_department , id_room)
+);
+
+CREATE TABLE patience (
+    id INT unsigned NOT NULL,
+	FIO varchar(100) not null,
+    
+    primary key(id)
+);
+CREATE TABLE patiente_in_hospital (
+    id_patience INT unsigned NOT NULL,
+    id_department INT unsigned NOT NULL,
+    id_room INT unsigned NOT NULL,
+    id_disease INT unsigned not null,
+    since_ DATE NOT NULL,
+    to_ DATE NOT NULL,
+    
+    
+    FOREIGN KEY(id_patience)
+        REFERENCES patience(id),
+    FOREIGN KEY(id_department , id_room)
+        REFERENCES room_department(id_department , id_room),
+	foreign key(id_disease) references disease(id)
+);

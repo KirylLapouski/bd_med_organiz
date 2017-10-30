@@ -21,14 +21,23 @@ CREATE TABLE housing(
     CONSTRAINT pk_housing PRIMARY KEY(id),
     CONSTRAINT fk_hospital_id FOREIGN KEY(medical_facility_id) REFERENCES medical_facility(id)
 );
+CREATE TABLE staff (
+    id int unsigned not null auto_increment,
+    FIO VARCHAR(100) not null,
+    /*-- учёная степень --*/
+
+    CONSTRAINT pk_staff PRIMARY KEY (id)
+);
 
 CREATE TABLE department (
     id int unsigned not null auto_increment,
     name VARCHAR(100) not null,
     housing_id Int unsigned not null,
-	
+	id_doctor int unsigned not null,
+
     CONSTRAINT pk_department PRIMARY KEY(id),
-    CONSTRAINT fk_housing_id FOREIGN KEY(housing_id) REFERENCES housing(id)
+    CONSTRAINT fk_housing_id FOREIGN KEY(housing_id) REFERENCES housing(id),
+    CONSTRAINT fk_id_doctor_department FOREIGN KEY(id_doctor) REFERENCES staff(id)
 );
 
 CREATE TABLE disease (
@@ -47,13 +56,7 @@ CREATE TABLE department_specialization (
     CONSTRAINT pk_dep_spec PRIMARY KEY(id_department,id_disease)
 );
 
-CREATE TABLE staff (
-    id int unsigned not null auto_increment,
-    FIO VARCHAR(100) not null,
-    /*-- учёная степень --*/
 
-    CONSTRAINT pk_staff PRIMARY KEY (id)
-);
 
 CREATE TABLE specialty (
     id  SMALLINT unsigned not null auto_increment,
@@ -179,14 +182,12 @@ CREATE TABLE hospital_laboratory (
 );
 	
 CREATE TABLE orderly_doctor (
-    id_department INT unsigned NOT NULL,
     id_doctor INT unsigned NOT NULL,
     since_ DATE NOT NULL,
     to_ DATE NOT NULL,
     FOREIGN KEY(id_doctor)
-        REFERENCES staff(id),
-    FOREIGN KEY(id_department )
-        REFERENCES department(id_department)
+        REFERENCES staff(id)
+
 );
 
 CREATE TABLE patience (
@@ -206,7 +207,7 @@ CREATE TABLE patiente_in_hospital (
     FOREIGN KEY(id_patience)
         REFERENCES patience(id),
     FOREIGN KEY( id_room)
-        REFERENCES room( id_room),
+        REFERENCES room( id),
 	foreign key(id_disease) references disease(id)
 );
 

@@ -2,13 +2,23 @@ DROP DATABASE IF EXISTS medicine;
 CREATE DATABASE medicine;
 
 use medicine;
+CREATE TABLE staff (
+    id int unsigned not null auto_increment,
+    FIO VARCHAR(100) not null,
+    /*-- учёная степень --*/
+
+    CONSTRAINT pk_staff PRIMARY KEY (id)
+);
 
 CREATE TABLE medical_facility(
     id Int unsigned not null auto_increment,
     name varchar(100) not null,
     address varchar(200) not null,
     superior_medical_facility Int unsigned  DEFAULT  NULL,
+    id_doctor int unsigned not null,
+
     constraint pk_medical_facility primary key (id),
+    CONSTRAINT fk_id_doctor_department FOREIGN KEY(id_doctor) REFERENCES staff(id),
     constraint fk_superior_medical_facility foreign key (superior_medical_facility) references medical_facility(id)
 );
 
@@ -21,23 +31,15 @@ CREATE TABLE housing(
     CONSTRAINT pk_housing PRIMARY KEY(id),
     CONSTRAINT fk_hospital_id FOREIGN KEY(medical_facility_id) REFERENCES medical_facility(id)
 );
-CREATE TABLE staff (
-    id int unsigned not null auto_increment,
-    FIO VARCHAR(100) not null,
-    /*-- учёная степень --*/
-
-    CONSTRAINT pk_staff PRIMARY KEY (id)
-);
 
 CREATE TABLE department (
     id int unsigned not null auto_increment,
     name VARCHAR(100) not null,
     housing_id Int unsigned not null,
-	id_doctor int unsigned not null,
+
 
     CONSTRAINT pk_department PRIMARY KEY(id),
-    CONSTRAINT fk_housing_id FOREIGN KEY(housing_id) REFERENCES housing(id),
-    CONSTRAINT fk_id_doctor_department FOREIGN KEY(id_doctor) REFERENCES staff(id)
+    CONSTRAINT fk_housing_id FOREIGN KEY(housing_id) REFERENCES housing(id)
 );
 
 CREATE TABLE disease (
@@ -68,6 +70,7 @@ CREATE TABLE specialty (
 CREATE TABLE staff_specialization (
     id_staff int unsigned not null,
     id_specialty SMALLINT unsigned not null,
+    is_Doctor BOOLEAN not null DEFAULT false,
 
 	CONSTRAINT fk_staff FOREIGN KEY(id_staff) REFERENCES staff(id),
 	CONSTRAINT fk_specialty FOREIGN KEY(id_specialty) REFERENCES specialty(id),
@@ -75,7 +78,7 @@ CREATE TABLE staff_specialization (
 );
 
 CREATE TABLE position_ (
-    id SMALLINT unsigned not null,
+    id SMALLINT unsigned not null auto_increment,
     name VARCHAR(100) not null,
 
     CONSTRAINT pk_position PRIMARY KEY (id)
@@ -100,7 +103,7 @@ CREATE TABLE room (
 	id int unsigned not null auto_increment,
 	room_number int unsigned not null,
 	number_of_beds int unsigned,
-	 id_department INT unsigned not null,
+	id_department INT unsigned not null,
 	
     FOREIGN KEY (id_department) REFERENCES department(id),
 	CONSTRAINT pk_room PRIMARY KEY (id)
@@ -118,14 +121,14 @@ CREATE TABLE room (
 	CONSTRAINT pk_room_department PRIMARY KEY (id_department,id_room,since,to_)
 );*/
 
-CREATE TABLE free_beds (
+CREATE TABLE occupied_beds (
+    id int unsigned not null auto_increment,
 	id_room int unsigned not null,
-	free_beds int unsigned not null,
-	since datetime not null,
+	since_ datetime not null,
 	to_ datetime not null,
 	
-	CONSTRAINT fk_room_id FOREIGN KEY(id_room) REFERENCES room(id)
-	/*-- PRIMARY KEY --*/
+	CONSTRAINT fk_room_id FOREIGN KEY(id_room) REFERENCES room(id),
+    CONSTRAINT pk_occupied_beds PRIMARY KEY(id)
 );
 
 /*--CREATE TABLE service_doctor (
@@ -183,10 +186,10 @@ CREATE TABLE hospital_laboratory (
 	
 CREATE TABLE orderly_doctor (
     id_doctor INT unsigned NOT NULL,
-    since_ DATE NOT NULL,
-    to_ DATE NOT NULL,
-    FOREIGN KEY(id_doctor)
-        REFERENCES staff(id)
+    since_ datetime NOT NULL,
+    to_ datetime NOT NULL,
+
+    FOREIGN KEY(id_doctor) REFERENCES staff(id)
 
 );
 
@@ -218,3 +221,76 @@ CREATE TABLE patience_analysis(
     FOREIGN KEY(id_patience) references patience(id),
     FOREIGN KEY(id_analysis) references analysis(id)
 );
+INSERT INTO staff(FIO)
+                        VALUES("Титова Галина Вячеславовна"),
+                            ("Ефимов Дмитрий Демьянович"),
+                            ("Боброва Тамара Глебовна"),
+                            ("Некрасов Александр Мэлсович"),
+                            ("Евдокимова Регина Кондратовна");
+INSERT INTO medical_facility(name,address,superior_medical_facility,id_doctor)
+                        VALUES("Hospital 1","Kolasa st. 89 ",null,1 ),
+                            ("polyclinic 1","Molodegnaya st. 12", 1,1);
+
+INSERT INTO housing(name, address,medical_facility_id)
+                        VALUES("housing 1","Kolasa st. 89, housing 1", 1),
+                            ("housing 2","Kolasa st. 89, housing 2", 1),
+                            ("housing 1","Molodegnaya st. 12, housing 1",2);
+INSERT INTO department(name, housing_id) 
+                        VALUES("infectious disease department",1),
+                            ("cardiology department",2),
+                            ("pulmonology department",2);
+INSERT INTO room(room_number,number_of_beds,id_department) 
+                        VALUES(100,5,1),
+                    (101,6,1),
+                            (102,7,1),
+                            (100,6,2),
+                            (101,7,2),
+                            (102,7,2),
+                            (201,6,3),
+                            (202,4,3),
+                            (203,5,3);
+/* ПРОВЕРИТЬ ЧТОБЫ НЕЛЬЗЯ БЫЛО ВСТАВИТЬ КОЛИЧЕСВТО КРОВАТЕЙ БОЛЬШЕ ЧЕМ В ПАЛАТЕ */
+/* ПРОВЕРИТЬ ЧТОБЫ ДАТА TO_ БЫЛА ПОЗЖА ЧЕМ ДАТА since_ */
+INSERT INTO occupied_beds(id_room,since_,to_) 
+                         VALUES(1,"2017-01-01 12:00:00","2017-01-10 12:00:00"),
+                            (1,"2017-11-03 12:00:00","2017-11-10 12:00:00"),
+                            (1,"2017-11-03 12:00:00","2017-11-10 12:00:00"),
+                            (1,"2017-11-03 12:00:00","2017-11-10 12:00:00"),
+                            (1,"2017-11-03 12:00:00","2017-11-10 12:00:00"),
+                            (2,"2017-11-01 12:00:00","2017-11-30 12:00:00"),
+                            (2,"2017-11-01 12:00:00","2017-11-30 12:00:00"),
+                            (2,"2017-11-01 12:00:00","2017-11-30 12:00:00"),
+                            (2,"2017-11-01 12:00:00","2017-11-30 12:00:00"),
+                            (2,"2017-11-01 12:00:00","2017-11-30 12:00:00"),
+                            (3,"2017-12-01 12:00:00","2017-12-31 12:00:00"),
+                            (3,"2017-12-01 12:00:00","2017-12-31 12:00:00"),
+                            (3,"2017-12-01 12:00:00","2017-12-31 12:00:00"),
+                            (3,"2017-12-01 12:00:00","2017-12-31 12:00:00"); 
+
+INSERT INTO specialty(name)
+                        VALUES("врач-пульмонолог"),
+                            ("врач-кардиолог"),
+                            ("врач-эндокринолог");
+INSERT INTO staff_specialization(id_staff,id_specialty) 
+                        VALUES(1,1),
+                            (1,2),
+                            (2,1),
+                            (3,3),
+                            (4,2),
+                            (5,2);
+/*ВРАЧ ДЕЖУРИТ ПО ВСЕЙ БОЛЬНИЦЕ*/
+INSERT INTO orderly_doctor(id_doctor,since_,to_)
+                        VALUES(1,"2017-11-03 08:00:00","2017-11-03 16:00:00"),
+                            (4,"2017-11-03 16:00:00","2017-11-04 00:00:00"),
+                            (5,"2017-11-04 00:00:00","2017-11-04 08:00:00"),
+                            (1,"2017-11-04 08:00:00","2017-11-04 16:00:00"),
+                            (2,"2017-11-04 16:00:00","2017-11-05 00:00:00");
+INSERT INTO position_(name)
+                        VALUES("глав. врач"),
+                            ("врач-ординатор"),
+                            ("зав. отделением");
+INSERT INTO place_of_work(id_staff,id_medical_facility,id_position,id_department,rate)
+                         VALUES(1, 1, 1, 2,1),
+                            (2,1,2,3,1),
+                            (4,1,2,2,1),
+                            (5,1,2,2,1);

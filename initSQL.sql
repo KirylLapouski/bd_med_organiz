@@ -16,12 +16,12 @@ CREATE TABLE medical_facility(
     address varchar(200) not null,
     superior_medical_facility Int unsigned  DEFAULT  NULL,
     id_doctor int unsigned not null,
+    medical_facility_type ENUM('Поликлиника','Больница') NOT NULL,
 
     constraint pk_medical_facility primary key (id),
     CONSTRAINT fk_id_doctor_department FOREIGN KEY(id_doctor) REFERENCES staff(id),
     constraint fk_superior_medical_facility foreign key (superior_medical_facility) references medical_facility(id)
 );
-
 CREATE TABLE housing(
     id int unsigned not null auto_increment,
     name varchar(100) not null,
@@ -90,7 +90,7 @@ CREATE TABLE place_of_work (
     id_medical_facility  int unsigned not null,
     id_position SMALLINT unsigned not NULL,
     id_department INT unsigned not null,
-    rate ENUM('1','0.25','0.5','0.75'), 
+    rate ENUM('1','0.25','0.5','0.75') not null, 
 
 	CONSTRAINT fk_place_of_work_staff FOREIGN KEY(id_staff) REFERENCES staff(id),
 	CONSTRAINT fk_place_of_work_medical_facility FOREIGN KEY(id_medical_facility) REFERENCES medical_facility(id),
@@ -176,7 +176,7 @@ CREATE TABLE hospital_laboratory (
 	id_hospital INT unsigned not null,
 	id_laboratory INT unsigned not null,
 	contract_number INT unsigned not null,
-	since DATE not null,
+	since_ DATE not null,
 	to_ DATE not null,
 	
 	CONSTRAINT fk_hospital_laboratory_hospital FOREIGN KEY(id_hospital) REFERENCES medical_facility(id),
@@ -227,9 +227,9 @@ INSERT INTO staff(FIO)
                             ("Боброва Тамара Глебовна"),
                             ("Некрасов Александр Мэлсович"),
                             ("Евдокимова Регина Кондратовна");
-INSERT INTO medical_facility(name,address,superior_medical_facility,id_doctor)
-                        VALUES("Hospital 1","Kolasa st. 89 ",null,1 ),
-                            ("polyclinic 1","Molodegnaya st. 12", 1,1);
+INSERT INTO medical_facility(name,address,superior_medical_facility,id_doctor,medical_facility_type)
+                        VALUES("Hospital 1","Kolasa st. 89 ",null,1,2 ),
+                            ("polyclinic 1","Molodegnaya st. 12", 1,1,1);
 
 INSERT INTO housing(name, address,medical_facility_id)
                         VALUES("housing 1","Kolasa st. 89, housing 1", 1),
@@ -241,7 +241,7 @@ INSERT INTO department(name, housing_id)
                             ("pulmonology department",2);
 INSERT INTO room(room_number,number_of_beds,id_department) 
                         VALUES(100,5,1),
-                    (101,6,1),
+                            (101,6,1),
                             (102,7,1),
                             (100,6,2),
                             (101,7,2),

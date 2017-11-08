@@ -15,11 +15,11 @@ CREATE TABLE medical_facility(
     name varchar(100) not null,
     address varchar(200) not null,
     superior_medical_facility Int unsigned  DEFAULT  NULL,
-    id_doctor int unsigned not null,
+    id_order_doctor int unsigned not null,
     medical_facility_type ENUM('Поликлиника','Больница') NOT NULL,
 
     constraint pk_medical_facility primary key (id),
-    CONSTRAINT fk_id_doctor_department FOREIGN KEY(id_doctor) REFERENCES staff(id),
+    CONSTRAINT fk_id_doctor_department FOREIGN KEY(id_order_doctor) REFERENCES staff(id),
     constraint fk_superior_medical_facility foreign key (superior_medical_facility) references medical_facility(id)
 );
 CREATE TABLE housing(
@@ -58,10 +58,8 @@ CREATE TABLE department_specialization (
     CONSTRAINT pk_dep_spec PRIMARY KEY(id_department,id_disease)
 );
 
-
-
 CREATE TABLE specialty (
-    id  SMALLINT unsigned not null auto_increment,
+    id  INT unsigned not null auto_increment,
     name VARCHAR(100) not null,
 
     CONSTRAINT pk_specialty PRIMARY KEY (id)
@@ -69,8 +67,10 @@ CREATE TABLE specialty (
 
 CREATE TABLE staff_specialization (
     id_staff int unsigned not null,
-    id_specialty SMALLINT unsigned not null,
+    id_specialty INT unsigned not null,
     is_Doctor BOOLEAN not null DEFAULT false,
+    degree ENUM("Кандидат медицинских наук","Доктор медицинских наук") DEFAULT null,
+    grade ENUM("Доцент","Профессор") DEFAULT null,
 
 	CONSTRAINT fk_staff FOREIGN KEY(id_staff) REFERENCES staff(id),
 	CONSTRAINT fk_specialty FOREIGN KEY(id_specialty) REFERENCES specialty(id),
@@ -78,7 +78,7 @@ CREATE TABLE staff_specialization (
 );
 
 CREATE TABLE position_ (
-    id SMALLINT unsigned not null auto_increment,
+    id INT unsigned not null auto_increment,
     name VARCHAR(100) not null,
 
     CONSTRAINT pk_position PRIMARY KEY (id)
@@ -88,9 +88,10 @@ CREATE TABLE place_of_work (
 	/*--свой ID? --*/
     id_staff int unsigned not null,
     id_medical_facility  int unsigned not null,
-    id_position SMALLINT unsigned not NULL,
+    id_position INT unsigned not NULL,
     id_department INT unsigned not null,
     rate ENUM('1','0.25','0.5','0.75') not null, 
+    type_of_work ENUM('Работа','Консультация') not null DEFAULT 'Работа',
 
 	CONSTRAINT fk_place_of_work_staff FOREIGN KEY(id_staff) REFERENCES staff(id),
 	CONSTRAINT fk_place_of_work_medical_facility FOREIGN KEY(id_medical_facility) REFERENCES medical_facility(id),
@@ -104,6 +105,7 @@ CREATE TABLE room (
 	room_number int unsigned not null,
 	number_of_beds int unsigned,
 	id_department INT unsigned not null,
+    id_responsible_doctor INT unsigned not null,
 	
     FOREIGN KEY (id_department) REFERENCES department(id),
 	CONSTRAINT pk_room PRIMARY KEY (id)
@@ -148,7 +150,7 @@ CREATE TABLE laboratory (
 	id INT unsigned not null auto_increment,
 	name VARCHAR(100) not null,
 	address VARCHAR(200) not null,
-	id_spec int unsigned not null,
+		id_spec int unsigned not null,
 	
 	CONSTRAINT pk_laboratory PRIMARY KEY(id),
 	CONSTRAINT fk_spec_id FOREIGN KEY (id_spec) REFERENCES laboratory_spec(id)
@@ -160,7 +162,7 @@ CREATE TABLE analysis (
 	id INT unsigned not null auto_increment,
 	name VARCHAR(100) not null,
 	
-	CONSTRAINT pk_laboratory PRIMARY KEY(id)
+	CONSTRAINT pk_analysis PRIMARY KEY(id)
 );
 
 CREATE TABLE laboratory_analysis (
@@ -169,7 +171,7 @@ CREATE TABLE laboratory_analysis (
 	
 	CONSTRAINT fk_analysis FOREIGN KEY(id_analysis) REFERENCES analysis(id),
 	CONSTRAINT fk_laboratory FOREIGN KEY(id_laboratory) REFERENCES laboratory(id),
-	CONSTRAINT pk_laboratory PRIMARY KEY(id_laboratory, id_analysis)
+	CONSTRAINT pk_laboratory_analysis PRIMARY KEY(id_laboratory, id_analysis)
 );
 
 CREATE TABLE hospital_laboratory (
@@ -184,13 +186,13 @@ CREATE TABLE hospital_laboratory (
 	CONSTRAINT pk_hospital_laboratory PRIMARY KEY(id_hospital, id_laboratory)
 );
 	
-CREATE TABLE orderly_doctor (
+CREATE TABLE orderly_for_hospital_doctor (
     id_doctor INT unsigned NOT NULL,
     since_ datetime NOT NULL,
     to_ datetime NOT NULL,
 
-    FOREIGN KEY(id_doctor) REFERENCES staff(id)
-
+    FOREIGN KEY(id_doctor) REFERENCES staff(id),
+    CONSTRAINT pk_order_for_hospital_doctor PRIMARY KEY(id_doctor,since_,to_)
 );
 
 CREATE TABLE patience (
@@ -211,7 +213,9 @@ CREATE TABLE patiente_in_hospital (
         REFERENCES patience(id),
     FOREIGN KEY( id_room)
         REFERENCES room( id),
-	foreign key(id_disease) references disease(id)
+	foreign key(id_disease) references disease(id),
+
+    primary key(id_patience,id_room,id_disease,since_,to_)
 );
 
 CREATE TABLE patience_analysis(
@@ -219,7 +223,8 @@ CREATE TABLE patience_analysis(
     id_analysis int unsigned not null,
 
     FOREIGN KEY(id_patience) references patience(id),
-    FOREIGN KEY(id_analysis) references analysis(id)
+    FOREIGN KEY(id_analysis) references analysis(id),
+    PRIMARY KEY(id_patience,id_analysis)
 );
 INSERT INTO staff(FIO)
                         VALUES("Титова Галина Вячеславовна"),
@@ -251,6 +256,7 @@ INSERT INTO room(room_number,number_of_beds,id_department)
                             (203,5,3);
 /* ПРОВЕРИТЬ ЧТОБЫ НЕЛЬЗЯ БЫЛО ВСТАВИТЬ КОЛИЧЕСВТО КРОВАТЕЙ БОЛЬШЕ ЧЕМ В ПАЛАТЕ */
 /* ПРОВЕРИТЬ ЧТОБЫ ДАТА TO_ БЫЛА ПОЗЖА ЧЕМ ДАТА since_ */
+/* ПО ID staff ПРОВЕРИТЬ ВРАЧ ЛИ ЭТО */
 INSERT INTO occupied_beds(id_room,since_,to_) 
                          VALUES(1,"2017-01-01 12:00:00","2017-01-10 12:00:00"),
                             (1,"2017-11-03 12:00:00","2017-11-10 12:00:00"),

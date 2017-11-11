@@ -1,8 +1,20 @@
 package entity;
 
+/**
+ * Created by lapko on 10.11.2017.
+ */
+//DONE
 public class AnalysisEntity {
     private int id;
     private String name;
+
+    public AnalysisEntity( String name) {
+
+        this.name = name;
+    }
+
+    public AnalysisEntity() {
+    }
 
     public int getId() {
         return id;

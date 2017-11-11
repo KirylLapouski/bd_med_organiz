@@ -1,15 +1,45 @@
 package entity;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by lapko on 10.11.2017.
+ */
+//DONE
 public class StaffEntity {
     private int id;
     private String fio;
+    private Map<Date, JobEntity> jobs;//!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!
+    //FOR SpecialEntity take fields from staff_specialization
+    private List<SpecialtyEntity> specializations;
+    private List<Date> shedule;
 
 
-    public StaffEntity(String fio) {
-        this.fio = fio;
+    public Map<Date, JobEntity> getJobs() {
+        return jobs;
     }
 
-    public StaffEntity() {
+    public void setJobs(Map<Date, JobEntity> jobs) {
+        this.jobs = jobs;
+    }
+
+    public List<SpecialtyEntity> getSpecializations() {
+        return specializations;
+    }
+
+    public void setSpecializations(List<SpecialtyEntity> specializations) {
+        this.specializations = specializations;
+    }
+
+    public List<Date> getShedule() {
+        return shedule;
+    }
+
+    public void setShedule(List<Date> shedule) {
+        this.shedule = shedule;
     }
 
     public int getId() {
@@ -27,7 +57,6 @@ public class StaffEntity {
     public void setFio(String fio) {
         this.fio = fio;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -48,14 +77,4 @@ public class StaffEntity {
         result = 31 * result + (fio != null ? fio.hashCode() : 0);
         return result;
     }
-
-
-    @Override
-    public String toString() {
-        return "StaffEntity{" +
-                "id=" + id +
-                ", fio='" + fio + '\'' +
-                '}';
-    }
-
 }

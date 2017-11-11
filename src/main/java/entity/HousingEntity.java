@@ -1,9 +1,24 @@
 package entity;
 
+import java.util.List;
+
+/**
+ * Created by lapko on 10.11.2017.
+ */
+//DONE
 public class HousingEntity {
     private int id;
     private String name;
     private String address;
+    private List<DepartmentEntity> departments;
+
+    public List<DepartmentEntity> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(List<DepartmentEntity> departments) {
+        this.departments = departments;
+    }
 
     public int getId() {
         return id;

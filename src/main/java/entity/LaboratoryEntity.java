@@ -1,9 +1,49 @@
 package entity;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by lapko on 10.11.2017.
+ */
+//DONE
 public class LaboratoryEntity {
     private int id;
     private String name;
     private String address;
+    private List<String> specialization;
+    private List<AnalysisEntity> analysis;
+    private Map<Date,MedicalFacilityEntity> medicalFacility;
+
+
+    public Map<Date, MedicalFacilityEntity> getMedicalFacility() {
+        return medicalFacility;
+    }
+
+    public void setMedicalFacility(Map<Date, MedicalFacilityEntity> medicalFacility) {
+        this.medicalFacility = medicalFacility;
+    }
+
+
+    public List<String> getSpecialization() {
+
+        return specialization;
+    }
+
+    public void setSpecialization(List<String> specialization) {
+        this.specialization = specialization;
+    }
+
+    public List<AnalysisEntity> getAnalysis() {
+        return analysis;
+    }
+
+    public void setAnalysis(List<AnalysisEntity> analysis) {
+        this.analysis = analysis;
+    }
+
+
 
     public int getId() {
         return id;

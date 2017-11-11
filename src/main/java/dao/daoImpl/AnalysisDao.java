@@ -2,7 +2,6 @@ package dao.daoImpl;
 
 import dao.CrudDao;
 import entity.AnalysisEntity;
-import entity.StaffEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -13,8 +12,13 @@ import org.hibernate.Transaction;
 public class AnalysisDao implements CrudDao<Integer, AnalysisEntity>{
     SessionFactory sessionFactory;
 
-    public AnalysisDao(SessionFactory sessionFactory) {
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    public AnalysisDao() {
+
     }
 
     public void create(AnalysisEntity o) {
@@ -29,7 +33,7 @@ public class AnalysisDao implements CrudDao<Integer, AnalysisEntity>{
     }
 
     public AnalysisEntity read(Integer id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         AnalysisEntity analysisEntity=session.load(AnalysisEntity.class,id);
 
         return analysisEntity;

@@ -1,5 +1,9 @@
 package entity;
 
+/**
+ * Created by lapko on 10.11.2017.
+ */
+//DONE
 public class DiseaseEntity {
     private int id;
     private String name;

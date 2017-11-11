@@ -39,7 +39,7 @@ public class DepartmentDao implements CrudDao<Integer, DepartmentEntity> {
     }
 
     @Override
-    public DepartmentEntity delete(Integer integer) {
-        return null;
+    public void delete(Integer integer) {
+
     }
 }

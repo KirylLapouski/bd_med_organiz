@@ -37,13 +37,12 @@ public class StaffDao implements CrudDao<Integer, StaffEntity> {
             session.update(o);
     }
 
-    public StaffEntity delete(Integer id) {
+    public void delete(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         StaffEntity staffEntity = session.load(StaffEntity.class,id);
 
         if(staffEntity!= null){
             session.delete(id);
         }
-        return null;
     }
 }

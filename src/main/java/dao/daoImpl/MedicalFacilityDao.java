@@ -41,7 +41,7 @@ public class MedicalFacilityDao implements CrudDao<Integer, MedicalFacilityEntit
     }
 
     @Override
-    public MedicalFacilityEntity delete(Integer integer) {
-        return null;
+    public void delete(Integer integer) {
+
     }
 }

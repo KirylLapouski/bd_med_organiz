@@ -43,7 +43,7 @@ public class HousingDao implements CrudDao<Integer, HousingEntity>{
     }
 
     @Override
-    public HousingEntity delete(Integer integer) {
-        return null;
+    public void delete(Integer integer) {
+
     }
 }

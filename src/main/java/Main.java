@@ -43,14 +43,15 @@ public class Main {
             medicalFacilityDao = new MedicalFacilityDao();
             medicalFacilityDao.setSessionFactory(ourSessionFactory);
 
-            analysisDao  = new AnalysisDao();
-            analysisDao.setSessionFactory(ourSessionFactory);
+            analysisDao  = new AnalysisDao(ourSessionFactory);
 
             analysisDao.create(new AnalysisEntity("analyzzzz"));
             AnalysisEntity analysisEntity  =  analysisDao.read(1);
 
             System.out.println("asdfa");
             System.out.println("Staff entity:" + analysisEntity.toString());
+
+            analysisDao.delete(6);
             ourSessionFactory.close();
 
     }

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.RoomEntity" table="room" schema="" catalog="medicine">
+        <id name="id">
+            <column name="id" sql-type="int unsigned" not-null="true"/>
+        </id>
+        <property name="roomNumber">
+            <column name="room_number" sql-type="int unsigned" not-null="true"/>
+        </property>
+        <property name="numberOfBeds">
+            <column name="number_of_beds" sql-type="int unsigned"/>
+        </property>
+        <property name="idResponsibleDoctor">
+            <column name="id_responsible_doctor" sql-type="int unsigned" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

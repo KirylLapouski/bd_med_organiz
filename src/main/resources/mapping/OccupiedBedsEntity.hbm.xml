@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.OccupiedBedsEntity" table="occupied_beds" schema="" catalog="medicine">
+        <id name="id">
+            <column name="id" sql-type="int unsigned" not-null="true"/>
+        </id>
+        <property name="since">
+            <column name="since_" sql-type="datetime" not-null="true"/>
+        </property>
+        <property name="to">
+            <column name="to_" sql-type="datetime" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

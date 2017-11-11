@@ -1,11 +1,11 @@
 DROP DATABASE IF EXISTS medicine;
 CREATE DATABASE medicine;
-
+/* beds instead of occupited_beds ??*/
+/* patiente after bed*/
 use medicine;
 CREATE TABLE staff (
     id int unsigned not null auto_increment,
     FIO VARCHAR(100) not null,
-    /*-- учёная степень --*/
 
     CONSTRAINT pk_staff PRIMARY KEY (id)
 );

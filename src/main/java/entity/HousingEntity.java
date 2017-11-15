@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by lapko on 10.11.2017.
@@ -10,13 +11,23 @@ public class HousingEntity {
     private int id;
     private String name;
     private String address;
-    private List<DepartmentEntity> departments;
+    private Set departments;
 
-    public List<DepartmentEntity> getDepartments() {
+    public HousingEntity() {
+    }
+
+    public HousingEntity(String name, String address, Set departments) {
+        this.name = name;
+        this.address = address;
+        this.departments = departments;
+    }
+
+    public Set getDepartments() {
+
         return departments;
     }
 
-    public void setDepartments(List<DepartmentEntity> departments) {
+    public void setDepartments(Set departments) {
         this.departments = departments;
     }
 

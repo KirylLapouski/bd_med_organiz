@@ -2,6 +2,7 @@ package entity;
 
 import javax.swing.event.ListDataEvent;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by lapko on 10.11.2017.
@@ -10,31 +11,42 @@ import java.util.List;
 public class DepartmentEntity {
     private int id;
     private String name;
-    private List<RoomEntity> rooms;
-    private List<OfficeEntity> offices;
-    private List<DiseaseEntity> departmentSpetialization;
+    private Set rooms;
+    private Set offices;
+    private Set departmentSpetialization;
 
-    public List<RoomEntity> getRooms() {
+    public DepartmentEntity() {
+    }
+
+
+    public DepartmentEntity(String name, Set rooms, Set offices, Set departmentSpetialization) {
+        this.name = name;
+        this.rooms = rooms;
+        this.offices = offices;
+        this.departmentSpetialization = departmentSpetialization;
+    }
+
+    public Set getRooms() {
         return rooms;
     }
 
-    public void setRooms(List<RoomEntity> rooms) {
+    public void setRooms(Set rooms) {
         this.rooms = rooms;
     }
 
-    public List<OfficeEntity> getOffices() {
+    public Set getOffices() {
         return offices;
     }
 
-    public void setOffices(List<OfficeEntity> offices) {
+    public void setOffices(Set offices) {
         this.offices = offices;
     }
 
-    public List<DiseaseEntity> getDepartmentSpetialization() {
+    public Set getDepartmentSpetialization() {
         return departmentSpetialization;
     }
 
-    public void setDepartmentSpetialization(List<DiseaseEntity> departmentSpetialization) {
+    public void setDepartmentSpetialization(Set departmentSpetialization) {
         this.departmentSpetialization = departmentSpetialization;
     }
 

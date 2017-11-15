@@ -2,11 +2,12 @@
 <!DOCTYPE hibernate-mapping PUBLIC
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
+<hibernate-mapping default-cascade="all">
 
     <class name="entity.RoomEntity" table="room" schema="" catalog="medicine">
         <id name="id">
             <column name="id" sql-type="int unsigned" not-null="true"/>
+            <generator class="native"/>
         </id>
         <property name="roomNumber">
             <column name="room_number" sql-type="int unsigned" not-null="true"/>
@@ -14,8 +15,11 @@
         <property name="numberOfBeds">
             <column name="number_of_beds" sql-type="int unsigned"/>
         </property>
-        <property name="idResponsibleDoctor">
-            <column name="id_responsible_doctor" sql-type="int unsigned" not-null="true"/>
-        </property>
+        <many-to-one name="responsibleDoctor" column="id_responsible_doctor" not-null="true" class="entity.StaffEntity"/>
+        <many-to-one name="department" column="id_department" not-null="true" class="entity.DepartmentEntity"/>
+        <set name="beds">
+            <key column="id_room"></key>
+            <one-to-many class="entity.OccupiedBedsEntity"/>
+        </set>
     </class>
 </hibernate-mapping>

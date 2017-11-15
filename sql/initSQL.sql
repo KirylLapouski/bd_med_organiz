@@ -147,8 +147,8 @@ CREATE TABLE office (
 CREATE TABLE occupied_beds (
     id int unsigned not null auto_increment,
 	id_room int unsigned not null,
-	since_ datetime not null,
-	to_ datetime not null,
+	since_ datetime not null DEFAULT NOW(),
+	to_ datetime not null DEFAULT NOW(),
 	
 	CONSTRAINT fk_room_id FOREIGN KEY(id_room) REFERENCES room(id),
     CONSTRAINT pk_occupied_beds PRIMARY KEY(id)
@@ -171,26 +171,30 @@ CREATE TABLE laboratory (
 	id INT unsigned not null auto_increment,
 	name VARCHAR(100) not null,
 	address VARCHAR(200) not null,
-		id_spec int unsigned not null,
 	
-	CONSTRAINT pk_laboratory PRIMARY KEY(id),
-	CONSTRAINT fk_spec_id FOREIGN KEY (id_spec) REFERENCES laboratory_spec(id)
+	CONSTRAINT pk_laboratory PRIMARY KEY(id)
 );
 
+CREATE TABLE laboratory_laboratory_spec(
+    id_laboratory INT unsigned not null,
+    id_laboratory_spec INT unsigned not null,
 
+    PRIMARY KEY(id_laboratory,id_laboratory_spec),
+    FOREIGN KEY(id_laboratory) REFERENCES laboratory(id),
+    FOREIGN KEY(id_laboratory_spec) REFERENCES laboratory_spec(id)
+);
 
 CREATE TABLE analysis (
 	id INT unsigned not null auto_increment,
 	name VARCHAR(100) not null,
-	
 	CONSTRAINT pk_analysis PRIMARY KEY(id)
 );
 
-CREATE TABLE laboratory_analysis (
+CREATE TABLE laboratory_analysis_type (
 	id_laboratory INT unsigned not null,
-	id_analysis INT unsigned not null,
+	id_analysis_type INT unsigned not null,
 	
-	CONSTRAINT fk_analysis FOREIGN KEY(id_analysis) REFERENCES analysis(id),
+	CONSTRAINT fk_analysis FOREIGN KEY(id_analysis_type) REFERENCES type_of_analysis(id),
 	CONSTRAINT fk_laboratory FOREIGN KEY(id_laboratory) REFERENCES laboratory(id),
 	CONSTRAINT pk_laboratory_analysis PRIMARY KEY(id_laboratory, id_analysis)
 );
@@ -289,6 +293,12 @@ CREATE TABLE operations(
     FOREIGN KEY(id_disease) references disease(id),
     PRIMARY KEY(id_staff,id_patience,id_disease,since_)
 );
+CREATE TABLE type_of_analysis{
+    id int unsigned not null auto_increment,
+    name VARCHAR(100) not null,
+
+    PRIMARY KEY(id)
+}
 /* Кабинеты в поликлинике*/
 INSERT INTO staff(FIO)
                         VALUES("Титова Галина Вячеславовна"),
@@ -296,7 +306,7 @@ INSERT INTO staff(FIO)
                             ("Боброва Тамара Глебовна"),
                             ("Некрасов Александр Мэлсович"),
                             ("Евдокимова Регина Кондратовна");
-INSERT INTO medical_facility(name,address,superior_medical_facility,id_doctor,medical_facility_type)
+INSERT INTO medical_facility(name,address,superior_medical_facility,id_order_doctor,medical_facility_type)
                         VALUES("Hospital 1","Kolasa st. 89 ",null,1,2 ),
                             ("polyclinic 1","Molodegnaya st. 12", 1,1,1);
 
@@ -308,19 +318,18 @@ INSERT INTO department(name, housing_id)
                         VALUES("infectious disease department",1),
                             ("cardiology department",2),
                             ("pulmonology department",2);
-INSERT INTO room(room_number,number_of_beds,id_department) 
-                        VALUES(100,5,1),
-                            (101,6,1),
-                            (102,7,1),
-                            (100,6,2),
-                            (101,7,2),
-                            (102,7,2),
-                            (201,6,3),
-                            (202,4,3),
-                            (203,5,3);
+INSERT INTO room(room_number,number_of_beds,id_department,id_responsible_doctor) 
+                        VALUES(100,5,1,1),
+                            (101,6,1,1),
+                            (102,7,1,1),
+                            (100,6,2,1),
+                            (101,7,2,1),
+                            (102,7,2,1),
+                            (201,6,3,1),
+                            (202,4,3,1),
+                            (203,5,3,2);
 /* ПРОВЕРИТЬ ЧТОБЫ НЕЛЬЗЯ БЫЛО ВСТАВИТЬ КОЛИЧЕСВТО КРОВАТЕЙ БОЛЬШЕ ЧЕМ В ПАЛАТЕ */
 /* ПРОВЕРИТЬ ЧТОБЫ ДАТА TO_ БЫЛА ПОЗЖА ЧЕМ ДАТА since_ */
-/* ПО ID staff ПРОВЕРИТЬ ВРАЧ ЛИ ЭТО */
 INSERT INTO occupied_beds(id_room,since_,to_) 
                          VALUES(1,"2017-01-01 12:00:00","2017-01-10 12:00:00"),
                             (1,"2017-11-03 12:00:00","2017-11-10 12:00:00"),
@@ -360,7 +369,12 @@ INSERT INTO position_(name)
                             ("врач-ординатор"),
                             ("зав. отделением");
 INSERT INTO place_of_work(id_staff,id_medical_facility,id_position,id_department,rate)
-                         VALUES(1, 1, 1, 2,1),
+                        VALUES(1, 1, 1, 2,1),
                             (2,1,2,3,1),
                             (4,1,2,2,1),
                             (5,1,2,2,1);
+INSERT INTO staff_specialization(id_staff,id_specialty,is_Doctor,salary) 
+                        VALUES(1,1,true,99.99);
+INSERT INTO staff_shedule(staff_id, since_,to_) 
+                        VALUES (1,"2017-01-01 12:00:00","2018-01-01 12:00:00"),
+                                (2,"2017-01-01 12:00:00","2018-01-01 12:00:00");

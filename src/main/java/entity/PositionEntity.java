@@ -8,6 +8,13 @@ public class PositionEntity {
     private int id;
     private String name;
 
+    public PositionEntity() {
+    }
+
+    public PositionEntity(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

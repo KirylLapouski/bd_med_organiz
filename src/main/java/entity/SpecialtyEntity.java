@@ -16,6 +16,17 @@ public class SpecialtyEntity {
     private Degree degree;
     private Grade grade;
 
+    public SpecialtyEntity() {
+    }
+
+    public SpecialtyEntity(String name, Boolean isDoctor, float salary, Degree degree, Grade grade) {
+        this.name = name;
+        this.isDoctor = isDoctor;
+        this.salary = salary;
+        this.degree = degree;
+        this.grade = grade;
+    }
+
     public float getSalary() {
         return salary;
     }

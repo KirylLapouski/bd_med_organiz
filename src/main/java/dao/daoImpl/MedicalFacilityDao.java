@@ -9,9 +9,13 @@ import org.hibernate.Transaction;
 /**
  * Created by lapko on 03.10.2017.
  */
-public class MedicalFacilityDao implements CrudDao<Integer, MedicalFacilityEntity> {
+public class MedicalFacilityDao extends CrudDao<Integer, MedicalFacilityEntity> {
 
     SessionFactory sessionFactory;
+
+    public MedicalFacilityDao(SessionFactory sessionFactory) {
+        super(sessionFactory);
+    }
 
 
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -30,10 +34,6 @@ public class MedicalFacilityDao implements CrudDao<Integer, MedicalFacilityEntit
         session.close();
     }
 
-    @Override
-    public MedicalFacilityEntity read(Integer integer) {
-        return null;
-    }
 
     @Override
     public void update(MedicalFacilityEntity o) {

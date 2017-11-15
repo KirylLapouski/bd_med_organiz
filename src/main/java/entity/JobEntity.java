@@ -18,6 +18,7 @@ public class JobEntity {
     private String rate;
     private String typeOfWork;
 
+
     public Date getTo() {
         return to;
     }

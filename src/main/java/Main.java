@@ -1,23 +1,25 @@
 import dao.daoImpl.*;
 import entity.*;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.metadata.ClassMetadata;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class Main {
     private static final SessionFactory ourSessionFactory;
-    private static  StaffDao staffDao;
-    private static DepartmentDao departmentDao;
-    private static HousingDao housingDao;
+
     private static MedicalFacilityDao medicalFacilityDao;
     private static AnalysisDao analysisDao;
+    private static DiseaseDao diseaseDao;
+    private static OccupiedBedsDao occupiedBedsDao;
+    private static PositionDao positionDao;
+    private static SpecialtyDao specialtyDao;
+    private static RoomDao roomDao;
     static {
         try {
             Configuration configuration = new Configuration();
@@ -34,25 +36,24 @@ public class Main {
 
     public static void main(final String[] args) throws Exception {
 
-            departmentDao = new DepartmentDao();
-            departmentDao.setSessionFactory(ourSessionFactory);
 
-            housingDao = new HousingDao();
-            housingDao.setSessionFactory(ourSessionFactory);
 
-            medicalFacilityDao = new MedicalFacilityDao();
-            medicalFacilityDao.setSessionFactory(ourSessionFactory);
+            medicalFacilityDao = new MedicalFacilityDao(ourSessionFactory);
 
             analysisDao  = new AnalysisDao(ourSessionFactory);
 
-            analysisDao.create(new AnalysisEntity("analyzzzz"));
-            AnalysisEntity analysisEntity  =  analysisDao.read(1);
+            occupiedBedsDao = new OccupiedBedsDao(ourSessionFactory);
 
-            System.out.println("asdfa");
-            System.out.println("Staff entity:" + analysisEntity.toString());
+            positionDao = new PositionDao(ourSessionFactory);
 
-            analysisDao.delete(6);
-            ourSessionFactory.close();
+            diseaseDao = new DiseaseDao(ourSessionFactory);
+            specialtyDao = new SpecialtyDao(ourSessionFactory);
+
+            roomDao = new RoomDao(ourSessionFactory);
+
+
+
+        ourSessionFactory.close();
 
     }
 }

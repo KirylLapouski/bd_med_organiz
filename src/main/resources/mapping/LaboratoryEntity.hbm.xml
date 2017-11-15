@@ -14,5 +14,18 @@
         <property name="address">
             <column name="address" sql-type="varchar" length="200" not-null="true"/>
         </property>
+        <set name="typeOfAnalysis" table="laboratory_analysis_type">
+            <key column="id_laboratory"></key>
+            <many-to-many column="id_analysis_type" class="entity.TypeOfAnalysisEntity"/>
+        </set>
+        <set name="specialization" table="laboratory_laboratory_spec">
+            <key column="id_laboratory"></key>
+            <many-to-many column="id_laboratory_spec" class="entity.LaboratorySpecEntity"/>
+        </set>
+        <map name="medicalFacility" table="hospital_laboratory">
+            <key column="id_laboratory"></key>
+            <many-to-many column="id_hospital" class="entity.MedicalFacilityEntity"/>
+            <index column=""
+        </map>
     </class>
 </hibernate-mapping>

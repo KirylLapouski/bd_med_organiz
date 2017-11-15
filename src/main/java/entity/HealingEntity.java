@@ -12,6 +12,7 @@ public class HealingEntity {
     private OccupiedBedsEntity bed;
     private StaffEntity doctor;
 
+
     public MedicalFacilityEntity getMedicalFacility() {
         return medicalFacility;
     }

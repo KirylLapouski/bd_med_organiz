@@ -8,6 +8,13 @@ public class DiseaseEntity {
     private int id;
     private String name;
 
+    public DiseaseEntity(String name) {
+        this.name = name;
+    }
+
+    public DiseaseEntity() {
+    }
+
     public int getId() {
         return id;
     }

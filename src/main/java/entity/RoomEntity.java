@@ -1,6 +1,8 @@
 package entity;
 
+
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by lapko on 10.11.2017.
@@ -10,15 +12,26 @@ public class RoomEntity {
     private int id;
     private int roomNumber;
     private Integer numberOfBeds;
-    private int idResponsibleDoctor;
-    private List<OccupiedBedsEntity> beds;
+    private DepartmentEntity department;
+    private StaffEntity ResponsibleDoctor;
+    private Set beds;
 
+    public RoomEntity() {
+    }
 
-    public List<OccupiedBedsEntity> getBeds() {
+    public RoomEntity(int roomNumber, Integer numberOfBeds, DepartmentEntity department, StaffEntity responsibleDoctor, Set beds) {
+        this.roomNumber = roomNumber;
+        this.numberOfBeds = numberOfBeds;
+        this.department = department;
+        ResponsibleDoctor = responsibleDoctor;
+        this.beds = beds;
+    }
+
+    public Set getBeds() {
         return beds;
     }
 
-    public void setBeds(List<OccupiedBedsEntity> beds) {
+    public void setBeds(Set beds) {
         this.beds = beds;
     }
 
@@ -46,12 +59,20 @@ public class RoomEntity {
         this.numberOfBeds = numberOfBeds;
     }
 
-    public int getIdResponsibleDoctor() {
-        return idResponsibleDoctor;
+    public DepartmentEntity getDepartment() {
+        return department;
     }
 
-    public void setIdResponsibleDoctor(int idResponsibleDoctor) {
-        this.idResponsibleDoctor = idResponsibleDoctor;
+    public void setDepartment(DepartmentEntity department) {
+        this.department = department;
+    }
+
+    public StaffEntity getResponsibleDoctor() {
+        return ResponsibleDoctor;
+    }
+
+    public void setResponsibleDoctor(StaffEntity responsibleDoctor) {
+        ResponsibleDoctor = responsibleDoctor;
     }
 
     @Override
@@ -63,10 +84,12 @@ public class RoomEntity {
 
         if (id != that.id) return false;
         if (roomNumber != that.roomNumber) return false;
-        if (idResponsibleDoctor != that.idResponsibleDoctor) return false;
         if (numberOfBeds != null ? !numberOfBeds.equals(that.numberOfBeds) : that.numberOfBeds != null) return false;
+        if (department != null ? !department.equals(that.department) : that.department != null) return false;
+        if (ResponsibleDoctor != null ? !ResponsibleDoctor.equals(that.ResponsibleDoctor) : that.ResponsibleDoctor != null)
+            return false;
+        return !(beds != null ? !beds.equals(that.beds) : that.beds != null);
 
-        return true;
     }
 
     @Override
@@ -74,7 +97,9 @@ public class RoomEntity {
         int result = id;
         result = 31 * result + roomNumber;
         result = 31 * result + (numberOfBeds != null ? numberOfBeds.hashCode() : 0);
-        result = 31 * result + idResponsibleDoctor;
+        result = 31 * result + (department != null ? department.hashCode() : 0);
+        result = 31 * result + (ResponsibleDoctor != null ? ResponsibleDoctor.hashCode() : 0);
+        result = 31 * result + (beds != null ? beds.hashCode() : 0);
         return result;
     }
 }

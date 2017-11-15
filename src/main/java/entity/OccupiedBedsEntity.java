@@ -12,6 +12,17 @@ public class OccupiedBedsEntity {
     private int id;
     private Date since;
     private Date to;
+    private int id_room;
+
+    public OccupiedBedsEntity(Date since, Date to, int id_room) {
+        this.since = since;
+        this.to = to;
+        this.id_room = id_room;
+    }
+
+    public OccupiedBedsEntity() {
+
+    }
 
     public int getId() {
         return id;
@@ -25,18 +36,25 @@ public class OccupiedBedsEntity {
         return since;
     }
 
-    public void setSince(Timestamp since) {
-        this.since = new Date( Integer.parseInt(since.toString()));
+    public void setSince(Date since) {
+        this.since = since;
     }
 
     public Date getTo() {
         return to;
     }
 
-    public void setTo(Timestamp to) {
-        this.to =new Date(Integer.parseInt(to.toString())) ;
+    public void setTo(Date to) {
+        this.to = to;
     }
 
+    public int getId_room() {
+        return id_room;
+    }
+
+    public void setId_room(int id_room) {
+        this.id_room = id_room;
+    }
 
     @Override
     public boolean equals(Object o) {

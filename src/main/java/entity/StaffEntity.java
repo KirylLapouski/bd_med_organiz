@@ -17,6 +17,8 @@ public class StaffEntity {
     private List<SpecialtyEntity> specializations;
     private List<Date> shedule;
 
+    public StaffEntity() {
+    }
 
     public Map<Date, JobEntity> getJobs() {
         return jobs;

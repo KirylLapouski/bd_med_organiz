@@ -17,6 +17,9 @@ public class MedicalFacilityEntity {
     private Map<Date,StaffEntity> orderForHospitalDoctor;
     private Map<HousingEntity,DepartmentEntity> departmentsLocation;
 
+    public MedicalFacilityEntity() {
+    }
+
     public List<LaboratoryEntity> getLaboratory() {
         return laboratory;
     }

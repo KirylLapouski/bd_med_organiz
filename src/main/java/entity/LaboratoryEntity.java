@@ -3,6 +3,7 @@ package entity;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by lapko on 10.11.2017.
@@ -12,10 +13,12 @@ public class LaboratoryEntity {
     private int id;
     private String name;
     private String address;
-    private List<String> specialization;
-    private List<AnalysisEntity> analysis;
+    private Set specialization;
+    private Set typeOfAnalysis;
     private Map<Date,MedicalFacilityEntity> medicalFacility;
 
+    public LaboratoryEntity() {
+    }
 
     public Map<Date, MedicalFacilityEntity> getMedicalFacility() {
         return medicalFacility;

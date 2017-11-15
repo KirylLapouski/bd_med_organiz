@@ -2,17 +2,21 @@
 <!DOCTYPE hibernate-mapping PUBLIC
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
+<hibernate-mapping default-cascade="all">
 
-    <class name="entity.OccupiedBedsEntity" table="occupied_beds" schema="" catalog="medicine">
-        <id name="id">
-            <column name="id" sql-type="int unsigned" not-null="true"/>
-        </id>
-        <property name="since">
-            <column name="since_" sql-type="datetime" not-null="true"/>
-        </property>
-        <property name="to">
-            <column name="to_" sql-type="datetime" not-null="true"/>
-        </property>
-    </class>
+<class name="entity.OccupiedBedsEntity" table="occupied_beds" schema="" catalog="medicine">
+    <id name="id">
+        <column name="id" sql-type="int unsigned" not-null="true"/>
+        <generator class="native"/>
+    </id>
+    <property name="since">
+        <column name="since_" sql-type="datetime" not-null="true"/>
+    </property>
+    <property name="to">
+        <column name="to_" sql-type="datetime" not-null="true"/>
+    </property>
+    <property name="id_room">
+        <column name="id_room" sql-type="int unsigned" not-null="true"></column>
+    </property>
+</class>
 </hibernate-mapping>

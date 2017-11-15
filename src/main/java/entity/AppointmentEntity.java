@@ -15,6 +15,9 @@ public class AppointmentEntity {
     private Date since;
     private Date to;
 
+    public AppointmentEntity() {
+    }
+
     public StaffEntity getDoctor() {
         return doctor;
     }

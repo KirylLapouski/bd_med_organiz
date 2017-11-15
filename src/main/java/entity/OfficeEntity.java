@@ -7,6 +7,22 @@ package entity;
 public class OfficeEntity {
     private int id;
     private StaffEntity doctor;
+    private DepartmentEntity department;
+    public OfficeEntity() {
+    }
+
+    public DepartmentEntity getDepartment() {
+        return department;
+    }
+
+    public OfficeEntity(StaffEntity doctor, DepartmentEntity department) {
+        this.doctor = doctor;
+        this.department = department;
+    }
+
+    public void setDepartment(DepartmentEntity department) {
+        this.department = department;
+    }
 
     public StaffEntity getDoctor() {
         return doctor;
@@ -32,12 +48,16 @@ public class OfficeEntity {
         OfficeEntity that = (OfficeEntity) o;
 
         if (id != that.id) return false;
+        if (doctor != null ? !doctor.equals(that.doctor) : that.doctor != null) return false;
+        return !(department != null ? !department.equals(that.department) : that.department != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        return id;
+        int result = id;
+        result = 31 * result + (doctor != null ? doctor.hashCode() : 0);
+        result = 31 * result + (department != null ? department.hashCode() : 0);
+        return result;
     }
 }

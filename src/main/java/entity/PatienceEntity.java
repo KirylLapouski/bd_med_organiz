@@ -16,6 +16,9 @@ public class PatienceEntity {
     private Map<Date,HealingEntity> arrival;
     private List<OperationsEntity> operationsEntities;
 
+    public PatienceEntity() {
+    }
+
     public List<OperationsEntity> getOperationsEntities() {
         return operationsEntities;
     }

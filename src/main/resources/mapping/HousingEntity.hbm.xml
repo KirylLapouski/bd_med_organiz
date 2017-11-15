@@ -14,5 +14,9 @@
         <property name="address">
             <column name="address" sql-type="varchar" length="200" not-null="true"/>
         </property>
+        <set name="departments">
+            <key column="housing_id"></key>
+            <one-to-many class="entity.DepartmentEntity"/>
+        </set>
     </class>
 </hibernate-mapping>

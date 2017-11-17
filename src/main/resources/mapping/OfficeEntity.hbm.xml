@@ -9,6 +9,6 @@
             <column name="id" sql-type="int unsigned" not-null="true"/>
         </id>
         <many-to-one name="doctor" not-null="true" column="id_responsible_doctor" class="entity.StaffEntity"/>
-        <many-to-one name="department" not-null="true" column="id_department"class="entity.DepartmentEntity"/>
+        <many-to-one name="department" not-null="true" column="id_department" class="entity.DepartmentEntity"/>
     </class>
 </hibernate-mapping>

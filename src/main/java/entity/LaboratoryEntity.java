@@ -29,24 +29,21 @@ public class LaboratoryEntity {
     }
 
 
-    public List<String> getSpecialization() {
-
+    public Set getSpecialization() {
         return specialization;
     }
 
-    public void setSpecialization(List<String> specialization) {
+    public void setSpecialization(Set specialization) {
         this.specialization = specialization;
     }
 
-    public List<AnalysisEntity> getAnalysis() {
-        return analysis;
+    public Set getTypeOfAnalysis() {
+        return typeOfAnalysis;
     }
 
-    public void setAnalysis(List<AnalysisEntity> analysis) {
-        this.analysis = analysis;
+    public void setTypeOfAnalysis(Set typeOfAnalysis) {
+        this.typeOfAnalysis = typeOfAnalysis;
     }
-
-
 
     public int getId() {
         return id;

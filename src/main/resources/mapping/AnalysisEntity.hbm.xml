@@ -7,9 +7,8 @@
     <class name="entity.AnalysisEntity" table="analysis" schema="" catalog="medicine">
         <id name="id">
             <column name="id" sql-type="int unsigned" not-null="true"/>
+            <generator class="native"/>
         </id>
-        <property name="name">
-            <column name="name" sql-type="varchar" length="100" not-null="true"/>
-        </property>
+        <many-to-one name="typeOfAnalys" column="id_type_of_analysis" class="entity.TypeOfAnalysisEntity" />
     </class>
 </hibernate-mapping>

@@ -184,19 +184,28 @@ CREATE TABLE laboratory_laboratory_spec(
     FOREIGN KEY(id_laboratory_spec) REFERENCES laboratory_spec(id)
 );
 
-CREATE TABLE analysis (
-	id INT unsigned not null auto_increment,
-	name VARCHAR(100) not null,
-	CONSTRAINT pk_analysis PRIMARY KEY(id)
+
+CREATE TABLE type_of_analysis(
+    id int unsigned not null auto_increment,
+    name VARCHAR(100) not null,
+
+    PRIMARY KEY(id)
 );
 
+CREATE TABLE analysis (
+	id INT unsigned not null auto_increment,
+    id_type_of_analysis INT unsigned not null,
+
+    CONSTRAINT fk_analysis_id_type_of_analysis FOREIGN KEY(id_type_of_analysis) REFERENCES type_of_analysis(id),
+	CONSTRAINT pk_analysis PRIMARY KEY(id)
+);
 CREATE TABLE laboratory_analysis_type (
 	id_laboratory INT unsigned not null,
 	id_analysis_type INT unsigned not null,
 	
 	CONSTRAINT fk_analysis FOREIGN KEY(id_analysis_type) REFERENCES type_of_analysis(id),
 	CONSTRAINT fk_laboratory FOREIGN KEY(id_laboratory) REFERENCES laboratory(id),
-	CONSTRAINT pk_laboratory_analysis PRIMARY KEY(id_laboratory, id_analysis)
+	CONSTRAINT pk_laboratory_analysis PRIMARY KEY(id_laboratory, id_analysis_type)
 );
 
 CREATE TABLE hospital_laboratory (
@@ -221,7 +230,7 @@ CREATE TABLE orderly_for_hospital_doctor (
 );
 
 CREATE TABLE patience (
-    id INT unsigned NOT NULL,
+    id INT unsigned NOT NULL auto_increment,
 	FIO varchar(100) not null,
     
     primary key(id)
@@ -293,12 +302,7 @@ CREATE TABLE operations(
     FOREIGN KEY(id_disease) references disease(id),
     PRIMARY KEY(id_staff,id_patience,id_disease,since_)
 );
-CREATE TABLE type_of_analysis{
-    id int unsigned not null auto_increment,
-    name VARCHAR(100) not null,
 
-    PRIMARY KEY(id)
-}
 /* Кабинеты в поликлинике*/
 INSERT INTO staff(FIO)
                         VALUES("Титова Галина Вячеславовна"),
@@ -378,3 +382,10 @@ INSERT INTO staff_specialization(id_staff,id_specialty,is_Doctor,salary)
 INSERT INTO staff_shedule(staff_id, since_,to_) 
                         VALUES (1,"2017-01-01 12:00:00","2018-01-01 12:00:00"),
                                 (2,"2017-01-01 12:00:00","2018-01-01 12:00:00");
+INSERT INTO type_of_analysis(name)
+                        VALUES ("type1"),
+                                ("type2");
+INSERT INTO analysis(type_of_analysis)
+                        VALUES (1),
+                                (2),
+                                (2);

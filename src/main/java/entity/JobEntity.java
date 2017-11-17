@@ -14,10 +14,20 @@ public class JobEntity {
     private DepartmentEntity department;
     private OfficeEntity office;
     private Date to;
-
+    private Date since;
     private String rate;
     private String typeOfWork;
 
+    public JobEntity(MedicalFacilityEntity medicalFacility, PositionEntity position, DepartmentEntity department, OfficeEntity office, Date to, Date since, String rate, String typeOfWork) {
+        this.medicalFacility = medicalFacility;
+        this.position = position;
+        this.department = department;
+        this.office = office;
+        this.to = to;
+        this.since = since;
+        this.rate = rate;
+        this.typeOfWork = typeOfWork;
+    }
 
     public Date getTo() {
         return to;
@@ -78,12 +88,15 @@ public class JobEntity {
     public JobEntity() {
     }
 
-    public JobEntity(MedicalFacilityEntity medicalFacility, PositionEntity position, DepartmentEntity department, String rate, String typeOfWork) {
+    public Date getSince() {
+        return since;
+    }
 
-        this.medicalFacility = medicalFacility;
-        this.position = position;
-        this.department = department;
-        this.rate = rate;
-        this.typeOfWork = typeOfWork;
+    public void setSince(Date since) {
+        this.since = since;
+    }
+
+    public void setTo(Date to) {
+        this.to = to;
     }
 }

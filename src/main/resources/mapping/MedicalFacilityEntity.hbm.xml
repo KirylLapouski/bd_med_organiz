@@ -17,5 +17,6 @@
         <property name="medicalFacilityType">
             <column name="medical_facility_type" sql-type="enum" length="12" not-null="true"/>
         </property>
+
     </class>
 </hibernate-mapping>

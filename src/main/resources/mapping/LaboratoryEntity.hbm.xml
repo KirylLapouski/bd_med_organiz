@@ -22,10 +22,5 @@
             <key column="id_laboratory"></key>
             <many-to-many column="id_laboratory_spec" class="entity.LaboratorySpecEntity"/>
         </set>
-        <map name="medicalFacility" table="hospital_laboratory">
-            <key column="id_laboratory"></key>
-            <many-to-many column="id_hospital" class="entity.MedicalFacilityEntity"/>
-            <index column=""
-        </map>
     </class>
 </hibernate-mapping>

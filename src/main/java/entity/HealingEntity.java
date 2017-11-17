@@ -9,9 +9,21 @@ import java.util.Date;
 public class HealingEntity {
     private MedicalFacilityEntity medicalFacility;
     private Date to;
+    private Date since;
     private OccupiedBedsEntity bed;
     private StaffEntity doctor;
 
+    public void setTo(Date to) {
+        this.to = to;
+    }
+
+    public Date getSince() {
+        return since;
+    }
+
+    public void setSince(Date since) {
+        this.since = since;
+    }
 
     public MedicalFacilityEntity getMedicalFacility() {
         return medicalFacility;

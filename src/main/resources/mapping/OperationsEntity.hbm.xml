@@ -6,7 +6,7 @@
 
     <class name="entity.OperationsEntity" table="operations" schema="" catalog="medicine">
         <composite-id mapped="true" class="entity.primaryKey.OperationsEntityPK">
-            <key-property name="idStaff">
+            <key-property name="doctor">
                 <column name="id_staff" sql-type="int unsigned" not-null="true"/>
             </key-property>
             <key-property name="idPatience">

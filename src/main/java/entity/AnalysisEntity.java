@@ -6,14 +6,21 @@ package entity;
 //DONE
 public class AnalysisEntity {
     private int id;
-    private String name;
+    TypeOfAnalysisEntity typeOfAnalys;
 
-    public AnalysisEntity( String name) {
-
-        this.name = name;
+    public AnalysisEntity( TypeOfAnalysisEntity typeOfAnalys) {
+        this.typeOfAnalys = typeOfAnalys;
     }
 
     public AnalysisEntity() {
+    }
+
+    public TypeOfAnalysisEntity getTypeOfAnalys() {
+        return typeOfAnalys;
+    }
+
+    public void setTypeOfAnalys(TypeOfAnalysisEntity typeOfAnalys) {
+        this.typeOfAnalys = typeOfAnalys;
     }
 
     public int getId() {
@@ -24,13 +31,6 @@ public class AnalysisEntity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -40,15 +40,14 @@ public class AnalysisEntity {
         AnalysisEntity that = (AnalysisEntity) o;
 
         if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return !(typeOfAnalys != null ? !typeOfAnalys.equals(that.typeOfAnalys) : that.typeOfAnalys != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (typeOfAnalys != null ? typeOfAnalys.hashCode() : 0);
         return result;
     }
 }

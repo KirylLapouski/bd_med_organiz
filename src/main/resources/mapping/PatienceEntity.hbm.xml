@@ -11,5 +11,13 @@
         <property name="fio">
             <column name="FIO" sql-type="varchar" length="100" not-null="true"/>
         </property>
+        <set name="analysis" table="patience_analysis">
+            <key column="id_patience"></key>
+            <one-to-many class="entity.AnalysisEntity"/>
+        </set>
+        <set name="disease" table="patience_analysis">
+            <key column="id_patience"></key>
+            <many-to-many column="id_analysis" class="entity.DiseaseEntity"/>
+        </set>
     </class>
 </hibernate-mapping>

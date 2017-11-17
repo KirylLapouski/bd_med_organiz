@@ -3,6 +3,7 @@ package entity;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by lapko on 10.11.2017.
@@ -15,7 +16,7 @@ public class MedicalFacilityEntity {
     private String medicalFacilityType;
     private MedicalFacilityEntity superior_hospital;
     private Map<Date,StaffEntity> orderForHospitalDoctor;
-    private Map<HousingEntity,DepartmentEntity> departmentsLocation;
+    private Set housing;
 
     public MedicalFacilityEntity() {
     }
@@ -30,12 +31,12 @@ public class MedicalFacilityEntity {
 
     private List<LaboratoryEntity> laboratory;
 
-    public Map<HousingEntity, DepartmentEntity> getDepartmentsLocation() {
-        return departmentsLocation;
+    public Set getHousing() {
+        return housing;
     }
 
-    public void setDepartmentsLocation(Map<HousingEntity, DepartmentEntity> departmentsLocation) {
-        this.departmentsLocation = departmentsLocation;
+    public void setHousing(Set housing) {
+        this.housing = housing;
     }
 
     public MedicalFacilityEntity getSuperior_hospital() {

@@ -1,5 +1,13 @@
 package entity;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,47 +18,28 @@ import java.util.Set;
  */
 //DONE
 public class StaffEntity {
-    private int id;
+    private Integer id;
     private String fio;
-    private Set jobs;//!!!!!!!!!!!!!!!!!
-    //!!!!!!!!!!!
+
     //FOR SpecialEntity take fields from staff_specialization
-    private List<SpecialtyEntity> specializations;
-    private List<Date> shedule;
+    private Set specializations; //SpecialtyEntity
+    private Set shedule;//DAte
+
+    //JAVA FX
+    private IntegerProperty id_fx = new SimpleIntegerProperty();
+    private  StringProperty fio_fx = new SimpleStringProperty();
+
 
     public StaffEntity() {
     }
 
-    public Set getJobs() {
-        return jobs;
-    }
-
-    public void setJobs(Set jobs) {
-        this.jobs = jobs;
-    }
-
-    public List<SpecialtyEntity> getSpecializations() {
-        return specializations;
-    }
-
-    public void setSpecializations(List<SpecialtyEntity> specializations) {
-        this.specializations = specializations;
-    }
-
-    public List<Date> getShedule() {
-        return shedule;
-    }
-
-    public void setShedule(List<Date> shedule) {
-        this.shedule = shedule;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+        this.id_fx.setValue(id);
     }
 
     public String getFio() {
@@ -59,6 +48,37 @@ public class StaffEntity {
 
     public void setFio(String fio) {
         this.fio = fio;
+        this.fio_fx.setValue(fio);
+    }
+
+    public void setSpecializations(Set specializations) {
+        this.specializations = specializations;
+    }
+
+    public Set getShedule() {
+        return shedule;
+    }
+
+    public void setShedule(Set shedule) {
+        this.shedule = shedule;
+    }
+
+    public IntegerProperty id_fxProperty() {
+        return id_fx;
+    }
+
+
+
+    public StringProperty fio_fxProperty() {
+        return fio_fx;
+    }
+
+
+
+
+
+    public Set getSpecializations() {
+        return specializations;
     }
 
     @Override
@@ -68,16 +88,24 @@ public class StaffEntity {
 
         StaffEntity that = (StaffEntity) o;
 
-        if (id != that.id) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (fio != null ? !fio.equals(that.fio) : that.fio != null) return false;
+        if (specializations != null ? !specializations.equals(that.specializations) : that.specializations != null)
+            return false;
+        if (shedule != null ? !shedule.equals(that.shedule) : that.shedule != null) return false;
+        if (id_fx != null ? !id_fx.equals(that.id_fx) : that.id_fx != null) return false;
+        return !(fio_fx != null ? !fio_fx.equals(that.fio_fx) : that.fio_fx != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (fio != null ? fio.hashCode() : 0);
+        result = 31 * result + (specializations != null ? specializations.hashCode() : 0);
+        result = 31 * result + (shedule != null ? shedule.hashCode() : 0);
+        result = 31 * result + (id_fx != null ? id_fx.hashCode() : 0);
+        result = 31 * result + (fio_fx != null ? fio_fx.hashCode() : 0);
         return result;
     }
 }

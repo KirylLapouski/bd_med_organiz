@@ -1,3 +1,5 @@
+package main;
+
 import dao.daoImpl.*;
 import entity.StaffEntity;
 import javafx.application.Application;
@@ -13,7 +15,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.io.File;
 import java.io.IOException;
 
 public class Main extends Application {
@@ -91,7 +92,7 @@ public class Main extends Application {
     public  void initRootLayout(){
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("view/rootLayout.fxml"));
+            loader.setLocation(Main.class.getResource("/view/rootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
 
             Scene scene = new Scene(rootLayout);

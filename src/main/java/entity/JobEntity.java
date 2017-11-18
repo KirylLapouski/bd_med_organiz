@@ -13,6 +13,7 @@ public class JobEntity {
     private PositionEntity position;
     private DepartmentEntity department;
     private OfficeEntity office;
+    private StaffEntity staff;
     private Date to;
     private Date since;
     private String rate;
@@ -27,6 +28,14 @@ public class JobEntity {
         this.since = since;
         this.rate = rate;
         this.typeOfWork = typeOfWork;
+    }
+
+    public StaffEntity getStaff() {
+        return staff;
+    }
+
+    public void setStaff(StaffEntity staff) {
+        this.staff = staff;
     }
 
     public Date getTo() {

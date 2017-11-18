@@ -11,5 +11,13 @@
         <property name="fio">
             <column name="FIO" sql-type="varchar" length="100" not-null="true"/>
         </property>
+       <set name="specializations" table="staff_specialization">
+           <key column="id_staff"></key>
+           <many-to-many class="entity.SpecialtyEntity" column="id_specialty"/>
+       </set>
+        <composite-element class="entity.util.TimeInterval">
+            <property name="since" column="since_"/>
+            <property name="to" column="to_"/>
+        </composite-element>
     </class>
 </hibernate-mapping>

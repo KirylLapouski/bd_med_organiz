@@ -69,17 +69,18 @@ CREATE TABLE department_specialization (
 CREATE TABLE specialty (
     id  INT unsigned not null auto_increment,
     name VARCHAR(100) not null,
-
+    is_Doctor BOOLEAN not null DEFAULT false,
+    salary FLOAT not null,
+    degree ENUM('Кандидат медицинских наук','Доктор медицинских наук') DEFAULT null,
+    grade ENUM('Доцент','Профессор') DEFAULT null,
+    
     CONSTRAINT pk_specialty PRIMARY KEY (id)
 );
 
 CREATE TABLE staff_specialization (
     id_staff int unsigned not null,
     id_specialty INT unsigned not null,
-    is_Doctor BOOLEAN not null DEFAULT false,
-    salary FLOAT not null,
-    degree ENUM('Кандидат медицинских наук','Доктор медицинских наук') DEFAULT null,
-    grade ENUM('Доцент','Профессор') DEFAULT null,
+   
 
 	CONSTRAINT fk_staff FOREIGN KEY(id_staff) REFERENCES staff(id),
 	CONSTRAINT fk_specialty FOREIGN KEY(id_specialty) REFERENCES specialty(id),
@@ -377,8 +378,8 @@ INSERT INTO place_of_work(id_staff,id_medical_facility,id_position,id_department
                             (2,1,2,3,1),
                             (4,1,2,2,1),
                             (5,1,2,2,1);
-INSERT INTO staff_specialization(id_staff,id_specialty,is_Doctor,salary) 
-                        VALUES(1,1,true,99.99);
+INSERT INTO staff_specialization(id_staff,id_specialty,is_Doctor,salary,degree) 
+                        VALUES(1,1,true,99.99,'Кандидат медицинских наук');
 INSERT INTO staff_shedule(staff_id, since_,to_) 
                         VALUES (1,"2017-01-01 12:00:00","2018-01-01 12:00:00"),
                                 (2,"2017-01-01 12:00:00","2018-01-01 12:00:00");

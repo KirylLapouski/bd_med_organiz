@@ -13,13 +13,13 @@ public class SpecialtyEntity {
     private String name;
     private Boolean isDoctor;
     private float salary;
-    private Degree degree;
-    private Grade grade;
+    private String degree;
+    private String grade;
 
     public SpecialtyEntity() {
     }
 
-    public SpecialtyEntity(String name, Boolean isDoctor, float salary, Degree degree, Grade grade) {
+    public SpecialtyEntity(String name, Boolean isDoctor, float salary, String degree, String grade) {
         this.name = name;
         this.isDoctor = isDoctor;
         this.salary = salary;
@@ -35,19 +35,19 @@ public class SpecialtyEntity {
         this.salary = salary;
     }
 
-    public Degree getDegree() {
+    public String getDegree() {
         return degree;
     }
 
-    public void setDegree(Degree degree) {
+    public void setDegree(String degree) {
         this.degree = degree;
     }
 
-    public Grade getGrade() {
+    public String getGrade() {
         return grade;
     }
 
-    public void setGrade(Grade grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
     }
 
@@ -94,5 +94,17 @@ public class SpecialtyEntity {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "SpecialtyEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", isDoctor=" + isDoctor +
+                ", salary=" + salary +
+                ", degree=" + degree +
+                ", grade=" + grade +
+                '}';
     }
 }

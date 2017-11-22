@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
+<hibernate-mapping default-cascade="all">
 
     <class name="entity.SpecialtyEntity" table="specialty" schema="" catalog="medicine">
         <id name="id">
@@ -11,5 +11,9 @@
         <property name="name">
             <column name="name" sql-type="varchar" length="100" not-null="true"/>
         </property>
+        <property name="isDoctor" column="is_Doctor"/>
+        <property name="degree" column="degree"/>
+        <property name="grade" column="grade"/>
+        <property name="salary" column="salary"/>
     </class>
 </hibernate-mapping>

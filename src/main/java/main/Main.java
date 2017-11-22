@@ -1,6 +1,9 @@
 package main;
 
+import FX.StaffController;
+import FX.StaffEditDialogController;
 import dao.daoImpl.*;
+import entity.SpecialtyEntity;
 import entity.StaffEntity;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -9,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -16,6 +20,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Main extends Application {
     private static final SessionFactory ourSessionFactory;
@@ -27,15 +33,15 @@ public class Main extends Application {
     private static PositionDao positionDao;
     private static SpecialtyDao specialtyDao;
     private static RoomDao roomDao;
+    private static StaffDao staffDao;
     private static TypeOfAnalysisDao typeOfAnalysisDao;
 
     private Stage stage;
     private BorderPane rootLayout;
 
-    private ObservableList<StaffEntity> staff = FXCollections.observableArrayList();
 
-    public ObservableList<StaffEntity> getStaff() {
-        return staff;
+    public Stage getStage() {
+        return stage;
     }
 
     static {
@@ -56,23 +62,13 @@ public class Main extends Application {
     }
 
     public static void main(final String[] args) throws Exception {
+
+
+
             //JAVAFX
             launch(args);
             //JAVAFX ends
 
-            medicalFacilityDao = new MedicalFacilityDao(ourSessionFactory);
-
-            analysisDao  = new AnalysisDao(ourSessionFactory);
-
-            occupiedBedsDao = new OccupiedBedsDao(ourSessionFactory);
-
-            positionDao = new PositionDao(ourSessionFactory);
-
-            diseaseDao = new DiseaseDao(ourSessionFactory);
-            specialtyDao = new SpecialtyDao(ourSessionFactory);
-
-            roomDao = new RoomDao(ourSessionFactory);
-            typeOfAnalysisDao  = new TypeOfAnalysisDao(ourSessionFactory);
 
 
         ourSessionFactory.close();
@@ -114,12 +110,18 @@ public class Main extends Application {
             anchorPane.setMaxWidth(Double.MAX_VALUE);
             rootLayout.setCenter(anchorPane);
 
+            StaffController staffController  = loader.getController();
+            staffController.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public Stage getPrimaryStage() {
         return stage;
+    }
+
+    public static SessionFactory getOurSessionFactory() {
+        return ourSessionFactory;
     }
 
 

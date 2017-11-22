@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
+<hibernate-mapping default-cascade="all">
 
     <class name="entity.StaffEntity" table="staff" schema="" catalog="medicine">
         <id name="id">
@@ -11,13 +11,18 @@
         <property name="fio">
             <column name="FIO" sql-type="varchar" length="100" not-null="true"/>
         </property>
-       <set name="specializations" table="staff_specialization">
+       <set name="specializations" table="staff_specialization"  >
            <key column="id_staff"></key>
            <many-to-many class="entity.SpecialtyEntity" column="id_specialty"/>
+
        </set>
-        <composite-element class="entity.util.TimeInterval">
-            <property name="since" column="since_"/>
-            <property name="to" column="to_"/>
+        <set name="shedule" table="staff_shedule">
+            <key column="staff_id"></key>
+            <composite-element class="entity.util.TimeInterval" >
+                <property name="since" column="since_"/>
+                <property name="to" column="to_"/>
         </composite-element>
+        </set>
+
     </class>
 </hibernate-mapping>

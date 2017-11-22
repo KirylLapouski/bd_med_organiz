@@ -81,6 +81,12 @@ public class StaffEntity {
         return specializations;
     }
 
+    public boolean isEmpty(){
+        if(this.id == 0){
+            return true;
+        }
+        return false;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

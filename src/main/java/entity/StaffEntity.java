@@ -25,9 +25,6 @@ public class StaffEntity {
     private Set specializations; //SpecialtyEntity
     private Set shedule;//DAte
 
-    //JAVA FX
-    private IntegerProperty id_fx = new SimpleIntegerProperty();
-    private  StringProperty fio_fx = new SimpleStringProperty();
 
 
     public StaffEntity() {
@@ -39,7 +36,6 @@ public class StaffEntity {
 
     public void setId(Integer id) {
         this.id = id;
-        this.id_fx.setValue(id);
     }
 
     public String getFio() {
@@ -48,7 +44,6 @@ public class StaffEntity {
 
     public void setFio(String fio) {
         this.fio = fio;
-        this.fio_fx.setValue(fio);
     }
 
     public void setSpecializations(Set specializations) {
@@ -63,15 +58,9 @@ public class StaffEntity {
         this.shedule = shedule;
     }
 
-    public IntegerProperty id_fxProperty() {
-        return id_fx;
-    }
 
 
 
-    public StringProperty fio_fxProperty() {
-        return fio_fx;
-    }
 
 
 
@@ -87,6 +76,7 @@ public class StaffEntity {
         }
         return false;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,9 +88,7 @@ public class StaffEntity {
         if (fio != null ? !fio.equals(that.fio) : that.fio != null) return false;
         if (specializations != null ? !specializations.equals(that.specializations) : that.specializations != null)
             return false;
-        if (shedule != null ? !shedule.equals(that.shedule) : that.shedule != null) return false;
-        if (id_fx != null ? !id_fx.equals(that.id_fx) : that.id_fx != null) return false;
-        return !(fio_fx != null ? !fio_fx.equals(that.fio_fx) : that.fio_fx != null);
+        return !(shedule != null ? !shedule.equals(that.shedule) : that.shedule != null);
 
     }
 
@@ -110,8 +98,6 @@ public class StaffEntity {
         result = 31 * result + (fio != null ? fio.hashCode() : 0);
         result = 31 * result + (specializations != null ? specializations.hashCode() : 0);
         result = 31 * result + (shedule != null ? shedule.hashCode() : 0);
-        result = 31 * result + (id_fx != null ? id_fx.hashCode() : 0);
-        result = 31 * result + (fio_fx != null ? fio_fx.hashCode() : 0);
         return result;
     }
 }

@@ -1,5 +1,6 @@
 package main;
 
+import FX.RootController;
 import FX.StaffController;
 import FX.StaffEditDialogController;
 import dao.daoImpl.*;
@@ -40,8 +41,8 @@ public class Main extends Application {
     private BorderPane rootLayout;
 
 
-    public Stage getStage() {
-        return stage;
+    public BorderPane getRootLayout() {
+        return rootLayout;
     }
 
     static {
@@ -95,6 +96,8 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.show();
 
+            RootController rootController = loader.getController();
+            rootController.setMain(this);
         } catch (IOException e) {
             e.printStackTrace();
         }

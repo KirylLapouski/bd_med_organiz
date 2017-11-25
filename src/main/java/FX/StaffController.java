@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,9 +30,9 @@ public class StaffController {
     StaffDao staffDao;
 
     @FXML
-    private TableView<StaffEntity> personTable;
+    private TableView<StaffEntity> personTable = new TableView<StaffEntity>();
     @FXML
-    private TableColumn<StaffEntity, Integer> idColumn;
+    private TableColumn<StaffEntity, String> idColumn;
     @FXML
     private TableColumn<StaffEntity, String> lastNameColumn;
 
@@ -57,13 +58,12 @@ public class StaffController {
     @FXML
     private void initialize() {
         // Инициализация таблицы адресатов с двумя столбцами.
-        idColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().id_fxProperty().getValue()));
-        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().fio_fxProperty());
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
+
 
         showStaffDetails(null);
-
-        personTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> showStaffDetails(newValue)));
-
+        personTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showStaffDetails(newValue));
     }
 
     private void showStaffDetails(StaffEntity staffEntity){
@@ -91,6 +91,7 @@ public class StaffController {
 
        staffDao  = new StaffDao(mainApp.getOurSessionFactory());
        staff.addAll(staffDao.list());
+        personTable.setItems(staff);
     }
 
     @FXML
@@ -116,7 +117,7 @@ public class StaffController {
     @FXML
     private void handleNewStaff() {
         StaffEntity tempPerson = new StaffEntity();
-        tempPerson.setId(0);
+        tempPerson.setId(staff.get(staff.size()-1).getId()+1);
         tempPerson.setFio("FirstName LastName ThirdName");
         boolean okClicked = showPersonEditDialog(tempPerson);
         if (okClicked) {
@@ -170,7 +171,7 @@ public class StaffController {
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Edit Person");
             dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(mainApp.getStage());
+            dialogStage.initOwner(mainApp.getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 

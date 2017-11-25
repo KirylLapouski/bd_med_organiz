@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -31,5 +32,17 @@ public class AnalysisDao extends CrudDao<Integer, AnalysisEntity>{
             query.executeUpdate();
 
         transaction.commit();
+    }
+
+    public List list(){
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+
+        transaction= session.beginTransaction();
+
+        List staffEntity =  session.createQuery("FROM AnalysisEntity").list();
+        transaction.commit();
+
+        return staffEntity;
     }
 }

@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS medicine;
 CREATE DATABASE medicine;
 /* beds instead of occupited_beds ??*/
 /* patiente after bed*/
+/*Добавить анализ*/
 use medicine;
 CREATE TABLE staff (
     id int unsigned not null auto_increment,

@@ -8,6 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 /**
  * Created by lapko on 16.11.2017.
  */
@@ -28,5 +30,10 @@ public class LaboratoryDao extends CrudDao<Integer, LaboratoryEntity> {
         query.executeUpdate();
 
         transaction.commit();
+    }
+
+    @Override
+    public List list() {
+        return null;
     }
 }

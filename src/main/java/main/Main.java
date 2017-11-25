@@ -98,6 +98,7 @@ public class Main extends Application {
 
             RootController rootController = loader.getController();
             rootController.setMain(this);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -114,7 +115,9 @@ public class Main extends Application {
             rootLayout.setCenter(anchorPane);
 
             StaffController staffController  = loader.getController();
+
             staffController.setMainApp(this);
+            RootController.setStaffController(staffController);
         } catch (IOException e) {
             e.printStackTrace();
         }

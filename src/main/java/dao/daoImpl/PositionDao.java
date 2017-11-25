@@ -10,6 +10,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 /**
  * Created by lapko on 13.11.2017.
  */
@@ -34,5 +36,10 @@ public class PositionDao extends CrudDao<Integer, PositionEntity> {
         query.executeUpdate();
 
         transaction.commit();
+    }
+
+    @Override
+    public List list() {
+        return null;
     }
 }

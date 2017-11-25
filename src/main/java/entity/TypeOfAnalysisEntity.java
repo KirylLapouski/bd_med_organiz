@@ -29,4 +29,5 @@ public class TypeOfAnalysisEntity {
     public void setName(String name) {
         this.name = name;
     }
+
 }

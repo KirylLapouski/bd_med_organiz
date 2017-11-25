@@ -6,6 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 /**
  * Created by lapko on 03.10.2017.
  */
@@ -43,5 +45,10 @@ public class MedicalFacilityDao extends CrudDao<Integer, MedicalFacilityEntity> 
     @Override
     public void delete(Integer integer) {
 
+    }
+
+    @Override
+    public List list() {
+        return null;
     }
 }

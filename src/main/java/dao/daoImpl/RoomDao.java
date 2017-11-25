@@ -8,6 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 /**
  * Created by lapko on 15.11.2017.
  */
@@ -28,5 +30,10 @@ public class RoomDao extends CrudDao<Integer, RoomEntity> {
         query.executeUpdate();
 
         transaction.commit();
+    }
+
+    @Override
+    public List list() {
+        return null;
     }
 }

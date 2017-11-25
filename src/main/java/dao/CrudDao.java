@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.io.Serializable;
+import java.util.List;
 
 public abstract class CrudDao <ID, T> {
     protected SessionFactory sessionFactory;
@@ -15,31 +16,34 @@ public abstract class CrudDao <ID, T> {
         this.sessionFactory = sessionFactory;
     }
 
-    public CrudDao(SessionFactory sessionFactory){
+    public CrudDao(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-    public  void create(T o){
+
+    public void create(T o) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
 
-        transaction= session.beginTransaction();
+        transaction = session.beginTransaction();
 
         session.save(o);
         transaction.commit();
     }
-    public T read(ID id, Class classToRead){
+
+    public T read(ID id, Class classToRead) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
 
-        transaction= session.beginTransaction();
+        transaction = session.beginTransaction();
 
-        T occupiedBedsEntity= (T) session.load(classToRead, Integer.parseInt(id.toString()));
+        T occupiedBedsEntity = (T) session.load(classToRead, Integer.parseInt(id.toString()));
         transaction.commit();
         return occupiedBedsEntity;
     }
-    public void update(T o){
+
+    public void update(T o) {
         Session session = sessionFactory.openSession();
-        Transaction transaction= null;
+        Transaction transaction = null;
 
         transaction = session.beginTransaction();
 
@@ -47,5 +51,8 @@ public abstract class CrudDao <ID, T> {
 
         transaction.commit();
     }
+
     public abstract void delete(ID id);
+
+    public abstract List list();
 }

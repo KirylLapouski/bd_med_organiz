@@ -1,38 +1,51 @@
 package FX;
 
+import dao.daoImpl.TypeOfAnalysisDao;
+import entity.AnalysisEntity;
 import entity.StaffEntity;
+import entity.TypeOfAnalysisEntity;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import main.Main;
 
 /**
  * Created by lapko on 22.11.2017.
  */
 public class StaffEditDialogController {
     @FXML
-    private TextField firstNameField;
+    private TextField firstField;
     @FXML
-    private TextField lastNameField;
+    private TextField lastField;
     @FXML
-    private TextField thirdNameField;
-
+    private TextField thirdField;
+    @FXML
+    private Label firstLabel;
+    @FXML
+    private Label secondLabel;
+    @FXML
+    private Label thirdLabel;
 
 
     private Stage dialogStage;
-    private StaffEntity staffEntity;
+    private Object entity;
     private boolean okClicked = false;
 
     /**
-     * Инициализирует класс-контроллер. Этот метод вызывается автоматически
-     * после того, как fxml-файл будет загружен.
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     * пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ fxml-пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
      */
     @FXML
     private void initialize() {
+        firstField= new TextField();
+        lastField = new TextField();
+        thirdField = new TextField();
     }
 
     /**
-     * Устанавливает сцену для этого окна.
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
      *
      * @param dialogStage
      */
@@ -41,17 +54,26 @@ public class StaffEditDialogController {
     }
 
 
-    public void setStaff(StaffEntity staff) {
-        this.staffEntity = staff;
+    public void setStaff(Object staff) {
+        Class  classs= staff.getClass();
+        this.entity = staff;
 
-            firstNameField.setText(staffEntity.getFio().split(" ")[0]);
-            lastNameField.setText(staffEntity.getFio().split(" ")[1]);
-            thirdNameField.setText(staffEntity.getFio().split(" ")[2]);
+        if(entity instanceof StaffEntity){
+            /*firstField.setText(entity.getFio().split(" ")[0]);
+            lastField.setText(entity.getFio().split(" ")[1]);
+            thirdField.setText(entity.getFio().split(" ")[2]);*/
+
+            setLabeksText("First name","Last name","Patronymic");
+        }else if(entity instanceof AnalysisEntity){
+            setLabeksText("ID type of analysis","","");
+        }
+
+
 
     }
 
     /**
-     * Returns true, если пользователь кликнул OK, в другом случае false.
+     * Returns true, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ OK, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ false.
      *
      * @return
      */
@@ -60,12 +82,19 @@ public class StaffEditDialogController {
     }
 
     /**
-     * Вызывается, когда пользователь кликнул по кнопке OK.
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ OK.
      */
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            staffEntity.setFio(firstNameField.getText() + " " + lastNameField.getText() + " " + thirdNameField.getText());
+            if(entity instanceof StaffEntity) {
+                StaffEntity staffEntity = StaffEntity.class.cast(entity);
+                staffEntity.setFio(firstField.getText() + " " + lastField.getText() + " " + thirdField.getText());
+            }else if(entity instanceof AnalysisEntity){
+                AnalysisEntity analysisEntity = AnalysisEntity.class.cast(entity);
+                TypeOfAnalysisDao typeOfAnalysisDao = new TypeOfAnalysisDao(Main.getOurSessionFactory());
+                analysisEntity.setTypeOfAnalys(typeOfAnalysisDao.read(Integer.valueOf(firstField.getText()),TypeOfAnalysisEntity.class));
+            }
 
             okClicked = true;
             dialogStage.close();
@@ -73,7 +102,7 @@ public class StaffEditDialogController {
     }
 
     /**
-     * Вызывается, когда пользователь кликнул по кнопке Cancel.
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ Cancel.
      */
     @FXML
     private void handleCancel() {
@@ -81,29 +110,27 @@ public class StaffEditDialogController {
     }
 
     /**
-     * Проверяет пользовательский ввод в текстовых полях.
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
      *
-     * @return true, если пользовательский ввод корректен
+     * @return true, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
      */
     private boolean isInputValid() {
         String errorMessage = "";
 
-        if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
-            errorMessage += "No valid first name!\n";
-        }
-        if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
-            errorMessage += "No valid last name!\n";
-        }
-        if (thirdNameField.getText() == null || thirdNameField.getText().length() == 0) {
-            errorMessage += "No valid street!\n";
-        }
+        if (firstField.disableProperty().getValue() == false && (firstField.getText() == null || firstField.getText().length() == 0))
+            errorMessage += "No valid first field!\n";
 
+        if (lastField.disableProperty().getValue() ==false && (lastField.getText() == null || lastField.getText().length() == 0))
+            errorMessage += "No valid second field!\n";
+
+        if (thirdField.disableProperty().getValue()==false && (thirdField.getText() == null || thirdField.getText().length() == 0))
+            errorMessage += "No valid third field!\n";
 
 
         if (errorMessage.length() == 0) {
             return true;
         } else {
-            // Показываем сообщение об ошибке.
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(dialogStage);
             alert.setTitle("Invalid Fields");
@@ -113,6 +140,24 @@ public class StaffEditDialogController {
             alert.showAndWait();
 
             return false;
+        }
+    }
+
+    private void setLabeksText(String first,String second,String third) {
+        firstLabel.setText(first);
+        secondLabel.setText(second);
+        thirdLabel.setText(third);
+        if(first.isEmpty()){
+            firstField.setVisible(false);
+            firstField.disableProperty().setValue(true);
+        }
+        if(second.isEmpty()){
+            lastField.setVisible(false);
+            lastField.disableProperty().setValue(true);
+        }
+        if(third.isEmpty()){
+            thirdField.setVisible(false);
+            lastField.disableProperty().setValue(true);
         }
     }
 }

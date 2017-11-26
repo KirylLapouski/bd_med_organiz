@@ -67,7 +67,7 @@ public class StaffController {
     // Ссылка на главное приложение.
     private CrudDao dao;
     private Main mainApp;
-
+    private Class classs;
     private static ObservableList<Object> staff = FXCollections.observableArrayList();
 
 
@@ -84,7 +84,7 @@ public class StaffController {
 
 
         showStaffDetails(null);
-        personTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showStaffDetails((StaffEntity) newValue));
+        personTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showStaffDetails(newValue));
     }
 
 
@@ -141,12 +141,14 @@ public class StaffController {
      */
     @FXML
     private void handleEditStaff() {
-        StaffEntity selectedStaff = (StaffEntity) personTable.getSelectionModel().getSelectedItem();
+        Class classs = staff.get(1).getClass();
+        Object selectedStaff = null;
+        selectedStaff = classs.cast(personTable.getSelectionModel().getSelectedItem());
         if (selectedStaff != null) {
             boolean okClicked = showPersonEditDialog(selectedStaff);
             if (okClicked) {
                 showStaffDetails(selectedStaff);
-                dao.update(selectedStaff);
+                dao.update(classs.cast(selectedStaff));
             }
 
         } else {
@@ -168,13 +170,14 @@ public class StaffController {
      *
      * @return true, если пользователь кликнул OK, в противном случае false.
      */
-    public boolean showPersonEditDialog(StaffEntity staffEntity) {
+    public boolean showPersonEditDialog(Object staffEntity) {
         try {
             // Загружаем fxml-файл и создаём новую сцену
             // для всплывающего диалогового окна.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/view/staffDialogDetails.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
+
 
             // Создаём диалоговое окно Stage.
             Stage dialogStage = new Stage();
@@ -199,36 +202,41 @@ public class StaffController {
         }
     }
 
-    private void showStaffDetails(StaffEntity staffEntity){
-        if(staffEntity!= null){
-            setLabeksText(staffEntity.getFio().split(" ")[0],staffEntity.getFio().split(" ")[1],staffEntity.getFio().split(" ")[2],"","","");
+    private void showStaffDetails(Object entity){
 
-        }else{
-            setLabeksText("","","","","","");
+        if(entity  == null){
+            setLabeksText("", "", "", "", "", "");
+        }
+        else if(entity instanceof StaffEntity) {
+            StaffEntity staffEntity = StaffEntity.class.cast(entity);
+            setLabeksText(staffEntity.getFio().split(" ")[0], staffEntity.getFio().split(" ")[1], staffEntity.getFio().split(" ")[2], "", "", "");
+
+        }
+        else if(entity instanceof AnalysisEntity) {
+            AnalysisEntity analysisEntity = AnalysisEntity.class.cast(entity);
+            setLabeksText(analysisEntity.getTypeOfAnalys().getName(), String.valueOf(analysisEntity.getId()), "", "", "", "");
         }
     }
-    private void showAnalusisDetails(AnalysisEntity analysisEntity){
+/*    private void showAnalusisDetails(AnalysisEntity analysisEntity){
         if(analysisEntity!= null){
             setLabeksText(analysisEntity.getTypeOfAnalys().getName(),String.valueOf(analysisEntity.getId()),"","","","");
 
         }else{
             setLabeksText("","","","","","");
         }
-    }
+    }*/
 
 
 
     public void setAnalysisColumns(){
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("typeOfAnalys"));
-        personTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showAnalusisDetails((AnalysisEntity) newValue));
 
         setStaticLabeksText("id","name","","","","");
     }
     public void setStaffColumns(){
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
-        personTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showStaffDetails((StaffEntity) newValue));
 
         setStaticLabeksText("id","First name","Second name","Patronym","","");
     }
@@ -262,5 +270,13 @@ public class StaffController {
     public static void setStaff(Object[] staff) {
         StaffController.getStaff().clear();
         StaffController.staff.addAll(staff);
+    }
+
+    public Class getClasss() {
+        return classs;
+    }
+
+    public void setClasss(Class classs) {
+        this.classs = classs;
     }
 }

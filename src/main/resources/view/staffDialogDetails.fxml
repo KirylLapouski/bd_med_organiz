@@ -22,12 +22,12 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="First name" GridPane.rowIndex="1" />
-            <Label text="Last name" GridPane.rowIndex="2" />
-            <Label text="Third name" GridPane.rowIndex="3" />
-            <TextField fx:id="firstNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="thirdNameField" prefHeight="37.0" prefWidth="211.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="firstLabel" text="First name" GridPane.rowIndex="1" />
+            <Label fx:id="secondLabel" text="Last name" GridPane.rowIndex="2" />
+            <Label fx:id="thirdLabel" text="Third name" GridPane.rowIndex="3" />
+            <TextField fx:id="firstField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="lastField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="thirdField" prefHeight="37.0" prefWidth="211.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
       <Button layoutX="234.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />

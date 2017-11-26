@@ -3,10 +3,7 @@ package dao.daoImpl;
 import dao.CrudDao;
 import entity.AnalysisEntity;
 import entity.DiseaseEntity;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 
 import java.util.List;
 
@@ -22,7 +19,12 @@ public class DiseaseDao extends CrudDao<Integer, DiseaseEntity> {
 
 
     public void delete(Integer integer){
-        Session session = sessionFactory.openSession();
+        Session session;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException ex) {
+            session = sessionFactory.openSession();
+        }
         Transaction transaction = null;
 
         transaction= session.beginTransaction();

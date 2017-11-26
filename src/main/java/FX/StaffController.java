@@ -64,7 +64,7 @@ public class StaffController {
     private Label SixStaticLabel;
 
 
-    // Ссылка на главное приложение.
+    // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     private CrudDao dao;
     private Main mainApp;
     private Class classs;
@@ -73,12 +73,12 @@ public class StaffController {
 
 
     /**
-     * Инициализация класса-контроллера. Этот метод вызывается автоматически
-     * после того, как fxml-файл будет загружен.
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     * пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ fxml-пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
      */
     @FXML
     private void initialize() {
-        // Инициализация таблицы адресатов с двумя столбцами.
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
 
@@ -89,14 +89,14 @@ public class StaffController {
 
 
     /**
-     * Вызывается главным приложением, которое даёт на себя ссылку.
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
      *
      * @param mainApp
      */
     public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
 
-        // Добавление в таблицу данных из наблюдаемого списка
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         personTable.setItems(staff);
 
         dao  = new StaffDao(mainApp.getOurSessionFactory());
@@ -110,6 +110,8 @@ public class StaffController {
         if(selectedIndex >= 0) {
             StaffEntity staffEntity = (StaffEntity) personTable.getItems().remove(selectedIndex);
             dao.delete(staffEntity.getId());
+            staff.clear();
+            staff.addAll(dao.list());
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(mainApp.getPrimaryStage());
@@ -121,38 +123,64 @@ public class StaffController {
         }
     }
     /**
-     * Вызывается, когда пользователь кликает по кнопке New...
-     * Открывает диалоговое окно с дополнительной информацией нового адресата.
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ New...
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
      */
     @FXML
     private void handleNewStaff() {
-        StaffEntity tempPerson = new StaffEntity();
-        tempPerson.setFio("FirstName LastName ThirdName");
-        boolean okClicked = showPersonEditDialog(tempPerson);
-        if (okClicked) {
-           staff.add(tempPerson);
-            dao.create(tempPerson);
+        try {
+            Class classs = staff.get(1).getClass();
+            Object newEntity = classs.newInstance();
+
+            if(newEntity instanceof StaffEntity) {
+                ((StaffEntity)newEntity).setId(0);
+                ((StaffEntity)newEntity).setFio("FirstName LastName ThirdName");
+            }else if(newEntity instanceof AnalysisEntity){
+                ((AnalysisEntity)newEntity).setId(0);
+            }
+            boolean okClicked = showPersonEditDialog(newEntity);
+            if (okClicked) {
+                staff.clear();
+                dao.create(newEntity);
+                staff.addAll(dao.list());
+            }
+
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
+
     }
 
     /**
-     * Вызывается, когда пользователь кликает по кнопка Edit...
-     * Открывает диалоговое окно для изменения выбранного адресата.
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ Edit...
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
      */
     @FXML
     private void handleEditStaff() {
         Class classs = staff.get(1).getClass();
-        Object selectedStaff = null;
-        selectedStaff = classs.cast(personTable.getSelectionModel().getSelectedItem());
-        if (selectedStaff != null) {
-            boolean okClicked = showPersonEditDialog(selectedStaff);
+        Object selectedEntity = null;
+        selectedEntity = classs.cast(personTable.getSelectionModel().getSelectedItem());
+        if (selectedEntity != null) {
+            boolean okClicked = showPersonEditDialog(selectedEntity);
             if (okClicked) {
-                showStaffDetails(selectedStaff);
-                dao.update(classs.cast(selectedStaff));
+                showStaffDetails(selectedEntity);
+                if(selectedEntity instanceof StaffEntity) {
+                    dao.update((StaffEntity)selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }else if(selectedEntity instanceof AnalysisEntity){
+                    dao.update((AnalysisEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }
             }
 
         } else {
-            // Ничего не выбрано.
+            // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(mainApp.getPrimaryStage());
             alert.setTitle("No Selection");
@@ -164,22 +192,22 @@ public class StaffController {
     }
 
     /**
-     * Открывает диалоговое окно для изменения деталей указанного адресата.
-     * Если пользователь кликнул OK, то изменения сохраняются в предоставленном
-     * объекте адресата и возвращается значение true.
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+     * пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ OK, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ true.
      *
-     * @return true, если пользователь кликнул OK, в противном случае false.
+     * @return true, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ OK, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ false.
      */
     public boolean showPersonEditDialog(Object staffEntity) {
         try {
-            // Загружаем fxml-файл и создаём новую сцену
-            // для всплывающего диалогового окна.
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ fxml-пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+            // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/view/staffDialogDetails.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
 
-            // Создаём диалоговое окно Stage.
+            // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Edit Person");
             dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -187,12 +215,12 @@ public class StaffController {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Передаём адресата в контроллер.
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
             StaffEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setStaff(staffEntity);
 
-            // Отображаем диалоговое окно и ждём, пока пользователь его не закроет
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             dialogStage.showAndWait();
 
             return controller.isOkClicked();
@@ -209,12 +237,12 @@ public class StaffController {
         }
         else if(entity instanceof StaffEntity) {
             StaffEntity staffEntity = StaffEntity.class.cast(entity);
-            setLabeksText(staffEntity.getFio().split(" ")[0], staffEntity.getFio().split(" ")[1], staffEntity.getFio().split(" ")[2], "", "", "");
+            setLabeksText(staffEntity.getId().toString(),staffEntity.getFio().split(" ")[0], staffEntity.getFio().split(" ")[1], staffEntity.getFio().split(" ")[2], "", "");
 
         }
         else if(entity instanceof AnalysisEntity) {
             AnalysisEntity analysisEntity = AnalysisEntity.class.cast(entity);
-            setLabeksText(analysisEntity.getTypeOfAnalys().getName(), String.valueOf(analysisEntity.getId()), "", "", "", "");
+            setLabeksText(String.valueOf(analysisEntity.getId()),analysisEntity.getTypeOfAnalys().getName() , "", "", "", "");
         }
     }
 /*    private void showAnalusisDetails(AnalysisEntity analysisEntity){

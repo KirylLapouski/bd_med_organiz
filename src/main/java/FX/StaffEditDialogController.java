@@ -39,9 +39,9 @@ public class StaffEditDialogController {
      */
     @FXML
     private void initialize() {
-        firstField= new TextField();
-        lastField = new TextField();
-        thirdField = new TextField();
+       /* firstField= new TextField("FirstField");
+        lastField = new TextField("SecondField");
+        thirdField = new TextField("ThirdField");*/
     }
 
     /**
@@ -93,7 +93,10 @@ public class StaffEditDialogController {
             }else if(entity instanceof AnalysisEntity){
                 AnalysisEntity analysisEntity = AnalysisEntity.class.cast(entity);
                 TypeOfAnalysisDao typeOfAnalysisDao = new TypeOfAnalysisDao(Main.getOurSessionFactory());
-                analysisEntity.setTypeOfAnalys(typeOfAnalysisDao.read(Integer.valueOf(firstField.getText()),TypeOfAnalysisEntity.class));
+
+                TypeOfAnalysisEntity typeOfAnalysisEntity =  typeOfAnalysisDao.read(Integer.parseInt(firstField.getText()), TypeOfAnalysisEntity.class);
+                String str = typeOfAnalysisEntity.getId()+"" + typeOfAnalysisEntity.getName();
+                analysisEntity.setTypeOfAnalys(typeOfAnalysisEntity);
             }
 
             okClicked = true;
@@ -117,10 +120,11 @@ public class StaffEditDialogController {
     private boolean isInputValid() {
         String errorMessage = "";
 
-        if (firstField.disableProperty().getValue() == false && (firstField.getText() == null || firstField.getText().length() == 0))
+        String str  = firstField.getText();
+        if (firstField.disableProperty().getValue()==false && (firstField.getText() == null || firstField.getText().length() == 0))
             errorMessage += "No valid first field!\n";
 
-        if (lastField.disableProperty().getValue() ==false && (lastField.getText() == null || lastField.getText().length() == 0))
+        if (lastField.disableProperty().getValue()==false && (lastField.getText() == null || lastField.getText().length() == 0))
             errorMessage += "No valid second field!\n";
 
         if (thirdField.disableProperty().getValue()==false && (thirdField.getText() == null || thirdField.getText().length() == 0))
@@ -157,7 +161,7 @@ public class StaffEditDialogController {
         }
         if(third.isEmpty()){
             thirdField.setVisible(false);
-            lastField.disableProperty().setValue(true);
+            thirdField.disableProperty().setValue(true);
         }
     }
 }

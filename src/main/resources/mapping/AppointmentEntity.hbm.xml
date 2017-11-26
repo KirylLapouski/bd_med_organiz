@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping default-cascade="all">
+<hibernate-mapping default-cascade="all" default-lazy="false">
 
     <class name="entity.AppointmentEntity" table="appointment" schema="" catalog="medicine">
         <composite-id mapped="true" class="entity.primaryKey.AppointmentEntityPK">

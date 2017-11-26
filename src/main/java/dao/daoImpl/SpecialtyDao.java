@@ -3,10 +3,7 @@ package dao.daoImpl;
 import dao.CrudDao;
 import entity.PositionEntity;
 import entity.SpecialtyEntity;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 
 import java.util.List;
 
@@ -19,19 +16,14 @@ public class SpecialtyDao extends CrudDao<Integer, SpecialtyEntity> {
         super(sessionFactory);
     }
 
-    public SpecialtyEntity read(Integer id){
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
-
-        transaction= session.beginTransaction();
-
-        SpecialtyEntity specialtyEntity=  session.load(SpecialtyEntity.class, Integer.parseInt(id.toString()));
-        transaction.commit();
-        return specialtyEntity;
-    }
     @Override
     public void delete(Integer integer) {
-        Session session = sessionFactory.openSession();
+        Session session;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException ex) {
+            session = sessionFactory.openSession();
+        }
         Transaction transaction = null;
 
         transaction= session.beginTransaction();

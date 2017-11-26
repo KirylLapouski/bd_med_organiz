@@ -1,6 +1,7 @@
 package dao;
 
 import entity.OccupiedBedsEntity;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -21,7 +22,13 @@ public abstract class CrudDao <ID, T> {
     }
 
     public void create(T o) {
-        Session session = sessionFactory.openSession();
+        Session session;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException ex) {
+            session = sessionFactory.openSession();
+        }
+
         Transaction transaction = null;
 
         transaction = session.beginTransaction();
@@ -31,18 +38,29 @@ public abstract class CrudDao <ID, T> {
     }
 
     public T read(ID id, Class classToRead) {
-        Session session = sessionFactory.openSession();
+        Session session;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException ex) {
+            session = sessionFactory.openSession();
+        }
         Transaction transaction = null;
 
         transaction = session.beginTransaction();
 
         T occupiedBedsEntity = (T) session.load(classToRead, Integer.parseInt(id.toString()));
         transaction.commit();
+
         return occupiedBedsEntity;
     }
 
     public void update(T o) {
-        Session session = sessionFactory.openSession();
+        Session session;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException ex) {
+            session = sessionFactory.openSession();
+        }
         Transaction transaction = null;
 
         transaction = session.beginTransaction();

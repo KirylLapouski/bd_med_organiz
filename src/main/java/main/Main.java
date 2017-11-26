@@ -6,6 +6,7 @@ import FX.StaffEditDialogController;
 import dao.daoImpl.*;
 import entity.SpecialtyEntity;
 import entity.StaffEntity;
+import entity.TypeOfAnalysisEntity;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,7 +64,6 @@ public class Main extends Application {
     }
 
     public static void main(final String[] args) throws Exception {
-
 
 
             //JAVAFX

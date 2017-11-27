@@ -18,5 +18,6 @@
             <key column="housing_id"></key>
             <one-to-many class="entity.DepartmentEntity"/>
         </set>
+        <many-to-one name="medicalFacility" class="entity.MedicalFacilityEntity" column="medical_facility_id"/>
     </class>
 </hibernate-mapping>

@@ -1,18 +1,17 @@
 package dao.daoImpl;
 
 import dao.CrudDao;
-import entity.SpecialtyEntity;
-import entity.TypeOfAnalysisEntity;
+import entity.OfficeEntity;
+import entity.PatienceEntity;
 import org.hibernate.*;
 
 import java.util.List;
 
 /**
- * Created by lapko on 16.11.2017.
+ * Created by lapko on 26.11.2017.
  */
-public class TypeOfAnalysisDao extends CrudDao<Integer, TypeOfAnalysisEntity> {
-
-    public TypeOfAnalysisDao(SessionFactory sessionFactory) {
+public class PatienceDao extends CrudDao<Integer, PatienceEntity> {
+    public PatienceDao(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
@@ -27,8 +26,8 @@ public class TypeOfAnalysisDao extends CrudDao<Integer, TypeOfAnalysisEntity> {
         Transaction transaction = null;
 
         transaction= session.beginTransaction();
-        SQLQuery query = session.createSQLQuery("DELETE FROM type_of_analysis WHERE id = :id");
-        query.addEntity(TypeOfAnalysisEntity.class);
+        SQLQuery query = session.createSQLQuery("DELETE FROM patience WHERE id = :id");
+        query.addEntity(PatienceEntity.class);
         query.setParameter("id",integer);
         query.executeUpdate();
 
@@ -47,7 +46,7 @@ public class TypeOfAnalysisDao extends CrudDao<Integer, TypeOfAnalysisEntity> {
 
         transaction= session.beginTransaction();
 
-        List staffEntity =  session.createQuery("FROM TypeOfAnalysisEntity").list();
+        List staffEntity =  session.createQuery("FROM PatienceEntity ").list();
         transaction.commit();
 
         return staffEntity;

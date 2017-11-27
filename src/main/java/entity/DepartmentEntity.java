@@ -14,16 +14,26 @@ public class DepartmentEntity {
     private Set rooms;
     private Set offices;
     private Set departmentSpetialization;
+    private HousingEntity housing;
 
     public DepartmentEntity() {
     }
 
 
-    public DepartmentEntity(String name, Set rooms, Set offices, Set departmentSpetialization) {
+    public DepartmentEntity(String name, Set rooms, Set offices, Set departmentSpetialization, HousingEntity housing) {
         this.name = name;
         this.rooms = rooms;
         this.offices = offices;
         this.departmentSpetialization = departmentSpetialization;
+        this.housing  =housing;
+    }
+
+    public HousingEntity getHousing() {
+        return housing;
+    }
+
+    public void setHousing(HousingEntity housing) {
+        this.housing = housing;
     }
 
     public Set getRooms() {

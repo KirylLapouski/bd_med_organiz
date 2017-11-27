@@ -36,6 +36,19 @@ public class LaboratoryDao extends CrudDao<Integer, LaboratoryEntity> {
 
     @Override
     public List list() {
-        return null;
+        Session session;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException ex) {
+            session = sessionFactory.openSession();
+        }
+        Transaction transaction = null;
+
+        transaction= session.beginTransaction();
+
+        List staffEntity =  session.createQuery("FROM LaboratoryEntity ").list();
+        transaction.commit();
+
+        return staffEntity;
     }
 }

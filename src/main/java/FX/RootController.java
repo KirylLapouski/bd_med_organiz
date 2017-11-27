@@ -1,7 +1,6 @@
 package FX;
 
-import dao.daoImpl.AnalysisDao;
-import dao.daoImpl.StaffDao;
+import dao.daoImpl.*;
 import entity.AnalysisEntity;
 import entity.StaffEntity;
 import entity.util.Tables;
@@ -52,10 +51,8 @@ public class RootController {
 
     @FXML
     private void initialize() {
-        list.add(new Tables("staff"));
-        list.add(new Tables("analysis"));
-        list.add(new Tables("something"));
 
+        tableListInit();
         name.setCellValueFactory(new PropertyValueFactory<Tables,String>("name"));
 
         tablesTable.setItems(list);
@@ -77,6 +74,103 @@ public class RootController {
                     staffController.setAnalysisColumns();
                     staffController.setDao(analysisDao);
                     break;
+            case "department":
+                DepartmentDao departmentDao = new DepartmentDao(Main.getOurSessionFactory());
+                StaffController.setStaff(departmentDao.list().toArray());
+                staffController.setDepartmentColumn();
+                staffController.setDao(departmentDao);
+                break;
+            case "disease":
+                DiseaseDao diseaseDao = new DiseaseDao(Main.getOurSessionFactory());
+                StaffController.setStaff(diseaseDao.list().toArray());
+                staffController.setDiseaseColumn();
+                staffController.setDao(diseaseDao);
+                break;
+            case "housing":
+                HousingDao housingDao = new HousingDao(Main.getOurSessionFactory());
+                StaffController.setStaff(housingDao.list().toArray());
+                staffController.setHousingColumn();
+                staffController.setDao(housingDao);
+                break;
+            case "laboratory":
+                LaboratoryDao laboratoryDao = new LaboratoryDao(Main.getOurSessionFactory());
+                StaffController.setStaff(laboratoryDao.list().toArray());
+                staffController.setLaboratoryColumn();
+                staffController.setDao(laboratoryDao);
+                break;
+            case "laboratorySpec":
+                 LaboratorySpecDao laboratorySpecDao = new LaboratorySpecDao(Main.getOurSessionFactory());
+                StaffController.setStaff(laboratorySpecDao.list().toArray());
+                staffController.setLaboratorySpecColumn();
+                staffController.setDao(laboratorySpecDao);
+                break;
+            case "medicalFacility":
+                MedicalFacilityDao medicalFacilityDao = new MedicalFacilityDao(Main.getOurSessionFactory());
+                StaffController.setStaff(medicalFacilityDao.list().toArray());
+                staffController.setMedicalFacilityColumn();
+                staffController.setDao(medicalFacilityDao);
+                break;
+            case "occupieBeds":
+                OccupiedBedsDao occupiedBedsDao = new OccupiedBedsDao(Main.getOurSessionFactory());
+                StaffController.setStaff(occupiedBedsDao.list().toArray());
+                staffController.setOccupiedBedsColumn();
+                staffController.setDao(occupiedBedsDao);
+                break;
+            case "office":
+                OfficeDao officeDao = new OfficeDao(Main.getOurSessionFactory());
+                StaffController.setStaff(officeDao.list().toArray());
+                staffController.setOfficeColumn();
+                staffController.setDao(officeDao);
+                break;
+            case "patience":
+                PatienceDao patienceDao = new PatienceDao(Main.getOurSessionFactory());
+                StaffController.setStaff(patienceDao.list().toArray());
+                staffController.setPatienceColumn();
+                staffController.setDao(patienceDao);
+                break;
+            case "position":
+                PositionDao positionDao = new PositionDao(Main.getOurSessionFactory());
+                StaffController.setStaff(positionDao.list().toArray());
+                staffController.setPositionColumn();
+                staffController.setDao(positionDao);
+                break;
+            case "room":
+                RoomDao roomDao = new RoomDao(Main.getOurSessionFactory());
+                StaffController.setStaff(roomDao.list().toArray());
+                staffController.setRoomColumn();
+                staffController.setDao(roomDao);
+                break;
+            case "specialty":
+                SpecialtyDao specialtyDao = new SpecialtyDao(Main.getOurSessionFactory());
+                StaffController.setStaff(specialtyDao.list().toArray());
+                staffController.setSpecialtyColumn();
+                staffController.setDao(specialtyDao);
+                break;
+            case "typeOfAnalysis":
+                TypeOfAnalysisDao typeOfAnalysisDao = new TypeOfAnalysisDao(Main.getOurSessionFactory());
+                StaffController.setStaff(typeOfAnalysisDao.list().toArray());
+                staffController.setTypeOfAnalysisColumn();
+                staffController.setDao(typeOfAnalysisDao);
+                break;
         }
+    }
+
+    private void tableListInit(){
+        list.add(new Tables("staff"));
+        list.add(new Tables("analysis"));
+        list.add(new Tables("department"));
+        list.add(new Tables("disease"));
+        list.add(new Tables("housing"));
+        list.add(new Tables("laboratory"));
+        list.add(new Tables("laboratorySpec"));
+        list.add(new Tables("medicalFacility"));
+        list.add(new Tables("occupieBeds"));
+        list.add(new Tables("office"));
+        list.add(new Tables("patience"));
+        list.add(new Tables("position"));
+        list.add(new Tables("room"));
+        list.add(new Tables("specialty"));
+        list.add(new Tables("typeOfAnalysis"));
+
     }
 }

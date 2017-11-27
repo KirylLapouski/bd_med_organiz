@@ -17,6 +17,10 @@
         <property name="medicalFacilityType">
             <column name="medical_facility_type" sql-type="enum" length="12" not-null="true"/>
         </property>
-
+        <many-to-one name="orderDoctor" class="entity.StaffEntity" column="id_order_doctor"/>
+        <set name="housing" table="housing">
+            <key column="medical_facility_id"></key>
+            <one-to-many class="entity.HousingEntity"/>
+        </set>
     </class>
 </hibernate-mapping>

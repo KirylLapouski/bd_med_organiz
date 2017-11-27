@@ -12,12 +12,12 @@ public class OccupiedBedsEntity {
     private int id;
     private Date since;
     private Date to;
-    private int id_room;
+    private RoomEntity room;
 
-    public OccupiedBedsEntity(Date since, Date to, int id_room) {
+    public OccupiedBedsEntity(Date since, Date to, RoomEntity room) {
         this.since = since;
         this.to = to;
-        this.id_room = id_room;
+        this.room= room;
     }
 
     public OccupiedBedsEntity() {
@@ -48,12 +48,12 @@ public class OccupiedBedsEntity {
         this.to = to;
     }
 
-    public int getId_room() {
-        return id_room;
+    public RoomEntity getRoom() {
+        return room;
     }
 
-    public void setId_room(int id_room) {
-        this.id_room = id_room;
+    public void setRoom(RoomEntity room) {
+        this.room = room;
     }
 
     @Override

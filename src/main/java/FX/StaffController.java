@@ -2,8 +2,7 @@ package FX;
 
 import dao.CrudDao;
 import dao.daoImpl.StaffDao;
-import entity.AnalysisEntity;
-import entity.StaffEntity;
+import entity.*;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +27,6 @@ import java.io.IOException;
 public class StaffController {
     public StaffController() {
     }
-
 
     @FXML
     private TableView personTable = new TableView();
@@ -64,21 +62,15 @@ public class StaffController {
     private Label SixStaticLabel;
 
 
-    // ������ �� ������� ����������.
     private CrudDao dao;
     private Main mainApp;
-    private Class classs;
     private static ObservableList<Object> staff = FXCollections.observableArrayList();
 
 
 
-    /**
-     * ������������� ������-�����������. ���� ����� ���������� �������������
-     * ����� ����, ��� fxml-���� ����� ��������.
-     */
+
     @FXML
     private void initialize() {
-        // ������������� ������� ��������� � ����� ���������.
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
 
@@ -88,15 +80,10 @@ public class StaffController {
     }
 
 
-    /**
-     * ���������� ������� �����������, ������� ��� �� ���� ������.
-     *
-     * @param mainApp
-     */
+
     public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
 
-        // ���������� � ������� ������ �� ������������ ������
         personTable.setItems(staff);
 
         dao  = new StaffDao(mainApp.getOurSessionFactory());
@@ -108,24 +95,69 @@ public class StaffController {
     private void deleteButtonHandler(){
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
         if(selectedIndex >= 0) {
-            StaffEntity staffEntity = (StaffEntity) personTable.getItems().remove(selectedIndex);
-            dao.delete(staffEntity.getId());
+
+
+            if(staff.get(0) instanceof StaffEntity) {
+                StaffEntity staffEntity = (StaffEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(staffEntity.getId());
+            }else if(staff.get(0) instanceof AnalysisEntity){
+                AnalysisEntity analysisEntity = (AnalysisEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(analysisEntity.getId());
+            }else if(staff.get(0) instanceof DepartmentEntity){
+                DepartmentEntity departmentEntity = (DepartmentEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(departmentEntity.getId());
+            }else if(staff.get(0) instanceof DiseaseEntity){
+                DiseaseEntity diseaseEntity = (DiseaseEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(diseaseEntity.getId());
+            }else if(staff.get(0) instanceof HousingEntity){
+                HousingEntity housingEntity = (HousingEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(housingEntity.getId());
+            }else if(staff.get(0) instanceof LaboratoryEntity){
+                LaboratoryEntity laboratoryEntity = (LaboratoryEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(laboratoryEntity.getId());
+            }else if(staff.get(0) instanceof LaboratorySpecEntity){
+                LaboratorySpecEntity laboratorySpecEntity = (LaboratorySpecEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(laboratorySpecEntity.getId());
+            }else if(staff.get(0) instanceof MedicalFacilityEntity) {
+                MedicalFacilityEntity medicalFacilityEntity = (MedicalFacilityEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(medicalFacilityEntity.getId());
+            }else if(staff.get(0) instanceof OccupiedBedsEntity){
+                OccupiedBedsEntity occupiedBedsEntity = (OccupiedBedsEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(occupiedBedsEntity.getId());
+            }else if(staff.get(0) instanceof OfficeEntity){
+                OfficeEntity officeEntity = (OfficeEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(officeEntity.getId());
+            }else if(staff.get(0) instanceof PatienceEntity){
+                PatienceEntity patienceEntity = (PatienceEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(patienceEntity.getId());
+            }else if(staff.get(0) instanceof PositionEntity){
+                PositionEntity positionEntity = (PositionEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(positionEntity.getId());
+            }else if(staff.get(0) instanceof RoomEntity){
+                RoomEntity roomEntity = (RoomEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(roomEntity.getId());
+            }else if(staff.get(0) instanceof SpecialtyEntity){
+                SpecialtyEntity specialtyEntity = (SpecialtyEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(specialtyEntity.getId());
+            }else if(staff.get(0) instanceof TypeOfAnalysisEntity){
+                TypeOfAnalysisEntity typeOfAnalysisEntity = (TypeOfAnalysisEntity) personTable.getItems().remove(selectedIndex);
+                dao.delete(typeOfAnalysisEntity.getId());
+            }
+
+
             staff.clear();
             staff.addAll(dao.list());
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(mainApp.getPrimaryStage());
             alert.setTitle("No selection");
-            alert.setHeaderText("No person selected");
-            alert.setContentText("Please select a person in the table");
+            alert.setHeaderText("No item selected");
+            alert.setContentText("Please select a item in the table");
 
             alert.showAndWait();
         }
     }
-    /**
-     * ����������, ����� ������������ ������� �� ������ New...
-     * ��������� ���������� ���� � �������������� ����������� ������ ��������.
-     */
+
     @FXML
     private void handleNewStaff() {
         try {
@@ -137,7 +169,35 @@ public class StaffController {
                 ((StaffEntity)newEntity).setFio("FirstName LastName ThirdName");
             }else if(newEntity instanceof AnalysisEntity){
                 ((AnalysisEntity)newEntity).setId(0);
+            }else if(newEntity instanceof DepartmentEntity){
+                ((DepartmentEntity)newEntity).setId(0);
+            }else if(newEntity instanceof DiseaseEntity){
+                ((DiseaseEntity)newEntity).setId(0);
+            }else if(newEntity instanceof HousingEntity){
+                ((HousingEntity)newEntity).setId(0);
+            }else if(newEntity instanceof LaboratoryEntity){
+                ((LaboratoryEntity)newEntity).setId(0);
+            }else if(newEntity instanceof LaboratorySpecEntity){
+                ((LaboratorySpecEntity)newEntity).setId(0);
+            }else if(newEntity instanceof MedicalFacilityEntity) {
+                ((MedicalFacilityEntity)newEntity).setId(0);
+            }else if(newEntity instanceof OccupiedBedsEntity){
+                ((OccupiedBedsEntity)newEntity).setId(0);
+            }else if(newEntity instanceof OfficeEntity){
+                ((OfficeEntity)newEntity).setId(0);
+            }else if(newEntity instanceof PatienceEntity){
+                ((PatienceEntity)newEntity).setId(0);
+            }else if(newEntity instanceof PositionEntity){
+                ((PositionEntity)newEntity).setId(0);
+            }else if(newEntity instanceof RoomEntity){
+                ((RoomEntity)newEntity).setId(0);
+            }else if(newEntity instanceof SpecialtyEntity){
+                ((SpecialtyEntity)newEntity).setId(0);
+            }else if(newEntity instanceof TypeOfAnalysisEntity){
+                ((TypeOfAnalysisEntity)newEntity).setId(0);
             }
+
+
             boolean okClicked = showPersonEditDialog(newEntity);
             if (okClicked) {
                 staff.clear();
@@ -153,10 +213,7 @@ public class StaffController {
 
     }
 
-    /**
-     * ����������, ����� ������������ ������� �� ������ Edit...
-     * ��������� ���������� ���� ��� ��������� ���������� ��������.
-     */
+
     @FXML
     private void handleEditStaff() {
         Class classs = staff.get(1).getClass();
@@ -166,6 +223,8 @@ public class StaffController {
             boolean okClicked = showPersonEditDialog(selectedEntity);
             if (okClicked) {
                 showStaffDetails(selectedEntity);
+
+
                 if(selectedEntity instanceof StaffEntity) {
                     dao.update((StaffEntity)selectedEntity);
 
@@ -176,11 +235,75 @@ public class StaffController {
 
                     staff.clear();
                     staff.addAll(dao.list());
+                }else if(selectedEntity instanceof DepartmentEntity){
+                    dao.update((DepartmentEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }else if(selectedEntity instanceof DiseaseEntity){
+                    dao.update((DiseaseEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }else if(selectedEntity instanceof HousingEntity){
+                    dao.update((HousingEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }else if(selectedEntity instanceof LaboratoryEntity){
+                    dao.update((LaboratoryEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }else if(selectedEntity instanceof LaboratorySpecEntity){
+                    dao.update((LaboratorySpecEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }else if(selectedEntity instanceof MedicalFacilityEntity) {
+                    dao.update((MedicalFacilityEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }else if(selectedEntity instanceof OccupiedBedsEntity){
+                    dao.update((OccupiedBedsEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }else if(selectedEntity instanceof OfficeEntity){
+                    dao.update((OfficeEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }else if(selectedEntity instanceof PatienceEntity){
+                    dao.update((PatienceEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }else if(selectedEntity instanceof PositionEntity){
+                    dao.update((PositionEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }else if(selectedEntity instanceof RoomEntity){
+                     dao.update((RoomEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }else if(selectedEntity instanceof SpecialtyEntity){
+                    dao.update((SpecialtyEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
+                }else if(selectedEntity instanceof TypeOfAnalysisEntity){
+                    dao.update((TypeOfAnalysisEntity) selectedEntity);
+
+                    staff.clear();
+                    staff.addAll(dao.list());
                 }
             }
 
         } else {
-            // ������ �� �������.
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(mainApp.getPrimaryStage());
             alert.setTitle("No Selection");
@@ -191,23 +314,15 @@ public class StaffController {
         }
     }
 
-    /**
-     * ��������� ���������� ���� ��� ��������� ������� ���������� ��������.
-     * ���� ������������ ������� OK, �� ��������� ����������� � ���������������
-     * ������� �������� � ������������ �������� true.
-     *
-     * @return true, ���� ������������ ������� OK, � ��������� ������ false.
-     */
+
     public boolean showPersonEditDialog(Object staffEntity) {
         try {
-            // ��������� fxml-���� � ������ ����� �����
-            // ��� ������������ ����������� ����.
+
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/view/staffDialogDetails.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
 
-            // ������ ���������� ���� Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Edit Person");
             dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -215,12 +330,10 @@ public class StaffController {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // ������� �������� � ����������.
             StaffEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setStaff(staffEntity);
 
-            // ���������� ���������� ���� � ���, ���� ������������ ��� �� �������
             dialogStage.showAndWait();
 
             return controller.isOkClicked();
@@ -234,16 +347,56 @@ public class StaffController {
 
         if(entity  == null){
             setLabeksText("", "", "", "", "", "");
-        }
-        else if(entity instanceof StaffEntity) {
+        } else if(entity instanceof StaffEntity) {
             StaffEntity staffEntity = StaffEntity.class.cast(entity);
             setLabeksText(staffEntity.getId().toString(),staffEntity.getFio().split(" ")[0], staffEntity.getFio().split(" ")[1], staffEntity.getFio().split(" ")[2], "", "");
-
-        }
-        else if(entity instanceof AnalysisEntity) {
+        }else if(entity instanceof AnalysisEntity) {
             AnalysisEntity analysisEntity = AnalysisEntity.class.cast(entity);
             setLabeksText(String.valueOf(analysisEntity.getId()),analysisEntity.getTypeOfAnalys().getName() , "", "", "", "");
+        }else if(staff.get(0) instanceof DepartmentEntity){
+            DepartmentEntity departmentEntity = DepartmentEntity.class.cast(entity);
+            setLabeksText(String.valueOf(departmentEntity.getId()), departmentEntity.getName(), String.valueOf(departmentEntity.getHousing().getId()), "", "", "");
+        }else if(staff.get(0) instanceof DiseaseEntity){
+            DiseaseEntity diseaseEntity = DiseaseEntity.class.cast(entity);
+            setLabeksText(String.valueOf(diseaseEntity.getId()), diseaseEntity.getName(),"", "", "", "");
+        }else if(staff.get(0) instanceof HousingEntity){
+            HousingEntity housingEntity = HousingEntity.class.cast(entity);
+            setLabeksText(String.valueOf(housingEntity.getId()), housingEntity.getName(), housingEntity.getAddress(), String.valueOf(housingEntity.getMedicalFacility().getId()), "", "");
+        }else if(staff.get(0) instanceof LaboratoryEntity){
+            LaboratoryEntity laboratoryEntity = LaboratoryEntity.class.cast(entity);
+            setLabeksText(String.valueOf(laboratoryEntity.getId()), laboratoryEntity.getName(), laboratoryEntity.getAddress(), "", "", "");
+        }else if(staff.get(0) instanceof LaboratorySpecEntity){
+            LaboratorySpecEntity laboratorySpecEntity = LaboratorySpecEntity.class.cast(entity);
+            setLabeksText(String.valueOf(laboratorySpecEntity.getId()), laboratorySpecEntity.getName(), "", "", "", "");
+        }else if(staff.get(0) instanceof MedicalFacilityEntity) {
+            MedicalFacilityEntity medicalFacilityEntity = MedicalFacilityEntity.class.cast(entity);
+            setLabeksText(String.valueOf(medicalFacilityEntity.getId()), medicalFacilityEntity.getName(), medicalFacilityEntity.getAddress(), medicalFacilityEntity.getMedicalFacilityType(), String.valueOf(medicalFacilityEntity.getOrderDoctor().getId()), "");
+        }else if(staff.get(0) instanceof OccupiedBedsEntity){
+            OccupiedBedsEntity occupiedBedsEntity = OccupiedBedsEntity.class.cast(entity);
+            setLabeksText(String.valueOf(occupiedBedsEntity.getId()), String.valueOf(occupiedBedsEntity.getRoom().getId()), String.valueOf(occupiedBedsEntity.getSince())
+                    , String.valueOf(occupiedBedsEntity.getTo()), "", "");
+        }else if(staff.get(0) instanceof OfficeEntity){
+            OfficeEntity officeEntity = OfficeEntity.class.cast(entity);
+            setLabeksText(String.valueOf(officeEntity.getId()), String.valueOf(officeEntity.getDepartment().getId()), String.valueOf(officeEntity.getDoctor().getId()), "", "", "");
+        }else if(staff.get(0) instanceof PatienceEntity){
+            PatienceEntity patienceEntity = PatienceEntity.class.cast(entity);
+            setLabeksText(String.valueOf(patienceEntity.getId()), patienceEntity.getFio().split(" ")[0], patienceEntity.getFio().split(" ")[1], patienceEntity.getFio().split(" ")[2], "", "");
+        }else if(staff.get(0) instanceof PositionEntity){
+            PositionEntity positionEntity = PositionEntity.class.cast(entity);
+            setLabeksText(String.valueOf(positionEntity.getId()), positionEntity.getName(), "", "", "", "");
+        }else if(staff.get(0) instanceof RoomEntity){
+            RoomEntity roomEntity = RoomEntity.class.cast(entity);
+            setLabeksText(String.valueOf(roomEntity.getId()), String.valueOf(roomEntity.getRoomNumber()), String.valueOf(roomEntity.getNumberOfBeds()),
+                    String.valueOf(roomEntity.getDepartment().getId()), String.valueOf(roomEntity.getResponsibleDoctor().getId()), "");
+        }else if(staff.get(0) instanceof SpecialtyEntity){
+            SpecialtyEntity specialtyEntity = SpecialtyEntity.class.cast(entity);
+            setLabeksText(String.valueOf(specialtyEntity.getId()), specialtyEntity.getName(), String.valueOf(specialtyEntity.getIsDoctor()), String.valueOf(specialtyEntity.getSalary()), specialtyEntity.getDegree(), specialtyEntity.getGrade());
+        }else if(staff.get(0) instanceof TypeOfAnalysisEntity){
+            TypeOfAnalysisEntity typeOfAnalysisEntity = TypeOfAnalysisEntity.class.cast(entity);
+            setLabeksText(String.valueOf(typeOfAnalysisEntity.getId()), typeOfAnalysisEntity.getName(), "", "", "", "");
         }
+
+
     }
 /*    private void showAnalusisDetails(AnalysisEntity analysisEntity){
         if(analysisEntity!= null){
@@ -259,15 +412,124 @@ public class StaffController {
     public void setAnalysisColumns(){
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("typeOfAnalys"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Name");
 
-        setStaticLabeksText("id","name","","","","");
+        setStaticLabeksText("id", "name", "", "", "", "");
     }
     public void setStaffColumns(){
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Fio");
 
         setStaticLabeksText("id","First name","Second name","Patronym","","");
     }
+    public void setDepartmentColumn(){
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Name");
+
+        setStaticLabeksText("id","name","housing id","","","");
+    }
+    public void setDiseaseColumn(){
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Name");
+
+        setStaticLabeksText("id","name","","","","");
+    }
+    public void setHousingColumn(){
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Name");
+
+        setStaticLabeksText("id","name","address","medical facility id","","");
+    }
+    public void setLaboratoryColumn(){
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Name");
+
+        setStaticLabeksText("id","name","address","","","");
+    }
+    public void setLaboratorySpecColumn(){
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Name");
+
+        setStaticLabeksText("id","name","","","","");
+    }
+    public void setMedicalFacilityColumn(){
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Name");
+
+        setStaticLabeksText("id","name","address","type","order doctor","");
+    }
+    public void setOccupiedBedsColumn(){
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("id room"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Id room");
+
+        setStaticLabeksText("id","id room","since","to","","");
+    }
+    public void setOfficeColumn(){
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("id department"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Id department");
+
+        setStaticLabeksText("id","id department","id doctor","","","");
+    }
+    public void setPatienceColumn(){
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Fio");
+
+        setStaticLabeksText("id","first name","last name","Patronym","","");
+    }
+    public void setPositionColumn(){
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Name");
+
+        setStaticLabeksText("id","name","","","","");
+    }
+    public void setRoomColumn(){
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Room number");
+
+        setStaticLabeksText("id","roomNumber","number of beds","id department","id doctor","");
+    }
+    public void setSpecialtyColumn(){
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Name");
+
+        setStaticLabeksText("id","name","Doctor","salary","degree","grade");
+    }
+    public void setTypeOfAnalysisColumn(){
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        idColumn.setText("Id");
+        lastNameColumn.setText("Name");
+
+        setStaticLabeksText("id","name","","","","");
+    }
+
 
     private void setStaticLabeksText(String first,String second,String third, String fouth,String fifth, String six){
         FirstStaticLabel.setText(first);
@@ -300,11 +562,4 @@ public class StaffController {
         StaffController.staff.addAll(staff);
     }
 
-    public Class getClasss() {
-        return classs;
-    }
-
-    public void setClasss(Class classs) {
-        this.classs = classs;
-    }
 }

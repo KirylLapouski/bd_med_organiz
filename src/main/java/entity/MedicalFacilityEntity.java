@@ -17,8 +17,17 @@ public class MedicalFacilityEntity {
     private MedicalFacilityEntity superior_hospital;
     private Map<Date,StaffEntity> orderForHospitalDoctor;
     private Set housing;
+    private StaffEntity orderDoctor;
 
     public MedicalFacilityEntity() {
+    }
+
+    public StaffEntity getOrderDoctor() {
+        return orderDoctor;
+    }
+
+    public void setOrderDoctor(StaffEntity orderDoctor) {
+        this.orderDoctor = orderDoctor;
     }
 
     public List<LaboratoryEntity> getLaboratory() {

@@ -1,7 +1,7 @@
 package dao.daoImpl;
 
 import dao.CrudDao;
-import entity.MedicalFacilityEntity;
+import entity.LaboratorySpecEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,13 +10,10 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 /**
- * Created by lapko on 03.10.2017.
+ * Created by lapko on 26.11.2017.
  */
-public class MedicalFacilityDao extends CrudDao<Integer, MedicalFacilityEntity> {
-
-    SessionFactory sessionFactory;
-
-    public MedicalFacilityDao(SessionFactory sessionFactory) {
+public class LaboratorySpecDao extends CrudDao<Integer, LaboratorySpecEntity> {
+    public LaboratorySpecDao(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
@@ -24,12 +21,6 @@ public class MedicalFacilityDao extends CrudDao<Integer, MedicalFacilityEntity> 
     public void delete(Integer integer) {
 
     }
-
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
 
     @Override
     public List list() {
@@ -39,9 +30,11 @@ public class MedicalFacilityDao extends CrudDao<Integer, MedicalFacilityEntity> 
         } catch (HibernateException ex) {
             session = sessionFactory.openSession();
         }
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
 
-        List staffEntity =  session.createQuery("FROM MedicalFacilityEntity ").list();
+        transaction= session.beginTransaction();
+
+        List staffEntity =  session.createQuery("FROM LaboratorySpecEntity ").list();
         transaction.commit();
 
         return staffEntity;

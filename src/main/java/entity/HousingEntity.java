@@ -12,14 +12,23 @@ public class HousingEntity {
     private String name;
     private String address;
     private Set departments;
-
+    private MedicalFacilityEntity medicalFacility;
     public HousingEntity() {
     }
 
-    public HousingEntity(String name, String address, Set departments) {
+    public HousingEntity(String name, String address, Set departments, MedicalFacilityEntity medicalFacilityEntity) {
         this.name = name;
         this.address = address;
         this.departments = departments;
+        this.medicalFacility = medicalFacilityEntity;
+    }
+
+    public MedicalFacilityEntity getMedicalFacility() {
+        return medicalFacility;
+    }
+
+    public void setMedicalFacility(MedicalFacilityEntity medicalFacility) {
+        this.medicalFacility = medicalFacility;
     }
 
     public Set getDepartments() {

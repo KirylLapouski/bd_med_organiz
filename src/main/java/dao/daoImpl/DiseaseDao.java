@@ -38,7 +38,20 @@ public class DiseaseDao extends CrudDao<Integer, DiseaseEntity> {
 
     @Override
     public List list() {
-        return null;
+        Session session;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException ex) {
+            session = sessionFactory.openSession();
+        }
+        Transaction transaction = null;
+
+        transaction= session.beginTransaction();
+
+        List staffEntity =  session.createQuery("FROM DiseaseEntity ").list();
+        transaction.commit();
+
+        return staffEntity;
     }
 
 }

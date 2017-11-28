@@ -33,6 +33,8 @@ public class OccupiedBedsDao extends CrudDao<Integer, OccupiedBedsEntity> {
         query.executeUpdate();
 
         transaction.commit();
+        session.clear();
+
     }
 
     @Override
@@ -49,6 +51,7 @@ public class OccupiedBedsDao extends CrudDao<Integer, OccupiedBedsEntity> {
 
         List staffEntity =  session.createQuery("FROM OccupiedBedsEntity ").list();
         transaction.commit();
+        session.clear();
 
         return staffEntity;
     }

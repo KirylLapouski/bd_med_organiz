@@ -19,11 +19,9 @@ public class StaffDao extends CrudDao<Integer, StaffEntity> {
     public void delete(Integer integer) {
 
         Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException ex) {
+
             session = sessionFactory.openSession();
-        }
+
         Transaction transaction = null;
 
         transaction= session.beginTransaction();
@@ -38,21 +36,23 @@ public class StaffDao extends CrudDao<Integer, StaffEntity> {
 */
 
         transaction.commit();
+        session.clear();
+
     }
 
     public List list(){
         Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException ex) {
+
             session = sessionFactory.openSession();
-        }
+
         Transaction transaction = null;
 
         transaction= session.beginTransaction();
 
         List staffEntity =  session.createQuery("FROM StaffEntity").list();
         transaction.commit();
+        session.clear();
+
         return staffEntity;
     }
 }

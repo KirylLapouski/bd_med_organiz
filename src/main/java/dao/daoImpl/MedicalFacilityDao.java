@@ -1,11 +1,9 @@
 package dao.daoImpl;
 
 import dao.CrudDao;
+import entity.DepartmentEntity;
 import entity.MedicalFacilityEntity;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 
 import java.util.List;
 
@@ -14,7 +12,6 @@ import java.util.List;
  */
 public class MedicalFacilityDao extends CrudDao<Integer, MedicalFacilityEntity> {
 
-    SessionFactory sessionFactory;
 
     public MedicalFacilityDao(SessionFactory sessionFactory) {
         super(sessionFactory);
@@ -22,6 +19,20 @@ public class MedicalFacilityDao extends CrudDao<Integer, MedicalFacilityEntity> 
 
     @Override
     public void delete(Integer integer) {
+        Session session;
+
+            session = sessionFactory.openSession();
+
+        Transaction transaction = null;
+
+        transaction= session.beginTransaction();
+        SQLQuery query = session.createSQLQuery("DELETE FROM medical_facility WHERE id = :id");
+        query.addEntity(MedicalFacilityEntity.class);
+        query.setParameter("id",integer);
+        query.executeUpdate();
+
+        transaction.commit();
+        session.clear();
 
     }
 
@@ -34,15 +45,14 @@ public class MedicalFacilityDao extends CrudDao<Integer, MedicalFacilityEntity> 
     @Override
     public List list() {
         Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException ex) {
+
             session = sessionFactory.openSession();
-        }
+
         Transaction transaction = session.beginTransaction();
 
         List staffEntity =  session.createQuery("FROM MedicalFacilityEntity ").list();
         transaction.commit();
+        session.clear();
 
         return staffEntity;
     }

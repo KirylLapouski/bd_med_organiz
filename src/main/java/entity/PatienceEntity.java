@@ -18,7 +18,7 @@ public class PatienceEntity {
     public PatienceEntity() {
     }
 
-    public PatienceEntity(String fio, Set disease, Set analysis, Map<Date, HealingEntity> arrival) {
+    public PatienceEntity(String fio, Set disease, Set analysis) {
         this.fio = fio;
         this.disease = disease;
         this.analysis = analysis;

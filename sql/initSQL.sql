@@ -104,7 +104,7 @@ CREATE TABLE place_of_work (
     rate ENUM('1','0.25','0.5','0.75') not null, 
     type_of_work ENUM('Работа','Консультация') not null DEFAULT 'Работа',
     since_ datetime not null,
-    to_ datetime not null,
+    to_ datetime not null DEFAULT NOW(),
 
 	CONSTRAINT fk_place_of_work_staff FOREIGN KEY(id_staff) REFERENCES staff(id) ON DELETE CASCADE,
 	CONSTRAINT fk_place_of_work_medical_facility FOREIGN KEY(id_medical_facility) REFERENCES medical_facility(id) ON DELETE CASCADE,
@@ -193,12 +193,19 @@ CREATE TABLE type_of_analysis(
 
     PRIMARY KEY(id)
 );
-
+CREATE TABLE patience (
+    id INT unsigned NOT NULL auto_increment,
+	FIO varchar(100) not null,
+    
+    primary key(id)
+);
 CREATE TABLE analysis (
 	id INT unsigned not null auto_increment,
     id_type_of_analysis INT unsigned not null,
+    id_patience int unsigned not null,
 
     CONSTRAINT fk_analysis_id_type_of_analysis FOREIGN KEY(id_type_of_analysis) REFERENCES type_of_analysis(id) ON DELETE CASCADE,
+    CONSTRAINT fk_analysis_id_patience FOREIGN KEY(id_patience) REFERENCES patience(id) ON DELETE CASCADE,
 	CONSTRAINT pk_analysis PRIMARY KEY(id)
 );
 CREATE TABLE laboratory_analysis_type (
@@ -231,12 +238,7 @@ CREATE TABLE orderly_for_hospital_doctor (
     CONSTRAINT pk_order_for_hospital_doctor PRIMARY KEY(id_doctor,since_,to_)
 );
 
-CREATE TABLE patience (
-    id INT unsigned NOT NULL auto_increment,
-	FIO varchar(100) not null,
-    
-    primary key(id)
-);
+
 CREATE TABLE patiente_in_hospital (
     id_patience INT unsigned NOT NULL,
     id_medical_facility INT unsigned NOT NULL,
@@ -282,14 +284,6 @@ CREATE TABLE attending_doctor(
     FOREIGN KEY(id_patience) REFERENCES patience(id) ON DELETE CASCADE,
     FOREIGN KEY(id_disease) REFERENCES disease(id) ON DELETE CASCADE,
     PRIMARY KEY(id_staff,id_patience,id_disease,since_)
-);
-CREATE TABLE patience_analysis(
-    id_patience int unsigned not null,
-    id_analysis int unsigned not null,
-
-    FOREIGN KEY(id_patience) references patience(id) ON DELETE CASCADE,
-    FOREIGN KEY(id_analysis) references analysis(id) ON DELETE CASCADE,
-    PRIMARY KEY(id_patience,id_analysis)
 );
 /* CHECH STAFF SPECIALIZATION PERMISSION*/
 CREATE TABLE operations(
@@ -352,10 +346,10 @@ INSERT INTO occupied_beds(id_room,since_,to_)
                             (3,"2017-12-01 12:00:00","2017-12-31 12:00:00"),
                             (3,"2017-12-01 12:00:00","2017-12-31 12:00:00"); 
 
-INSERT INTO specialty(name)
-                        VALUES("врач-пульмонолог"),
-                            ("врач-кардиолог"),
-                            ("врач-эндокринолог");
+INSERT INTO specialty(name,is_Doctor,salary)
+                        VALUES("врач-пульмонолог",true,99.99),
+                            ("врач-кардиолог",true,99.99),
+                            ("врач-эндокринолог",true,99.99);
 INSERT INTO staff_specialization(id_staff,id_specialty) 
                         VALUES(1,1),
                             (1,2),
@@ -364,7 +358,7 @@ INSERT INTO staff_specialization(id_staff,id_specialty)
                             (4,2),
                             (5,2);
 /*ВРАЧ ДЕЖУРИТ ПО ВСЕЙ БОЛЬНИЦЕ*/
-INSERT INTO orderly_doctor(id_doctor,since_,to_)
+INSERT INTO orderly_for_hospital_doctor(id_doctor,since_,to_)
                         VALUES(1,"2017-11-03 08:00:00","2017-11-03 16:00:00"),
                             (4,"2017-11-03 16:00:00","2017-11-04 00:00:00"),
                             (5,"2017-11-04 00:00:00","2017-11-04 08:00:00"),
@@ -374,20 +368,53 @@ INSERT INTO position_(name)
                         VALUES("глав. врач"),
                             ("врач-ординатор"),
                             ("зав. отделением");
-INSERT INTO place_of_work(id_staff,id_medical_facility,id_position,id_department,rate)
-                        VALUES(1, 1, 1, 2,1),
-                            (2,1,2,3,1),
-                            (4,1,2,2,1),
-                            (5,1,2,2,1);
-INSERT INTO staff_specialization(id_staff,id_specialty,is_Doctor,salary,degree) 
-                        VALUES(1,1,true,99.99,'Кандидат медицинских наук');
+INSERT INTO place_of_work(id_staff,id_medical_facility,id_position,id_department,rate,since_)
+                        VALUES(1, 1, 1, 2,1,"2017-11-03 08:00:00"),
+                            (2,1,2,3,1,"2017-11-03 08:00:00"),
+                            (4,1,2,2,1,"2017-11-03 08:00:00"),
+                            (5,1,2,2,1,"2017-11-03 08:00:00");
+INSERT INTO staff_specialization(id_staff,id_specialty) 
+                        VALUES(1,1);
 INSERT INTO staff_shedule(staff_id, since_,to_) 
                         VALUES (1,"2017-01-01 12:00:00","2018-01-01 12:00:00"),
                                 (2,"2017-01-01 12:00:00","2018-01-01 12:00:00");
 INSERT INTO type_of_analysis(name)
                         VALUES ("type1"),
                                 ("type2");
-INSERT INTO analysis(type_of_analysis)
-                        VALUES (1),
-                                (2),
-                                (2);
+INSERT INTO patience(FIO) values("Петухов Иван Агафонович"),
+								("Михеева Екатерина Игнатьева"),
+                                ("Молчанов Лукий Лукьянович"),
+                                ("Носов Илья Денисович"),
+                                ("Панфилов Лаврентий  Иринеевич");  
+INSERT INTO analysis(id_type_of_analysis,id_patience)
+                        VALUES (1,1),
+                                (2,1),
+                                (2,1);
+INSERT INTO disease(name) VALUES("disease1"),
+								("disease2"),
+								("disease3"),
+                                ("disease4");
+INSERT INTO department_specialization(id_department,id_disease) VALUES(1,1),
+																		(1,2),
+                                                                        (2,1);
+INSERT INTO laboratory(name,address) VALUES("laboratory1","address1"),
+							("laboratory2","address2");
+INSERT INTO hospital_laboratory VALUES(1,1,1,"2016-11-03","2018-11-03"),
+										(2,1,2,"2015-11-03","2019-11-03");
+INSERT INTO laboratory_analysis_type VALUES(1,1),
+											(1,2),
+                                            (2,1);
+INSERT INTO laboratory_spec(name) VALUES("spec1"),
+									("spec2"),
+									("spec3");
+INSERT INTO laboratory_laboratory_spec VALUES(1,1),
+											(1,2),
+                                            (1,3),
+                                            (2,1);
+/*Проверить является ли работником этого учереждения*/
+INSERT INTO office(id_department,id_responsible_doctor) VALUES(1,1),
+															(2,2);
+
+INSERT INTO patiente_in_hospital VALUES(1,1,1,1,"2016-11-03 12:00:00","2018-11-03 12:00:00"),
+										(1,1,1,1,"2019-11-03 12:00:00","2020-11-03 12:00:00");
+                                    

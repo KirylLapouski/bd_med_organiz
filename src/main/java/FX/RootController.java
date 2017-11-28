@@ -7,15 +7,19 @@ import entity.util.Tables;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import main.Main;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +51,11 @@ public class RootController {
 
     public static void setStaffController(StaffController staffController) {
         RootController.staffController = staffController;
+    }
+
+    @FXML
+    private void queryHandler(){
+        openQueryWindow();
     }
 
     @FXML
@@ -171,6 +180,31 @@ public class RootController {
         list.add(new Tables("room"));
         list.add(new Tables("specialty"));
         list.add(new Tables("typeOfAnalysis"));
+
+    }
+
+    private void openQueryWindow(){
+        AnchorPane pane;
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(Main.class.getResource("/view/query.fxml"));
+        try {
+             pane = (AnchorPane)loader.load();
+            Stage stage= new Stage();
+            stage.setTitle("Query");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(main.getPrimaryStage());
+
+            Scene scene = new Scene(pane);
+            stage.setScene(scene);
+
+            QueryWindowController controller = loader.getController();
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 }

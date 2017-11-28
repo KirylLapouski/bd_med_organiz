@@ -4,6 +4,7 @@ import dao.CrudDao;
 import dao.daoImpl.StaffDao;
 import entity.*;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import main.Main;
 
 import java.io.IOException;
@@ -161,7 +163,7 @@ public class StaffController {
     @FXML
     private void handleNewStaff() {
         try {
-            Class classs = staff.get(1).getClass();
+            Class classs = staff.get(0).getClass();
             Object newEntity = classs.newInstance();
 
             if(newEntity instanceof StaffEntity) {
@@ -352,7 +354,7 @@ public class StaffController {
             setLabeksText(staffEntity.getId().toString(),staffEntity.getFio().split(" ")[0], staffEntity.getFio().split(" ")[1], staffEntity.getFio().split(" ")[2], "", "");
         }else if(entity instanceof AnalysisEntity) {
             AnalysisEntity analysisEntity = AnalysisEntity.class.cast(entity);
-            setLabeksText(String.valueOf(analysisEntity.getId()),analysisEntity.getTypeOfAnalys().getName() , "", "", "", "");
+            setLabeksText(String.valueOf(analysisEntity.getId()),analysisEntity.getTypeOfAnalys().getName() , String.valueOf(analysisEntity.getPatience().getId()), "", "", "");
         }else if(staff.get(0) instanceof DepartmentEntity){
             DepartmentEntity departmentEntity = DepartmentEntity.class.cast(entity);
             setLabeksText(String.valueOf(departmentEntity.getId()), departmentEntity.getName(), String.valueOf(departmentEntity.getHousing().getId()), "", "", "");
@@ -411,11 +413,16 @@ public class StaffController {
 
     public void setAnalysisColumns(){
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("typeOfAnalys"));
+        lastNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Object, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue call(TableColumn.CellDataFeatures<Object, String> param) {
+                return new ReadOnlyObjectWrapper(((AnalysisEntity)param.getValue()).getTypeOfAnalys().getId());
+            }
+        });
         idColumn.setText("Id");
-        lastNameColumn.setText("Name");
+        lastNameColumn.setText("Id analysis type");
 
-        setStaticLabeksText("id", "name", "", "", "", "");
+        setStaticLabeksText("id", "Id analysis type", "id patience", "", "", "");
     }
     public void setStaffColumns(){
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -473,17 +480,27 @@ public class StaffController {
 
         setStaticLabeksText("id","name","address","type","order doctor","");
     }
-    public void setOccupiedBedsColumn(){
+    public void setOccupiedBedsColumn(){//TODO
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("id room"));
+        lastNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+            @Override
+            public ObservableValue call(TableColumn.CellDataFeatures param) {
+                return new ReadOnlyObjectWrapper (String.valueOf(((OccupiedBedsEntity) param.getValue()).getRoom().getId()));
+            }
+        });
         idColumn.setText("Id");
         lastNameColumn.setText("Id room");
 
         setStaticLabeksText("id","id room","since","to","","");
     }
-    public void setOfficeColumn(){
+    public void setOfficeColumn(){//TODO
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("id department"));
+        lastNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+            @Override
+            public ObservableValue call(TableColumn.CellDataFeatures param) {
+                return  new ReadOnlyObjectWrapper (((OfficeEntity)param.getValue()).getDepartment().getId());
+            }
+        });
         idColumn.setText("Id");
         lastNameColumn.setText("Id department");
 

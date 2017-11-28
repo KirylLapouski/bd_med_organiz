@@ -18,11 +18,9 @@ public class RoomDao extends CrudDao<Integer, RoomEntity> {
     @Override
     public void delete(Integer integer) {
         Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException ex) {
+
             session = sessionFactory.openSession();
-        }
+
         Transaction transaction = null;
 
         transaction= session.beginTransaction();
@@ -32,22 +30,23 @@ public class RoomDao extends CrudDao<Integer, RoomEntity> {
         query.executeUpdate();
 
         transaction.commit();
+        session.clear();
+
     }
 
     @Override
     public List list() {
         Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException ex) {
+
             session = sessionFactory.openSession();
-        }
+
         Transaction transaction = null;
 
         transaction= session.beginTransaction();
 
         List staffEntity =  session.createQuery("FROM RoomEntity ").list();
         transaction.commit();
+        session.clear();
 
         return staffEntity;
     }

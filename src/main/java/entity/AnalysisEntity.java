@@ -6,10 +6,13 @@ package entity;
 //DONE
 public class AnalysisEntity {
     private int id;
-    TypeOfAnalysisEntity typeOfAnalys;
+    private TypeOfAnalysisEntity typeOfAnalys;
+    private PatienceEntity patience;
 
-    public AnalysisEntity( TypeOfAnalysisEntity typeOfAnalys) {
+
+    public AnalysisEntity( TypeOfAnalysisEntity typeOfAnalys,PatienceEntity patience) {
         this.typeOfAnalys = typeOfAnalys;
+        this.patience = patience;
     }
 
     public AnalysisEntity() {
@@ -31,6 +34,13 @@ public class AnalysisEntity {
         this.id = id;
     }
 
+    public PatienceEntity getPatience() {
+        return patience;
+    }
+
+    public void setPatience(PatienceEntity patience) {
+        this.patience = patience;
+    }
 
     @Override
     public boolean equals(Object o) {

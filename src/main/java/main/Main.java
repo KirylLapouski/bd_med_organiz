@@ -4,9 +4,7 @@ import FX.RootController;
 import FX.StaffController;
 import FX.StaffEditDialogController;
 import dao.daoImpl.*;
-import entity.SpecialtyEntity;
-import entity.StaffEntity;
-import entity.TypeOfAnalysisEntity;
+import entity.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +20,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -64,7 +63,6 @@ public class Main extends Application {
     }
 
     public static void main(final String[] args) throws Exception {
-
 
             //JAVAFX
             launch(args);

@@ -25,17 +25,16 @@ public class LaboratorySpecDao extends CrudDao<Integer, LaboratorySpecEntity> {
     @Override
     public List list() {
         Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException ex) {
+
             session = sessionFactory.openSession();
-        }
+
         Transaction transaction = null;
 
         transaction= session.beginTransaction();
 
         List staffEntity =  session.createQuery("FROM LaboratorySpecEntity ").list();
         transaction.commit();
+        session.clear();
 
         return staffEntity;
     }

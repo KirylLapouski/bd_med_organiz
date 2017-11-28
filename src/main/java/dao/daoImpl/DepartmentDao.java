@@ -32,6 +32,8 @@ public class DepartmentDao extends CrudDao<Integer, DepartmentEntity> {
         query.executeUpdate();
 
         transaction.commit();
+        session.clear();
+
     }
 
     @Override
@@ -48,6 +50,7 @@ public class DepartmentDao extends CrudDao<Integer, DepartmentEntity> {
 
         List staffEntity =  session.createQuery("FROM DepartmentEntity").list();
         transaction.commit();
+        session.clear();
 
         return staffEntity;
     }

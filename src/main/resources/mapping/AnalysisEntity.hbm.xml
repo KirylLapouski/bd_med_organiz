@@ -10,5 +10,6 @@
             <generator class="native"/>
         </id>
         <many-to-one name="typeOfAnalys" column="id_type_of_analysis" class="entity.TypeOfAnalysisEntity" />
+        <many-to-one name="patience" column="id_patience" class="entity.PatienceEntity"/>
     </class>
 </hibernate-mapping>

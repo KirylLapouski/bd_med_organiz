@@ -18,11 +18,9 @@ public class OfficeDao extends CrudDao<Integer, OfficeEntity> {
     @Override
     public void delete(Integer integer) {
         Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException ex) {
+
             session = sessionFactory.openSession();
-        }
+
         Transaction transaction = null;
 
         transaction= session.beginTransaction();
@@ -32,22 +30,23 @@ public class OfficeDao extends CrudDao<Integer, OfficeEntity> {
         query.executeUpdate();
 
         transaction.commit();
+        session.clear();
+
     }
 
     @Override
     public List list() {
         Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException ex) {
+
             session = sessionFactory.openSession();
-        }
+
         Transaction transaction = null;
 
         transaction= session.beginTransaction();
 
         List staffEntity =  session.createQuery("FROM OfficeEntity").list();
         transaction.commit();
+        session.clear();
 
         return staffEntity;
     }

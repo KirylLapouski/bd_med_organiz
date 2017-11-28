@@ -15,7 +15,7 @@ public class MedicalFacilityEntity {
     private String address;
     private String medicalFacilityType;
     private MedicalFacilityEntity superior_hospital;
-    private Map<Date,StaffEntity> orderForHospitalDoctor;
+//    private Map<Date,StaffEntity> orderForHospitalDoctor;
     private Set housing;
     private StaffEntity orderDoctor;
 
@@ -56,13 +56,13 @@ public class MedicalFacilityEntity {
         this.superior_hospital = superior_hospital;
     }
 
-    public Map<Date, StaffEntity> getOrderForHospitalDoctor() {
+   /* public Map<Date, StaffEntity> getOrderForHospitalDoctor() {
         return orderForHospitalDoctor;
     }
 
     public void setOrderForHospitalDoctor(Map<Date, StaffEntity> orderForHospitalDoctor) {
         this.orderForHospitalDoctor = orderForHospitalDoctor;
-    }
+    }*/
 
     public int getId() {
         return id;

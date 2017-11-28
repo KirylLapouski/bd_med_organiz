@@ -23,11 +23,7 @@ public abstract class CrudDao <ID, T> {
 
     public void create(T o) {
         Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException ex) {
-            session = sessionFactory.openSession();
-        }
+        session = sessionFactory.openSession();
 
         Transaction transaction = null;
 
@@ -35,32 +31,29 @@ public abstract class CrudDao <ID, T> {
 
         session.save(o);
         transaction.commit();
+        session.clear();
     }
 
     public T read(ID id, Class classToRead) {
         Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException ex) {
-            session = sessionFactory.openSession();
-        }
+
+        session = sessionFactory.openSession();
+
         Transaction transaction = null;
 
         transaction = session.beginTransaction();
 
         T occupiedBedsEntity = (T) session.load(classToRead, Integer.parseInt(id.toString()));
         transaction.commit();
+        session.clear();
 
         return occupiedBedsEntity;
     }
 
     public void update(T o) {
         Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException ex) {
-            session = sessionFactory.openSession();
-        }
+
+        session = sessionFactory.openSession();
         Transaction transaction = null;
 
         transaction = session.beginTransaction();
@@ -68,6 +61,8 @@ public abstract class CrudDao <ID, T> {
         session.update(o);
 
         transaction.commit();
+        session.clear();
+
     }
 
     public abstract void delete(ID id);

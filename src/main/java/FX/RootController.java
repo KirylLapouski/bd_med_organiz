@@ -2,10 +2,12 @@ package FX;
 
 import dao.daoImpl.*;
 import entity.AnalysisEntity;
+import entity.MedicalFacilityEntity;
 import entity.StaffEntity;
 import entity.util.Tables;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.control.MenuItem;
 import main.Main;
 
 import java.io.File;
@@ -42,6 +45,15 @@ public class RootController {
 
     @FXML
     private TableColumn<Tables,String> name;
+
+    @FXML
+    private MenuItem firstMenuItem;
+    @FXML
+    private MenuItem secondMenuItem;
+    @FXML
+    private MenuItem thirdMenuItem;
+    @FXML
+    private MenuItem fouthMenuItem;
 
     private static ObservableList<Tables> list =  FXCollections.observableArrayList();
 
@@ -204,7 +216,40 @@ public class RootController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    private void menuItemHandler(Event event){
+        if(event.getTarget() == firstMenuItem) {
+            showCallFunctionWindow("Select getOrderleDoctors();");
+        }else if(event.getTarget() == secondMenuItem){
+            showCallFunctionWindow("Select getFreeBeds(?);");
+        }else if(event.getTarget()== thirdMenuItem){
+            showCallFunctionWindow("Select checkDoctorById(?);");
+        }else if(event.getTarget() == fouthMenuItem){
+            showCallFunctionWindow("call workingStaff();");
+        }
+    }
 
+    private void showCallFunctionWindow(String sql){
+        AnchorPane pane;
+        FXMLLoader loader = new FXMLLoader();
 
+        loader.setLocation(Main.class.getResource("/view/callFunction.fxml"));
+        try {
+            pane = (AnchorPane)loader.load();
+            Stage stage= new Stage();
+            stage.setTitle("Query");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(main.getPrimaryStage());
+
+            Scene scene = new Scene(pane);
+            stage.setScene(scene);
+
+            FunctionWindowController controller = loader.getController();
+            controller.setSql(sql);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

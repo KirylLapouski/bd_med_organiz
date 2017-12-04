@@ -18,6 +18,14 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Query">
             <items>
+                  <Menu mnemonicParsing="false" text="Call Function">
+                    <items>
+                      <MenuItem fx:id="firstMenuItem" onAction="#menuItemHandler" mnemonicParsing="false" text="get orderly doctors" />
+                        <MenuItem fx:id="secondMenuItem" onAction="#menuItemHandler" mnemonicParsing="false" text="get free beds" />
+                        <MenuItem fx:id="thirdMenuItem" onAction="#menuItemHandler" mnemonicParsing="false" text="check doctor by id" />
+                        <MenuItem fx:id="fouthMenuItem" onAction="#menuItemHandler" mnemonicParsing="false" text="now working" />
+                    </items>
+                  </Menu>
               <MenuItem mnemonicParsing="false" onAction="#queryHandler" text="Create" />
             </items>
           </Menu>

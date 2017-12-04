@@ -9,6 +9,7 @@ import org.hibernate.jdbc.Work;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 /**
@@ -30,6 +31,22 @@ public class QueryUtil {
             public void execute(Connection connection) throws SQLException {
                 result[0] = connection.createStatement().executeQuery(SQLQuery);
 
+            }
+        });
+        transaction.commit();
+        return result[0];
+    }
+
+    public ResultSet createQueryWithParam(String SQLQuery,int param){
+        final ResultSet[] result = new ResultSet[1];
+        Session sesssion = sessionFactory.openSession();
+        Transaction transaction = sesssion.beginTransaction();
+
+        sesssion.doWork(new Work() {
+            @Override
+            public void execute(Connection connection) throws SQLException {
+
+                result[0] = connection.createStatement().executeQuery(SQLQuery.replace("?",String.valueOf(param)));
             }
         });
         transaction.commit();

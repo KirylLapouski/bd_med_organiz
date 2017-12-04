@@ -46,7 +46,7 @@ WHERE
 END;
 $$
 delimiter ;
-
+/*FIRST SPECIALIZATION*/ 
 delimiter $$
 use medicine$$
 drop function if exists checkDoctorById$$
@@ -54,8 +54,9 @@ CREATE FUNCTION checkDoctorById(id int)
 RETURNS bool
 BEGIN
 	DECLARE result bool;
-		select staff_specialization.is_Doctor into result
+		select specialty.is_Doctor  into result
         from staff Inner join staff_specialization ON staff.id= staff_specialization.id_staff
+                    INNER JOIN specialty ON staff_specialization.id_specialty = specialty.id
         where staff.id = id;
     RETURN result;
 END;
@@ -72,6 +73,66 @@ BEGIN
     from staff inner join staff_shedule ON staff.id = staff_shedule.staff_id
     where NOW() between staff_shedule.since_ AND staff_shedule.to_;
 
+END;
+$$
+delimiter ;
+
+delimiter $$
+use medicine$$
+drop procedure if exists createUser$$
+CREATE procedure createUser(IN userName varchar(100),IN pass varchar(100))
+BEGIN
+	declare template VARCHAR(100);
+    
+    SET @template = concat("CREATE USER ", userName,"@\'localhost\' IDENTIFIED BY \'",pass,"\'");
+	prepare query1 from @template;
+    EXECUTE query1;
+    DEALLOCATE PREPARE query1;
+END;
+$$
+delimiter ;
+
+delimiter $$
+use medicine$$
+drop procedure if exists deleteUser$$
+CREATE procedure deleteUser(IN userName varchar(100))
+BEGIN
+	declare template VARCHAR(100);
+    
+    SET @template = concat("drop USER ", userName,"@\'localhost\'");
+	prepare query1 from @template;
+    EXECUTE query1;
+    DEALLOCATE PREPARE query1;
+END;
+$$
+delimiter ;
+
+delimiter $$
+use medicine$$
+drop procedure if exists addPermissionForUserOnTable$$
+CREATE procedure addPermissionForUserOnTable(IN userName varchar(100), IN tableName varchar(100))
+BEGIN
+	declare template VARCHAR(100);
+    
+    SET @template = concat("GRANT ALL PRIVILEGES ON medicine.", tableName," TO ", userName,"@\'localhost\'; ");
+	prepare query1 from @template;
+    EXECUTE query1;
+    DEALLOCATE PREPARE query1;
+END;
+$$
+delimiter ;
+
+delimiter $$
+use medicine$$
+drop procedure if exists deletePermissionForUserOnTable$$
+CREATE procedure deletePermissionForUserOnTable(IN userName varchar(100), IN tableName varchar(100))
+BEGIN
+	declare template VARCHAR(100);
+    
+    SET @template = concat("REVOKE ALL PRIVILEGES ON medicine.", tableName," FROM ", userName,"@\'localhost\'; ");
+	prepare query1 from @template;
+    EXECUTE query1;
+    DEALLOCATE PREPARE query1;
 END;
 $$
 delimiter ;

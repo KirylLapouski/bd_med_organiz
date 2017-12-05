@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.util.Callback;
 import main.Main;
@@ -47,10 +48,11 @@ public class QueryWindowController {
         columns.clear();
         table.getColumns().clear();
 
-        ResultSet resultSet =  queryUtil.createQuery(textArea.getText());
 
         try {
-             meta = resultSet.getMetaData();
+            ResultSet resultSet =  queryUtil.createQuery(textArea.getText());
+
+            meta = resultSet.getMetaData();
             for(int i=1;i<=meta.getColumnCount();i++) {
                 columns.add(new TableColumn(meta.getColumnName(i)));
             }
@@ -78,7 +80,12 @@ public class QueryWindowController {
             table.setItems(list);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error when execute query");
+            alert.setContentText("Close and try again");
+
+            alert.showAndWait();
         }
 
     }

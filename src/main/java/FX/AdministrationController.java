@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import main.Main;
 
@@ -17,10 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by lapko on 29.11.2017.
+ * Created by lapko on 05.12.2017.
  */
-public class FunctionWindowController {
+public class AdministrationController {
+
     QueryUtil queryUtil;
+    Stage stage;
     @FXML
     Label label1;
     @FXML
@@ -29,20 +32,16 @@ public class FunctionWindowController {
     TextField textField;
     @FXML
     TextField textField2;
-    @FXML
-    TableView<String> table;
+
     @FXML
     Button button;
 
-    List<TableColumn<String,String>> columns;
-    private ObservableList<String> list =  FXCollections.observableArrayList();
 
     private String sql;
 
     @FXML
     private void initialize(){
         queryUtil = new QueryUtil(Main.getOurSessionFactory());
-        columns = new ArrayList<>();
     }
 
     @FXML
@@ -50,63 +49,35 @@ public class FunctionWindowController {
         ResultSetMetaData meta;
         ResultSet resultSet;
 
-        list.clear();
-        columns.clear();
-        table.getColumns().clear();
 
 
+        if(textField.getText().isEmpty())
+            resultSet =  queryUtil.createQuery(sql);
+        else {
+            if(!textField.getText().isEmpty())
+                queryUtil.addParam(textField.getText());
 
-        try {
+            if(!textField2.getText().isEmpty())
+                queryUtil.addParam(textField2.getText());
 
-            if(textField.getText().isEmpty())
-                resultSet =  queryUtil.createQuery(sql);
-            else {
-                if(!textField.getText().isEmpty())
-                    queryUtil.addParam(textField.getText());
-
-                if(!textField2.getText().isEmpty())
-                    queryUtil.addParam(textField2.getText());
-
+            try {
                 resultSet = queryUtil.createQueryWithParam(sql);
+            }catch (Exception e){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.initOwner(stage);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error when execute query");
+                alert.setContentText("Close and try again");
+
+                alert.showAndWait();
             }
 
 
-            meta = resultSet.getMetaData();
-            for(int i=1;i<=meta.getColumnCount();i++) {
-                columns.add(new TableColumn(meta.getColumnName(i)));
-            }
-            while (resultSet.next()){
-                String result = "";
-                for(int i=1;i<=meta.getColumnCount();i++){
-                    result+= resultSet.getString(i)+";";
-                }
-                list.add(result);
-            }
-            for(int i=1;i<=meta.getColumnCount();i++){
-                final int finalI = i;
 
-                columns.get(i-1).setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String, String>, ObservableValue<String>>() {
-                    @Override
-                    public ObservableValue<String> call(TableColumn.CellDataFeatures<String, String> param) {
-                        return new ReadOnlyObjectWrapper<String>(param.getValue().split(";")[ finalI -1]);
-
-                    }
-                });
-
-            }
-
-            table.getColumns().addAll(columns);
-            table.setItems(list);
-
-        } catch (SQLException e) {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error when execute query");
-            alert.setContentText("Try again");
-
-            alert.showAndWait();
         }
+        stage.close();
+
+
     }
 
     public void setSql(String SQL){
@@ -162,7 +133,9 @@ public class FunctionWindowController {
     private void setVisibleSecondParam(){
         textField2.setVisible(true);
         textField2.disableProperty().setValue(false);
+    }
 
-
+    public void setStage(Stage stage){
+        this.stage = stage;
     }
 }

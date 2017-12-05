@@ -11,19 +11,22 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Administration">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="deleteUser" onAction="#administrationHandler" mnemonicParsing="false" text="delete user" />
+                  <MenuItem fx:id="addUser" onAction="#administrationHandler" mnemonicParsing="false" text="add user" />
+                  <MenuItem fx:id="addPermission" onAction="#administrationHandler" mnemonicParsing="false" text="add permission" />
+                  <MenuItem fx:id="deletePermission" onAction="#administrationHandler" mnemonicParsing="false" text="delete permission" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Query">
             <items>
                   <Menu mnemonicParsing="false" text="Call Function">
                     <items>
-                      <MenuItem fx:id="firstMenuItem" onAction="#menuItemHandler" mnemonicParsing="false" text="get orderly doctors" />
-                        <MenuItem fx:id="secondMenuItem" onAction="#menuItemHandler" mnemonicParsing="false" text="get free beds" />
-                        <MenuItem fx:id="thirdMenuItem" onAction="#menuItemHandler" mnemonicParsing="false" text="check doctor by id" />
-                        <MenuItem fx:id="fouthMenuItem" onAction="#menuItemHandler" mnemonicParsing="false" text="now working" />
+                      <MenuItem fx:id="firstMenuItem" mnemonicParsing="false" onAction="#menuItemHandler" text="get orderly doctors" />
+                        <MenuItem fx:id="secondMenuItem" mnemonicParsing="false" onAction="#menuItemHandler" text="get free beds" />
+                        <MenuItem fx:id="thirdMenuItem" mnemonicParsing="false" onAction="#menuItemHandler" text="check doctor by id" />
+                        <MenuItem fx:id="fouthMenuItem" mnemonicParsing="false" onAction="#menuItemHandler" text="now working" />
                     </items>
                   </Menu>
               <MenuItem mnemonicParsing="false" onAction="#queryHandler" text="Create" />

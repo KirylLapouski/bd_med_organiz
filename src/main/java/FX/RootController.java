@@ -54,6 +54,14 @@ public class RootController {
     private MenuItem thirdMenuItem;
     @FXML
     private MenuItem fouthMenuItem;
+    @FXML
+    private MenuItem deleteUser;
+    @FXML
+    private MenuItem addUser;
+    @FXML
+    private MenuItem addPermission;
+    @FXML
+    private MenuItem deletePermission;
 
     private static ObservableList<Tables> list =  FXCollections.observableArrayList();
 
@@ -195,38 +203,29 @@ public class RootController {
 
     }
 
-    private void openQueryWindow(){
-        AnchorPane pane;
-        FXMLLoader loader = new FXMLLoader();
-
-        loader.setLocation(Main.class.getResource("/view/query.fxml"));
-        try {
-             pane = (AnchorPane)loader.load();
-            Stage stage= new Stage();
-            stage.setTitle("Query");
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(main.getPrimaryStage());
-
-            Scene scene = new Scene(pane);
-            stage.setScene(scene);
-
-            QueryWindowController controller = loader.getController();
-
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     @FXML
     private void menuItemHandler(Event event){
         if(event.getTarget() == firstMenuItem) {
             showCallFunctionWindow("Select getOrderleDoctors();");
         }else if(event.getTarget() == secondMenuItem){
-            showCallFunctionWindow("Select getFreeBeds(?);");
+            showCallFunctionWindow("Select getFreeBeds(?);",new String[]{"Room id"});
         }else if(event.getTarget()== thirdMenuItem){
-            showCallFunctionWindow("Select checkDoctorById(?);");
+            showCallFunctionWindow("Select checkDoctorById(?);", new String[]{"Staff id"});
         }else if(event.getTarget() == fouthMenuItem){
             showCallFunctionWindow("call workingStaff();");
+        }
+    }
+
+    @FXML
+    private void administrationHandler(Event event){
+        if(event.getTarget() == deleteUser){
+            showAdministrationWindow("call deleteUser(?)", new String[]{"User name"});
+        }else if(event.getTarget() == addUser){
+            showAdministrationWindow("call createUser(?,?)", new String[]{"User name", "Password"});
+        }else if(event.getTarget() == addPermission){
+            showAdministrationWindow("call addPermissionForUserOnTable(?,?)", new String[]{"User name", "Table name"});
+        }else if(event.getTarget() == deletePermission){
+            showAdministrationWindow("call deletePermissionForUserOnTable(?,?)", new String[]{"User name", "Table name"});
         }
     }
 
@@ -247,6 +246,103 @@ public class RootController {
 
             FunctionWindowController controller = loader.getController();
             controller.setSql(sql);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void showCallFunctionWindow(String sql, String[] param){
+        AnchorPane pane;
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(Main.class.getResource("/view/callFunction.fxml"));
+        try {
+            pane = (AnchorPane)loader.load();
+            Stage stage= new Stage();
+            stage.setTitle("Query");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(main.getPrimaryStage());
+
+            Scene scene = new Scene(pane);
+            stage.setScene(scene);
+
+            FunctionWindowController controller = loader.getController();
+            controller.setSql(sql);
+            controller.setParamesNames(param);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showAdministrationWindow(String sql){
+        AnchorPane pane;
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(Main.class.getResource("/view/administrationLayout.fxml"));
+        try {
+            pane = (AnchorPane)loader.load();
+            Stage stage= new Stage();
+            stage.setTitle("Query");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(main.getPrimaryStage());
+
+            Scene scene = new Scene(pane);
+            stage.setScene(scene);
+
+            AdministrationController controller = loader.getController();
+            controller.setSql(sql);
+            controller.setStage(stage);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void showAdministrationWindow(String sql, String[] param){
+        AnchorPane pane;
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(Main.class.getResource("/view/administrationLayout.fxml"));
+        try {
+            pane = (AnchorPane)loader.load();
+            Stage stage= new Stage();
+            stage.setTitle("Query");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(main.getPrimaryStage());
+
+            Scene scene = new Scene(pane);
+            stage.setScene(scene);
+
+            AdministrationController controller = loader.getController();
+            controller.setSql(sql);
+            controller.setParamesNames(param);
+            controller.setStage(stage);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void openQueryWindow(){
+        AnchorPane pane;
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(Main.class.getResource("/view/query.fxml"));
+        try {
+            pane = (AnchorPane)loader.load();
+            Stage stage= new Stage();
+            stage.setTitle("Query");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(main.getPrimaryStage());
+
+            Scene scene = new Scene(pane);
+            stage.setScene(scene);
+
+            QueryWindowController controller = loader.getController();
+
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();

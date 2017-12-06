@@ -22,6 +22,8 @@ import javafx.util.Callback;
 import main.Main;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lapko on 17.11.2017.
@@ -200,7 +202,7 @@ public class StaffController {
             }
 
 
-            boolean okClicked = showPersonEditDialog(newEntity);
+            boolean okClicked = showPersonNewDialog(newEntity);
             if (okClicked) {
                 staff.clear();
                 dao.create(newEntity);
@@ -222,10 +224,72 @@ public class StaffController {
         Object selectedEntity = null;
         selectedEntity = classs.cast(personTable.getSelectionModel().getSelectedItem());
         if (selectedEntity != null) {
-            boolean okClicked = showPersonEditDialog(selectedEntity);
+            List<String> str = new ArrayList<>();
+
+
+            if(selectedEntity instanceof StaffEntity) {
+                str.add(((StaffEntity) selectedEntity).getFio().split(" ")[0]);
+                str.add(((StaffEntity) selectedEntity).getFio().split(" ")[1]);
+                str.add(((StaffEntity) selectedEntity).getFio().split(" ")[2]);
+            }else if(selectedEntity instanceof AnalysisEntity){
+                str.add(String.valueOf(((AnalysisEntity) selectedEntity).getTypeOfAnalys().getId()));
+                str.add(String.valueOf(((AnalysisEntity) selectedEntity).getPatience().getId()));
+            }else if(selectedEntity instanceof DepartmentEntity){
+                str.add(((DepartmentEntity) selectedEntity).getName());
+                str.add(String.valueOf(((DepartmentEntity) selectedEntity).getHousing().getId()));
+            }else if(selectedEntity instanceof DiseaseEntity){
+                str.add(((DiseaseEntity) selectedEntity).getName());
+            }else if(selectedEntity instanceof HousingEntity){
+                str.add(((HousingEntity) selectedEntity).getName());
+                str.add(((HousingEntity) selectedEntity).getAddress());
+                str.add(String.valueOf(((HousingEntity) selectedEntity).getMedicalFacility().getId()));
+            }else if(selectedEntity instanceof LaboratoryEntity){
+                str.add(((LaboratoryEntity) selectedEntity).getName());
+                str.add(((LaboratoryEntity) selectedEntity).getAddress());
+            }else if(selectedEntity instanceof LaboratorySpecEntity){
+               str.add(((LaboratorySpecEntity) selectedEntity).getName());
+            }else if(selectedEntity instanceof MedicalFacilityEntity) {
+                str.add(((MedicalFacilityEntity) selectedEntity).getName());
+                str.add(((MedicalFacilityEntity) selectedEntity).getAddress());
+                str.add(((MedicalFacilityEntity) selectedEntity).getMedicalFacilityType());
+                str.add(String.valueOf(((MedicalFacilityEntity) selectedEntity).getOrderDoctor().getId()));
+            }else if(selectedEntity instanceof OccupiedBedsEntity){
+                str.add(String.valueOf(((OccupiedBedsEntity) selectedEntity).getRoom().getId()));
+                str.add(String.valueOf(((OccupiedBedsEntity) selectedEntity).getSince()));
+                str.add(String.valueOf(((OccupiedBedsEntity) selectedEntity).getTo()));
+            }else if(selectedEntity instanceof OfficeEntity) {
+                str.add(String.valueOf(((OfficeEntity) selectedEntity).getDepartment().getId()));
+                str.add(String.valueOf(((OfficeEntity) selectedEntity).getDoctor().getId()));
+            }else if(selectedEntity instanceof PatienceEntity){
+                str.add(((PatienceEntity) selectedEntity).getFio().split(" ")[0]);
+                str.add(((PatienceEntity) selectedEntity).getFio().split(" ")[1]);
+                str.add(((PatienceEntity) selectedEntity).getFio().split(" ")[2]);
+            }else if(selectedEntity instanceof PositionEntity){
+                str.add(((PositionEntity) selectedEntity).getName());
+            }else if(selectedEntity instanceof RoomEntity) {
+                str.add(String.valueOf(((RoomEntity) selectedEntity).getRoomNumber()));
+                str.add(((RoomEntity) selectedEntity).getNumberOfBeds().toString());
+                str.add(String.valueOf(((RoomEntity) selectedEntity).getDepartment().getId()));
+                str.add(String.valueOf(((RoomEntity) selectedEntity).getResponsibleDoctor().getId()));
+            }else if(selectedEntity instanceof SpecialtyEntity) {
+                str.add(((SpecialtyEntity) selectedEntity).getName());
+                str.add(String.valueOf(((SpecialtyEntity) selectedEntity).getIsDoctor()));
+                str.add(String.valueOf(((SpecialtyEntity) selectedEntity).getSalary()));
+                str.add(((SpecialtyEntity) selectedEntity).getDegree());
+                str.add(((SpecialtyEntity) selectedEntity).getGrade());
+            }else if(selectedEntity instanceof TypeOfAnalysisEntity){
+               str.add(((TypeOfAnalysisEntity) selectedEntity).getName());
+            }
+
+            String[] values=  new String[str.size()];
+            for(int i=0;i< str.size();i++)
+                values[i] =  str.get(i);
+
+
+            boolean okClicked = showPersonEditDialog(selectedEntity,values);
+
             if (okClicked) {
                 showStaffDetails(selectedEntity);
-
 
                 if(selectedEntity instanceof StaffEntity) {
                     dao.update((StaffEntity)selectedEntity);
@@ -317,13 +381,40 @@ public class StaffController {
     }
 
 
-    public boolean showPersonEditDialog(Object staffEntity) {
+    public boolean showPersonEditDialog(Object staffEntity, String[] values) {
         try {
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/view/staffDialogDetails.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit Person");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            StaffEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setStaff(staffEntity);
+            controller.setTextFieldValues(values);
+
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean showPersonNewDialog(Object staffEntity) {
+        try {
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/view/staffDialogDetails.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
 
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Edit Person");
@@ -344,7 +435,6 @@ public class StaffController {
             return false;
         }
     }
-
     private void showStaffDetails(Object entity){
 
         if(entity  == null){
@@ -397,7 +487,6 @@ public class StaffController {
             TypeOfAnalysisEntity typeOfAnalysisEntity = TypeOfAnalysisEntity.class.cast(entity);
             setLabeksText(String.valueOf(typeOfAnalysisEntity.getId()), typeOfAnalysisEntity.getName(), "", "", "", "");
         }
-
 
     }
 /*    private void showAnalusisDetails(AnalysisEntity analysisEntity){
@@ -578,5 +667,4 @@ public class StaffController {
         StaffController.getStaff().clear();
         StaffController.staff.addAll(staff);
     }
-
 }

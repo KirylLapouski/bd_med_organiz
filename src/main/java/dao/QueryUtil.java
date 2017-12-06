@@ -99,4 +99,7 @@ public class QueryUtil {
     public void addParam(String str){
         param.add("'" + str+"'");
     }
+    public void clearParams(){
+        param.clear();
+    }
 }

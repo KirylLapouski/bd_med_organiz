@@ -54,10 +54,11 @@ CREATE FUNCTION checkDoctorById(id int)
 RETURNS bool
 BEGIN
 	DECLARE result bool;
+    SET result = false;
 		select specialty.is_Doctor  into result
         from staff Inner join staff_specialization ON staff.id= staff_specialization.id_staff
                     INNER JOIN specialty ON staff_specialization.id_specialty = specialty.id
-        where staff.id = id;
+        where staff.id = id and  specialty.is_Doctor = true;
     RETURN result;
 END;
 $$

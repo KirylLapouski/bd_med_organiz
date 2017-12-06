@@ -79,7 +79,7 @@ public class QueryWindowController {
             table.getColumns().addAll(columns);
             table.setItems(list);
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error when execute query");

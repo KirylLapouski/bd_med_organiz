@@ -28,15 +28,15 @@
             <Label fx:id="secondLabel" text="Last name" GridPane.rowIndex="1" />
             <Label fx:id="thirdLabel" text="Third name" GridPane.rowIndex="2" />
             <TextField fx:id="firstField" prefHeight="35.0" prefWidth="211.0" GridPane.columnIndex="1" />
-            <TextField fx:id="lastField" prefHeight="35.0" prefWidth="211.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="secondField" prefHeight="35.0" prefWidth="211.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="thirdField" prefHeight="35.0" prefWidth="211.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="fouthLabel" text="Fouth Label" GridPane.rowIndex="3" />
             <Label fx:id="fifthLabel" text="Fifth Label" GridPane.rowIndex="4" />
             <TextField fx:id="fouthField" prefHeight="35.0" prefWidth="211.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="fifthField" prefHeight="34.0" prefWidth="211.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <ComboBox fx:id="firstcomboBox" prefHeight="25.0" prefWidth="213.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ComboBox fx:id="secondComboBox" prefHeight="25.0" prefWidth="216.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ComboBox fx:id="thirdCombobox" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="thirdComboBox" prefHeight="25.0" prefWidth="213.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="fouthComboBox" prefHeight="25.0" prefWidth="216.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="fifthCombobox" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <Button layoutX="234.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />

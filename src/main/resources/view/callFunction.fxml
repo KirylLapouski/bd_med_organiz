@@ -14,7 +14,7 @@
             </columnResizePolicy>
         </TableView>
       <TextField fx:id="textField" layoutX="147.0" layoutY="25.0" prefHeight="25.0" prefWidth="115.0" />
-      <Button fx:id="button" layoutX="510.0" layoutY="25.0" mnemonicParsing="false" onAction="#queryButtonHandler" text="Button" />
+      <Button fx:id="button" layoutX="510.0" layoutY="25.0" mnemonicParsing="false" onAction="#queryButtonHandler" text="Execute" />
       <TextField fx:id="textField2" layoutX="377.0" layoutY="25.0" prefHeight="25.0" prefWidth="115.0" />
       <Label fx:id="label1" layoutX="45.0" layoutY="29.0" />
       <Label fx:id="label2" layoutX="276.0" layoutY="29.0" />

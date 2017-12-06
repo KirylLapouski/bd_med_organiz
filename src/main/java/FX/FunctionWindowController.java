@@ -57,12 +57,13 @@ public class FunctionWindowController {
 
 
         try {
-
             if(textField.getText().isEmpty())
                 resultSet =  queryUtil.createQuery(sql);
             else {
-                if(!textField.getText().isEmpty())
+                if(!textField.getText().isEmpty()) {
+
                     queryUtil.addParam(textField.getText());
+                }
 
                 if(!textField2.getText().isEmpty())
                     queryUtil.addParam(textField2.getText());
@@ -89,7 +90,6 @@ public class FunctionWindowController {
                     @Override
                     public ObservableValue<String> call(TableColumn.CellDataFeatures<String, String> param) {
                         return new ReadOnlyObjectWrapper<String>(param.getValue().split(";")[ finalI -1]);
-
                     }
                 });
 
@@ -98,15 +98,18 @@ public class FunctionWindowController {
             table.getColumns().addAll(columns);
             table.setItems(list);
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error when execute query");
             alert.setContentText("Try again");
 
+
             alert.showAndWait();
         }
+
+        queryUtil.clearParams();
     }
 
     public void setSql(String SQL){
@@ -155,14 +158,10 @@ public class FunctionWindowController {
 
         textField.setVisible(true);
         textField.disableProperty().setValue(false);
-
-
     }
 
     private void setVisibleSecondParam(){
         textField2.setVisible(true);
         textField2.disableProperty().setValue(false);
-
-
     }
 }

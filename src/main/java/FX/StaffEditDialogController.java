@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.Main;
 
-import javax.xml.soap.Text;
 import java.util.Date;
 
 /**
@@ -20,7 +19,7 @@ public class StaffEditDialogController {
     @FXML
     private TextField firstField;
     @FXML
-    private TextField lastField;
+    private TextField secondField;
     @FXML
     private TextField thirdField;
     @FXML
@@ -38,11 +37,11 @@ public class StaffEditDialogController {
     @FXML
     private Label fifthLabel;
     @FXML
-    private ComboBox<String> firstcomboBox;
+    private ComboBox<String> thirdComboBox;
     @FXML
-    private ComboBox<String> secondComboBox;
+    private ComboBox<String> fouthComboBox;
     @FXML
-    private ComboBox<String> thirdCombobox;
+    private ComboBox<String> fifthCombobox;
 
     private Stage dialogStage;
     private Object entity;
@@ -51,8 +50,6 @@ public class StaffEditDialogController {
 
     @FXML
     private void initialize() {
-
-
     }
 
 
@@ -117,7 +114,7 @@ public class StaffEditDialogController {
             if(entity instanceof StaffEntity) {
 
                 StaffEntity staffEntity = StaffEntity.class.cast(entity);
-                staffEntity.setFio(firstField.getText() + " " + lastField.getText() + " " + thirdField.getText());
+                staffEntity.setFio(firstField.getText() + " " + secondField.getText() + " " + thirdField.getText());
 
             }else if(entity instanceof AnalysisEntity){
 
@@ -128,7 +125,7 @@ public class StaffEditDialogController {
                 analysisEntity.setTypeOfAnalys(typeOfAnalysisEntity);
 
                 PatienceDao patienceDao  =new PatienceDao(Main.getOurSessionFactory());
-                analysisEntity.setPatience(patienceDao.read(Integer.valueOf(lastField.getText()), PatienceEntity.class));
+                analysisEntity.setPatience(patienceDao.read(Integer.valueOf(secondField.getText()), PatienceEntity.class));
 
             }else if(entity instanceof DepartmentEntity){
 
@@ -136,28 +133,28 @@ public class StaffEditDialogController {
                 departmentEntity.setName(firstField.getText());
 
                 HousingDao housingDao = new HousingDao(Main.getOurSessionFactory());
-                departmentEntity.setHousing( housingDao.read(Integer.valueOf(lastField.getText()),HousingEntity.class));
+                departmentEntity.setHousing( housingDao.read(Integer.valueOf(secondField.getText()),HousingEntity.class));
             }else if(entity instanceof DiseaseEntity){
                 DiseaseEntity diseaseEntity = DiseaseEntity.class.cast(entity);
                 diseaseEntity.setName(firstField.getText());
             }else if(entity instanceof HousingEntity){
                 HousingEntity housingEntity = HousingEntity.class.cast(entity);
                 housingEntity.setName(firstField.getText());
-                housingEntity.setAddress(lastField.getText());
+                housingEntity.setAddress(secondField.getText());
 
                 MedicalFacilityDao dao = new MedicalFacilityDao(Main.getOurSessionFactory());
                 housingEntity.setMedicalFacility(dao.read(Integer.valueOf(thirdField.getText()),MedicalFacilityEntity.class));
             }else if(entity instanceof LaboratoryEntity){
                LaboratoryEntity laboratoryEntity = LaboratoryEntity.class.cast(entity);
                 laboratoryEntity.setName(firstField.getText());
-                laboratoryEntity.setAddress(lastField.getText());
+                laboratoryEntity.setAddress(secondField.getText());
             }else if(entity instanceof LaboratorySpecEntity){
                 LaboratorySpecEntity laboratorySpecEntity = LaboratorySpecEntity.class.cast(entity);
                 laboratorySpecEntity.setName(firstField.getText());
             }else if(entity instanceof MedicalFacilityEntity) {
                 MedicalFacilityEntity medicalFacilityEntity  = MedicalFacilityEntity.class.cast(entity);
                 medicalFacilityEntity.setName(firstField.getText());
-                medicalFacilityEntity.setAddress(lastField.getText());
+                medicalFacilityEntity.setAddress(secondField.getText());
                 medicalFacilityEntity.setMedicalFacilityType(thirdField.getText());
 
                 StaffDao dao = new StaffDao(Main.getOurSessionFactory());
@@ -168,7 +165,7 @@ public class StaffEditDialogController {
                 RoomDao dao = new RoomDao(Main.getOurSessionFactory());
                 occupiedBedsEntity.setRoom(dao.read(Integer.valueOf(firstField.getText()),RoomEntity.class));
 
-                occupiedBedsEntity.setSince(new Date(lastField.getText()));
+                occupiedBedsEntity.setSince(new Date(secondField.getText()));
                 occupiedBedsEntity.setTo(new Date(thirdField.getText()));
             }else if(entity instanceof OfficeEntity){
                OfficeEntity officeEntity = OfficeEntity.class.cast(entity);
@@ -177,11 +174,11 @@ public class StaffEditDialogController {
                 officeEntity.setDepartment(dao.read(Integer.valueOf(firstField.getText()),DepartmentEntity.class));
 
                 StaffDao staffDao = new StaffDao(Main.getOurSessionFactory());
-                officeEntity.setDoctor(staffDao.read(Integer.valueOf(lastField.getText()),StaffEntity.class));
+                officeEntity.setDoctor(staffDao.read(Integer.valueOf(secondField.getText()),StaffEntity.class));
             }else if(entity instanceof PatienceEntity){
                 PatienceEntity patienceEntity = PatienceEntity.class.cast(entity);
 
-                patienceEntity.setFio(firstField.getText()+" "+lastField.getText()+" "+ thirdField.getText());
+                patienceEntity.setFio(firstField.getText()+" "+ secondField.getText()+" "+ thirdField.getText());
             }else if(entity instanceof PositionEntity){
                 PositionEntity positionEntity = PositionEntity.class.cast(entity);
 
@@ -189,7 +186,7 @@ public class StaffEditDialogController {
             }else if(entity instanceof RoomEntity){
               RoomEntity roomEntity = RoomEntity.class.cast(entity);
                 roomEntity.setRoomNumber(Integer.parseInt(firstField.getText()));
-                roomEntity.setNumberOfBeds(Integer.valueOf(lastField.getText()));
+                roomEntity.setNumberOfBeds(Integer.valueOf(secondField.getText()));
 
                 DepartmentDao departmentDao = new DepartmentDao(Main.getOurSessionFactory());
                 roomEntity.setDepartment(departmentDao.read(Integer.valueOf(thirdField.getText()), DepartmentEntity.class));
@@ -200,7 +197,7 @@ public class StaffEditDialogController {
                 SpecialtyEntity specialtyEntity = SpecialtyEntity.class.cast(entity);
 
                 specialtyEntity.setName(firstField.getText());
-                specialtyEntity.setIsDoctor(Boolean.valueOf(lastField.getText()));
+                specialtyEntity.setIsDoctor(Boolean.valueOf(secondField.getText()));
                 specialtyEntity.setSalary(Float.parseFloat(thirdField.getText()));
                 specialtyEntity.setDegree(fouthField.getText());
                 specialtyEntity.setGrade(fifthField.getText());
@@ -229,7 +226,7 @@ public class StaffEditDialogController {
         if (firstField.disableProperty().getValue()==false && (firstField.getText() == null || firstField.getText().length() == 0))
             errorMessage += "No valid first field!\n";
 
-        if (lastField.disableProperty().getValue()==false && (lastField.getText() == null || lastField.getText().length() == 0))
+        if (secondField.disableProperty().getValue()==false && (secondField.getText() == null || secondField.getText().length() == 0))
             errorMessage += "No valid second field!\n";
 
         if (thirdField.disableProperty().getValue()==false && (thirdField.getText() == null || thirdField.getText().length() == 0))
@@ -269,8 +266,8 @@ public class StaffEditDialogController {
             firstField.disableProperty().setValue(true);
         }
         if(second.isEmpty()){
-            lastField.setVisible(false);
-            lastField.disableProperty().setValue(true);
+            secondField.setVisible(false);
+            secondField.disableProperty().setValue(true);
         }
         if(third.isEmpty()){
             thirdField.setVisible(false);
@@ -285,53 +282,79 @@ public class StaffEditDialogController {
         }
     }
 
+
+
     private void showFirstComboBox(){
-        firstcomboBox.getItems().clear();
-        firstcomboBox.getItems().add(new String("Поликлиника"));
-        firstcomboBox.getItems().add(new String("Больница"));
+        thirdComboBox.getItems().clear();
+        thirdComboBox.getItems().add(new String("Поликлиника"));
+        thirdComboBox.getItems().add(new String("Больница"));
 
         thirdField.visibleProperty().setValue(false);
         thirdField.disableProperty().setValue(true);
 
-        firstcomboBox.disableProperty().setValue(false);
-        firstcomboBox.visibleProperty().setValue(true);
+        thirdComboBox.disableProperty().setValue(false);
+        thirdComboBox.visibleProperty().setValue(true);
 
     }
 
     private void showSecondComboBox(){
-        secondComboBox.getItems().clear();
-        secondComboBox.getItems().add(new String("Кандидат медицинских наук"));
-        secondComboBox.getItems().add(new String("Доктор медицинских наук"));
+        fouthComboBox.getItems().clear();
+        fouthComboBox.getItems().add(new String("Кандидат медицинских наук"));
+        fouthComboBox.getItems().add(new String("Доктор медицинских наук"));
 
         fouthField.visibleProperty().setValue(false);
         fouthField.disableProperty().setValue(true);
 
-        secondComboBox.disableProperty().setValue(false);
-        secondComboBox.visibleProperty().setValue(true);
+        fouthComboBox.disableProperty().setValue(false);
+        fouthComboBox.visibleProperty().setValue(true);
 
     }
     private void showThirdComboBox(){
-        thirdCombobox.getItems().clear();
-        thirdCombobox.getItems().add(new String("Доцент"));
-        thirdCombobox.getItems().add(new String("Профессор"));
+        fifthCombobox.getItems().clear();
+        fifthCombobox.getItems().add(new String("Доцент"));
+        fifthCombobox.getItems().add(new String("Профессор"));
 
         fifthField.visibleProperty().setValue(false);
         fifthField.disableProperty().setValue(true);
 
-        thirdCombobox.disableProperty().setValue(false);
-        thirdCombobox.visibleProperty().setValue(true);
+        fifthCombobox.disableProperty().setValue(false);
+        fifthCombobox.visibleProperty().setValue(true);
 
     }
 
     private void setComboBoxInvisible(){
-        firstcomboBox.setVisible(false);
-        firstcomboBox.disableProperty().setValue(false);
+        thirdComboBox.setVisible(false);
+        thirdComboBox.disableProperty().setValue(false);
 
-        secondComboBox.setVisible(false);
-        secondComboBox.disableProperty().setValue(false);
+        fouthComboBox.setVisible(false);
+        fouthComboBox.disableProperty().setValue(false);
 
-        thirdCombobox.setVisible(false);
-        thirdCombobox.disableProperty().setValue(false);
+        fifthCombobox.setVisible(false);
+        fifthCombobox.disableProperty().setValue(false);
     }
 
+
+    public void setTextFieldValues(String[] values){
+        if(values.length>=1)
+        {
+            firstField.setText(values[0]);
+            if(values.length>=2) {
+                secondField.setText(values[1]);
+                if(values.length>=3){
+                    thirdField.setText(values[2]);
+                    thirdComboBox.setValue(values[2]);
+                    if(values.length>=4) {
+                        fouthField.setText(values[3]);
+                        fouthComboBox.setValue(values[3]);
+                        if(values.length>=5) {
+                            fifthField.setText(values[4]);
+                            fifthCombobox.setValue(values[4]);
+                        }
+                    }
+
+                }
+            }
+
+        }
+    }
 }

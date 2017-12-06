@@ -49,8 +49,6 @@ public class AdministrationController {
         ResultSetMetaData meta;
         ResultSet resultSet;
 
-
-
         if(textField.getText().isEmpty())
             resultSet =  queryUtil.createQuery(sql);
         else {
@@ -71,9 +69,6 @@ public class AdministrationController {
 
                 alert.showAndWait();
             }
-
-
-
         }
         stage.close();
 

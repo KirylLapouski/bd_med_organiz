@@ -243,6 +243,7 @@ CREATE TABLE patiente_in_hospital (
     id_patience INT unsigned NOT NULL,
     id_medical_facility INT unsigned NOT NULL,
     id_room INT unsigned DEFAULT null,
+    id_doctor INT unsigned not null,
     id_disease INT unsigned not null,
     since_ DATETIME NOT NULL,
     to_ DATETIME NOT NULL,
@@ -254,7 +255,7 @@ CREATE TABLE patiente_in_hospital (
         REFERENCES room( id) ON DELETE CASCADE,
 	foreign key(id_disease) references disease(id) ON DELETE CASCADE,
     FOREIGN KEY(id_medical_facility) references medical_facility(id) ON DELETE CASCADE,
-
+    FOREIGN KEY(id_doctor) references staff(id) ON DELETE CASCADE,
     primary key(id_patience,id_disease,since_,to_)
 );
 CREATE TABLE appointment(
@@ -273,7 +274,7 @@ CREATE TABLE appointment(
 /* CHECk IN HOSPITAL ONLY ONE doctor*/
 /* CHECk DOCTOR and working in this medical facility*/
 /* checK patience is exuding now*/ 
-CREATE TABLE attending_doctor(
+/*CREATE TABLE attending_doctor(
     id_staff int unsigned not null,
     id_patience int unsigned not null,
     id_disease int unsigned not null,
@@ -284,7 +285,7 @@ CREATE TABLE attending_doctor(
     FOREIGN KEY(id_patience) REFERENCES patience(id) ON DELETE CASCADE,
     FOREIGN KEY(id_disease) REFERENCES disease(id) ON DELETE CASCADE,
     PRIMARY KEY(id_staff,id_patience,id_disease,since_)
-);
+);*/
 /* CHECH STAFF SPECIALIZATION PERMISSION*/
 CREATE TABLE operations(
     id_staff int unsigned not null,
@@ -298,123 +299,3 @@ CREATE TABLE operations(
     FOREIGN KEY(id_disease) references disease(id) ON DELETE CASCADE,
     PRIMARY KEY(id_staff,id_patience,id_disease,since_)
 );
-
-/* Кабинеты в поликлинике*/
-INSERT INTO staff(FIO)
-                        VALUES("Титова Галина Вячеславовна"),
-                            ("Ефимов Дмитрий Демьянович"),
-                            ("Боброва Тамара Глебовна"),
-                            ("Некрасов Александр Мэлсович"),
-                            ("Евдокимова Регина Кондратовна");
-INSERT INTO medical_facility(name,address,superior_medical_facility,id_order_doctor,medical_facility_type)
-                        VALUES("Hospital 1","Kolasa st. 89 ",null,1,2 ),
-                            ("polyclinic 1","Molodegnaya st. 12", 1,1,1);
-
-INSERT INTO housing(name, address,medical_facility_id)
-                        VALUES("housing 1","Kolasa st. 89, housing 1", 1),
-                            ("housing 2","Kolasa st. 89, housing 2", 1),
-                            ("housing 1","Molodegnaya st. 12, housing 1",2);
-INSERT INTO department(name, housing_id) 
-                        VALUES("infectious disease department",1),
-                            ("cardiology department",2),
-                            ("pulmonology department",2);
-INSERT INTO room(room_number,number_of_beds,id_department,id_responsible_doctor) 
-                        VALUES(100,5,1,1),
-                            (101,6,1,1),
-                            (102,7,1,1),
-                            (100,6,2,1),
-                            (101,7,2,1),
-                            (102,7,2,1),
-                            (201,6,3,1),
-                            (202,4,3,1),
-                            (203,5,3,2);
-/* ПРОВЕРИТЬ ЧТОБЫ НЕЛЬЗЯ БЫЛО ВСТАВИТЬ КОЛИЧЕСВТО КРОВАТЕЙ БОЛЬШЕ ЧЕМ В ПАЛАТЕ */
-/* ПРОВЕРИТЬ ЧТОБЫ ДАТА TO_ БЫЛА ПОЗЖА ЧЕМ ДАТА since_ */
-INSERT INTO occupied_beds(id_room,since_,to_) 
-                         VALUES(1,"2017-01-01 12:00:00","2017-01-10 12:00:00"),
-                            (1,"2017-11-03 12:00:00","2017-11-10 12:00:00"),
-                            (1,"2017-11-03 12:00:00","2017-11-10 12:00:00"),
-                            (1,"2017-11-03 12:00:00","2017-11-10 12:00:00"),
-                            (1,"2017-11-03 12:00:00","2017-11-10 12:00:00"),
-                            (2,"2017-11-01 12:00:00","2017-11-30 12:00:00"),
-                            (2,"2017-11-01 12:00:00","2017-11-30 12:00:00"),
-                            (2,"2017-11-01 12:00:00","2017-11-30 12:00:00"),
-                            (2,"2017-11-01 12:00:00","2017-11-30 12:00:00"),
-                            (2,"2017-11-01 12:00:00","2017-11-30 12:00:00"),
-                            (3,"2017-12-01 12:00:00","2017-12-31 12:00:00"),
-                            (3,"2017-12-01 12:00:00","2017-12-31 12:00:00"),
-                            (3,"2017-12-01 12:00:00","2017-12-31 12:00:00"),
-                            (3,"2017-12-01 12:00:00","2017-12-31 12:00:00"); 
-
-INSERT INTO specialty(name,is_Doctor,salary)
-                        VALUES("врач-пульмонолог",true,99.99),
-                            ("врач-кардиолог",true,99.99),
-                            ("врач-эндокринолог",true,99.99);
-INSERT INTO staff_specialization(id_staff,id_specialty) 
-                        VALUES(1,1),
-                            (1,2),
-                            (2,1),
-                            (3,3),
-                            (4,2),
-                            (5,2);
-/*ВРАЧ ДЕЖУРИТ ПО ВСЕЙ БОЛЬНИЦЕ*/
-INSERT INTO orderly_for_hospital_doctor(id_doctor,since_,to_)
-                        VALUES(1,"2017-11-03 08:00:00","2017-11-03 16:00:00"),
-                            (4,"2017-11-03 16:00:00","2017-11-04 00:00:00"),
-                            (5,"2017-11-04 00:00:00","2017-11-04 08:00:00"),
-                            (1,"2017-11-04 08:00:00","2017-11-04 16:00:00"),
-                            (2,"2017-11-04 16:00:00","2017-11-05 00:00:00");
-INSERT INTO position_(name)
-                        VALUES("глав. врач"),
-                            ("врач-ординатор"),
-                            ("зав. отделением");
-INSERT INTO place_of_work(id_staff,id_medical_facility,id_position,id_department,rate,since_)
-                        VALUES(1, 1, 1, 2,1,"2017-11-03 08:00:00"),
-                            (2,1,2,3,1,"2017-11-03 08:00:00"),
-                            (4,1,2,2,1,"2017-11-03 08:00:00"),
-                            (5,1,2,2,1,"2017-11-03 08:00:00");
-INSERT INTO staff_specialization(id_staff,id_specialty) 
-                        VALUES(1,1);
-INSERT INTO staff_shedule(staff_id, since_,to_) 
-                        VALUES (1,"2017-01-01 12:00:00","2018-01-01 12:00:00"),
-                                (2,"2017-01-01 12:00:00","2018-01-01 12:00:00");
-INSERT INTO type_of_analysis(name)
-                        VALUES ("type1"),
-                                ("type2");
-INSERT INTO patience(FIO) values("Петухов Иван Агафонович"),
-								("Михеева Екатерина Игнатьева"),
-                                ("Молчанов Лукий Лукьянович"),
-                                ("Носов Илья Денисович"),
-                                ("Панфилов Лаврентий  Иринеевич");  
-INSERT INTO analysis(id_type_of_analysis,id_patience)
-                        VALUES (1,1),
-                                (2,1),
-                                (2,1);
-INSERT INTO disease(name) VALUES("disease1"),
-								("disease2"),
-								("disease3"),
-                                ("disease4");
-INSERT INTO department_specialization(id_department,id_disease) VALUES(1,1),
-																		(1,2),
-                                                                        (2,1);
-INSERT INTO laboratory(name,address) VALUES("laboratory1","address1"),
-							("laboratory2","address2");
-INSERT INTO hospital_laboratory VALUES(1,1,1,"2016-11-03","2018-11-03"),
-										(2,1,2,"2015-11-03","2019-11-03");
-INSERT INTO laboratory_analysis_type VALUES(1,1),
-											(1,2),
-                                            (2,1);
-INSERT INTO laboratory_spec(name) VALUES("spec1"),
-									("spec2"),
-									("spec3");
-INSERT INTO laboratory_laboratory_spec VALUES(1,1),
-											(1,2),
-                                            (1,3),
-                                            (2,1);
-/*Проверить является ли работником этого учереждения*/
-INSERT INTO office(id_department,id_responsible_doctor) VALUES(1,1),
-															(2,2);
-
-INSERT INTO patiente_in_hospital VALUES(1,1,1,1,"2016-11-03 12:00:00","2018-11-03 12:00:00"),
-										(1,1,1,1,"2019-11-03 12:00:00","2020-11-03 12:00:00");
-                                    

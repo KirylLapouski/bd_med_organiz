@@ -263,12 +263,14 @@ CREATE TABLE appointment(
     id_patience int unsigned not null,
     complaints VARCHAR(100) DEFAULT null,
     id_disease int unsigned DEFAULT null,
+    id_medical_facility int unsigned not null,
     since_ DATETIME not null,
     to_ DATETIME not null,
 
     FOREIGN KEY(id_doctor) REFERENCES staff(id) ON DELETE CASCADE,
     FOREIGN KEY(id_patience) REFERENCES patience(id) ON DELETE CASCADE,
     FOREIGN KEY(id_disease) REFERENCES disease(id) ON DELETE CASCADE,
+    FOREIGN KEY(id_medical_facility) REFERENCES medical_facility(id) ON DELETE CASCADE,
     PRIMARY KEY(id_doctor,id_patience,since_,to_)
 );
 /* CHECk IN HOSPITAL ONLY ONE doctor*/
@@ -291,11 +293,13 @@ CREATE TABLE operations(
     id_staff int unsigned not null,
     id_patience int unsigned not null,
     id_disease int unsigned not null,
+    id_medical_facility int unsigned not null,
     since_ datetime not null,
     to_ datetime not null,
 
     FOREIGN KEY(id_staff) REFERENCES staff(id) ON DELETE CASCADE,
     FOREIGN KEY(id_patience) REFERENCES patience(id) ON DELETE CASCADE,
     FOREIGN KEY(id_disease) references disease(id) ON DELETE CASCADE,
+    FOREIGN KEY(id_medical_facility) references medical_facility(id) ON DELETE CASCADE,
     PRIMARY KEY(id_staff,id_patience,id_disease,since_)
 );

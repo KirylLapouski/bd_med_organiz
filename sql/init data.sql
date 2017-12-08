@@ -6,7 +6,8 @@ INSERT INTO staff(FIO)
                             ("Боброва Тамара Глебовна"),
                             ("Некрасов Александр Мэлсович"),
                             ("Евдокимова Регина Кондратовна"),
-                            ("Анисимов Иван Вадимович");
+                            ("Анисимов Иван Вадимович"),
+                            ("Матвиенко Лариса Вадимовна");
 INSERT INTO medical_facility(name,address,superior_medical_facility,id_order_doctor,medical_facility_type)
                         VALUES("Hospital 1","Kolasa st. 89 ",null,1,2 ),
                             ("polyclinic 1","Molodegnaya st. 12", 1,1,1),
@@ -56,20 +57,24 @@ INSERT INTO occupied_beds(id_room,since_,to_)
                             (3,"2017-12-01 12:00:00","2017-12-31 12:00:00"),
                             (3,"2017-12-01 12:00:00","2017-12-31 12:00:00"); 
 
-INSERT INTO specialty(name,is_Doctor,salary)
-                        VALUES("the pulmonologist",true,99.99),
-                            ("the cardiologist",true,99.99),
-                            ("the endocrinologist",true,99.99),
-                            ("the pediatrician",true,99.99),
-                            ("the allergist",true,99.99),
-                            ("the nurse",false,99.99);
+INSERT INTO specialty(name,is_Doctor,salary,degree,grade)
+                        VALUES("the pulmonologist",true,99.99,'Кандидат медицинских наук','Доцент'),
+                            ("the cardiologist",true,99.99,'Доктор медицинских наук','Профессор'),
+                            ("the endocrinologist",true,99.99,null,null),
+                            ("the pediatrician",true,99.99,null,null),
+                            ("the allergist",true,99.99,null,null),
+                            ("the nurse",false,99.99,null,null);
 INSERT INTO staff_specialization(id_staff,id_specialty) 
                         VALUES(1,1),
                             (1,2),
                             (2,1),
                             (3,3),
                             (4,2),
-                            (5,2);
+                            (5,2),
+                            (1,3),
+                            (1,4),
+                            (1,5),
+                            (7,6);
 /*ВРАЧ ДЕЖУРИТ ПО ВСЕЙ БОЛЬНИЦЕ*/
 INSERT INTO orderly_for_hospital_doctor(id_doctor,since_,to_)
                         VALUES(1,"2017-11-03 08:00:00","2017-11-03 16:00:00"),
@@ -85,13 +90,8 @@ INSERT INTO place_of_work(id_staff,id_medical_facility,id_position,id_department
                         VALUES(1, 1, 1, 2,1,"2017-11-03 08:00:00"),
                             (2,1,2,3,1,"2017-11-03 08:00:00"),
                             (4,1,2,2,1,"2017-11-03 08:00:00"),
-                            (5,1,2,2,1,"2017-11-03 08:00:00");
-INSERT INTO staff_specialization(id_staff,id_specialty) 
-                        VALUES(1,1),
-                                (1,2),
-                                (1,3),
-                                (1,4),
-                                (1,5);
+                            (5,1,2,2,1,"2017-11-03 08:00:00"),
+                            (7,1,1,1,1,"2011-12-30 12:00:00","2020-12-30 12:00:00");
 INSERT INTO staff_shedule(staff_id, since_,to_) 
                         VALUES (1,"2017-01-01 12:00:00","2018-01-01 12:00:00"),
                                 (2,"2017-01-01 12:00:00","2018-01-01 12:00:00");
@@ -154,22 +154,25 @@ INSERT INTO office(id_department,id_responsible_doctor) VALUES(1,1),
                                                             (4,5),
                                                             (4,6);
 /* CHECK room in the medical facility, staff in ,medical facility */
-INSERT INTO patiente_in_hospital VALUES(1,1,1,1,1,"2016-11-03 12:00:00","2018-11-03 12:00:00"),
-										(1,1,1,1,1,"2019-11-03 12:00:00","2020-11-03 12:00:00"),
-                                        (2,2,null,2,2,"2016-11-03 12:00:00","2018-11-03 12:00:00"),
-                                        (3,2,null,3,3,"2016-11-03 12:00:00","2018-11-03 12:00:00"),
-                                        (4,3,null,3,4,"2016-11-03 12:00:00","2018-11-03 12:00:00");
-INSERT INTO appointment(id_doctor,id_patience,complaints,id_disease,since_,to_) VALUES(1,1,"complaints 1",1,"2016-11-03 12:00:00","2018-11-03 12:00:00"),
-                                                                                    (1,2,"complaints 2",1,"2016-11-03 12:00:00","2018-11-03 12:00:00"),
-                                                                                    (2,3,"complaints 3",2,"2016-11-03 12:00:00","2018-11-03 12:00:00"),
-                                                                                    (3,4,"complaints 4",3,"2016-11-03 12:00:00","2018-11-03 12:00:00"),
-                                                                                    (4,5,"complaints 5",4,"2016-11-03 12:00:00","2018-11-03 12:00:00");
+INSERT INTO patiente_in_hospital(id_patience,id_medical_facility,id_room,id_doctor,id_disease,type,complaints_at_admission,since_,to_) VALUES
+                                        (1,1,1,1,1,'Амбулаторное лечение',"complaints 1","2016-11-03 12:00:00","2018-11-03 12:00:00"),
+										(1,1,1,1,1,'Амбулаторное лечение',"complaints 2","2019-11-03 12:00:00","2020-11-03 12:00:00"),
+                                        (2,2,null,2,2,'Амбулаторное лечение',"complaints 3","2016-11-03 12:00:00","2018-11-03 12:00:00"),
+                                        (3,2,null,3,3,'Cтационарное лечение',"complaints 4","2016-11-03 12:00:00","2018-11-03 12:00:00"),
+                                        (4,3,null,3,4,'Cтационарное лечение',"complaints 5","2016-11-03 12:00:00","2018-11-03 12:00:00");
+INSERT INTO appointment(id_doctor,id_patience,complaints,id_disease,id_office,since_,to_) VALUES(1,1,"complaints 1",1,1,"2016-11-03 12:00:00","2018-11-03 12:00:00"),
+                                                                                    (1,2,"complaints 2",1,1,"2016-11-03 12:00:00","2018-11-03 12:00:00"),
+                                                                                    (2,3,"complaints 3",2,2,"2016-11-03 12:00:00","2018-11-03 12:00:00"),
+                                                                                    (3,4,"complaints 4",3,2,"2016-11-03 12:00:00","2018-11-03 12:00:00"),
+                                                                                    (4,5,"complaints 5",4,3,"2016-11-03 12:00:00","2018-11-03 12:00:00");
 /* CHECK PERMISSION */
 INSERT INTO operations(id_staff,id_patience,id_disease,id_medical_facility,since_,to_) VALUES(1,1,1,1,"2016-11-03 12:00:00","2016-11-03 19:00:00"),
                                                                         (1,2,1,1,"2016-12-03 12:00:00","2016-12-03 14:00:00"),
                                                                         (2,3,4,2,"2017-12-04 12:00:00","2017-12-04 12:30:00"),
                                                                         (3,4,5,2,"2017-12-05 11:00:00","2017-12-05 12:00:00"),
-                                                                        (4,3,5,1,"2017-12-07 11:00:00","2017-12-07 11:20:00").
+                                                                        (4,3,5,1,"2017-12-07 11:00:00","2017-12-07 11:20:00"),
                                                                         (1,1,3,1,"2017-01-01 20:00:00","2018-12-30 23:00:00");
-
+INSERT INTO survey(id_laboratory,id_medical_facility,id_analysis,since_,to_) VALUES (1,1,1,"2017-12-08 12:00:00","2017-12-08 13:00:00"),
+                                                                        (1,2,2,"2017-12-08 12:00:00","2017-12-08 13:00:00"),
+                                                                        (1,2,3,"2017-12-08 12:00:00","2017-12-08 13:00:00");
                                     

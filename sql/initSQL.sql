@@ -245,8 +245,10 @@ CREATE TABLE patiente_in_hospital (
     id_room INT unsigned DEFAULT null,
     id_doctor INT unsigned not null,
     id_disease INT unsigned not null,
+    type ENUM('Амбулаторное лечение','Cтационарное лечение') not null,
+    complaints_at_admission VARCHAR(1000),
     since_ DATETIME NOT NULL,
-    to_ DATETIME NOT NULL,
+    to_ DATETIME,
     
     
     FOREIGN KEY(id_patience)
@@ -256,21 +258,22 @@ CREATE TABLE patiente_in_hospital (
 	foreign key(id_disease) references disease(id) ON DELETE CASCADE,
     FOREIGN KEY(id_medical_facility) references medical_facility(id) ON DELETE CASCADE,
     FOREIGN KEY(id_doctor) references staff(id) ON DELETE CASCADE,
-    primary key(id_patience,id_disease,since_,to_)
+    primary key(id_patience,id_disease,since_)
 );
+/* CHECH office in medical_facility */
 CREATE TABLE appointment(
     id_doctor int unsigned not null,
     id_patience int unsigned not null,
     complaints VARCHAR(100) DEFAULT null,
     id_disease int unsigned DEFAULT null,
-    id_medical_facility int unsigned not null,
+    id_office int unsigned not null,
     since_ DATETIME not null,
     to_ DATETIME not null,
 
     FOREIGN KEY(id_doctor) REFERENCES staff(id) ON DELETE CASCADE,
     FOREIGN KEY(id_patience) REFERENCES patience(id) ON DELETE CASCADE,
     FOREIGN KEY(id_disease) REFERENCES disease(id) ON DELETE CASCADE,
-    FOREIGN KEY(id_medical_facility) REFERENCES medical_facility(id) ON DELETE CASCADE,
+    FOREIGN KEY(id_office) REFERENCES office(id) ON DELETE CASCADE,
     PRIMARY KEY(id_doctor,id_patience,since_,to_)
 );
 /* CHECk IN HOSPITAL ONLY ONE doctor*/
@@ -302,4 +305,17 @@ CREATE TABLE operations(
     FOREIGN KEY(id_disease) references disease(id) ON DELETE CASCADE,
     FOREIGN KEY(id_medical_facility) references medical_facility(id) ON DELETE CASCADE,
     PRIMARY KEY(id_staff,id_patience,id_disease,since_)
+);
+/* CHECK agreement laboratory and medical facility */
+CREATE TABLE survey(
+    id_laboratory int unsigned not null,
+    id_medical_facility int unsigned not null,
+    id_analysis int unsigned not null,
+    since_ datetime not null,
+    to_ datetime DEFAULT null,
+
+    FOREIGN KEY(id_laboratory) references laboratory(id) ON DELETE CASCADE,
+    FOREIGN KEY(id_medical_facility) references medical_facility(id) ON DELETE CASCADE,
+    FOREIGN KEY(id_analysis) references analysis(id) ON DELETE CASCADE,
+    PRIMARY KEY(id_laboratory,id_medical_facility,id_analysis,since_)
 );

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SecondReport" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e909962c-d487-4ff2-9cf1-bc7476fd201c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT tabl.id, tabl.lab_name, avg(tabl.coun)
+FROM(
+        SELECT laboratory.id as id,laboratory.name as lab_name, count(survey.id_analysis) as coun
+        FROM survey INNER JOIN laboratory ON survey.id_laboratory = laboratory.id
+        WHERE   (Select DISTINCT DATE(survey.to_)
+                                                        FROM survey
+                                                        WHERE survey.to_ BEtWEEN "1970-12-01 12:00:00" and NOW()) BETWEEN DATE(survey.since_) AND DATE(survey.to_)
+        ) as tabl]]>
+	</queryString>
+	<field name="id" class="java.math.BigInteger">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="lab_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="lab_name"/>
+	</field>
+	<field name="avg(tabl.coun)" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="avg(tabl.coun)"/>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<textField>
+					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="0" y="0" width="180" height="32" forecolor="#000000" backcolor="#FFFCFC" uuid="7ec592e0-e0be-4427-85dd-df7323371e2b"/>
+					<textElement>
+						<font size="14" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="180" y="-1" width="197" height="34" uuid="bea01744-1443-4d57-bd61-095bb73a2be2">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b97d0571-fb2c-44dc-b007-414ab1b6e004"/>
+					</reportElement>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{lab_name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="380" y="-1" width="175" height="34" uuid="d31e55b3-5c03-4edf-ac56-a73b5dfbe8ab">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5b16696d-9837-402d-a9cd-41643d9d2119"/>
+					</reportElement>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{avg(tabl.coun)}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="105">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="125" backcolor="#006699" uuid="0c90f820-86d0-4272-b873-f47b3d47e412"/>
+				<staticText>
+					<reportElement x="20" y="20" width="280" height="90" forecolor="#FFFFFF" uuid="d4b4a499-8d26-4533-aa56-1d9c84db2fce"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[LABORATORY WORKLOAD]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="14e5c5f3-bb5f-4189-8e92-04c571e900da"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Add a description here]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement mode="Opaque" x="180" y="0" width="197" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6ba5e07a-f1de-4d58-b30b-ccd7eea992bd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b97d0571-fb2c-44dc-b007-414ab1b6e004"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LABORATORY NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="375" y="0" width="179" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="c5d61832-850a-494c-becd-7d385ea8473d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5b16696d-9837-402d-a9cd-41643d9d2119"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COUNT OF SURVEY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="180" height="21" forecolor="#006699" backcolor="#E6E6E6" uuid="fe483b9c-995d-443f-8113-e1059e435137"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24"/>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="ce838378-a336-4ab0-a774-7eef955a87b8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="52d75639-41e5-42fe-a598-ccb456b37969"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="2a16c58f-20f1-4e15-b631-0b71e145391c"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

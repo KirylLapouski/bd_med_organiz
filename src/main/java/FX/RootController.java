@@ -20,6 +20,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.MenuItem;
 import main.Main;
+import net.sf.jasperreports.engine.JRException;
+import reportGenerator.ReportGenerator;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,6 +64,10 @@ public class RootController {
     private MenuItem addPermission;
     @FXML
     private MenuItem deletePermission;
+    @FXML
+    private MenuItem cityMedicalFacilityReport;
+    @FXML
+    private MenuItem laboratoryWorkload;
 
     private static ObservableList<Tables> list =  FXCollections.observableArrayList();
 
@@ -226,6 +232,29 @@ public class RootController {
             showAdministrationWindow("call addPermissionForUserOnTable(?,?)", new String[]{"User name", "Table name"});
         }else if(event.getTarget() == deletePermission){
             showAdministrationWindow("call deletePermissionForUserOnTable(?,?)", new String[]{"User name", "Table name"});
+        }
+    }
+
+    @FXML
+    private void reportHandler(Event event){
+        if(event.getTarget() == cityMedicalFacilityReport){
+            try {
+                ReportGenerator rg = new ReportGenerator();
+                rg.setREPORT_pattern("src/main/resources/jrxml/medicalFacility.jrxml");
+                rg.create();
+            } catch (JRException e) {
+                e.printStackTrace();
+            }
+        }else if(event.getTarget() == laboratoryWorkload)
+        {
+            try {
+               ReportGenerator rg = new ReportGenerator();
+                rg.setREPORT_pattern("src/main/resources/jrxml/SecondReport.jrxml");
+                rg.create();
+
+            } catch (JRException e) {
+                e.printStackTrace();
+            }
         }
     }
 

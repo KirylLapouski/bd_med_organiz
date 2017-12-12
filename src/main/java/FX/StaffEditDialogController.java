@@ -10,7 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.Main;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by lapko on 22.11.2017.
@@ -46,7 +48,8 @@ public class StaffEditDialogController {
     private Stage dialogStage;
     private Object entity;
     private boolean okClicked = false;
-
+    private List<Boolean> required= new ArrayList<>();
+    private String STYLE_FOR_REQUIRED_FIELD = "-fx-border-color: blue";
 
     @FXML
     private void initialize() {
@@ -63,40 +66,53 @@ public class StaffEditDialogController {
 
         if(entity instanceof StaffEntity){
             setLabeksText("First name","Last name","Patronymic","","");
+            setRequired(new boolean[]{true, true, true});
         }else if(entity instanceof AnalysisEntity){
             setLabeksText("Id type of analysis","Id patience","","","");
+            setRequired(new boolean[]{true,true,true});
         }else if(entity instanceof DepartmentEntity){
             setLabeksText("Name", "Housing id", "","","");
+            setRequired(new boolean[]{true,true});
         }else if(entity instanceof DiseaseEntity){
              setLabeksText("Name", "", "","","");
+            setRequired(new boolean[]{true});
         }else if(entity instanceof HousingEntity){
              setLabeksText("Name", "Address", "Medical facility id","","");
+            setRequired(new boolean[]{true,true,true});
         }else if(entity instanceof LaboratoryEntity){
             setLabeksText("Name", "Address", "","","");
+            setRequired(new boolean[]{true,true});
         }else if(entity instanceof LaboratorySpecEntity){
             setLabeksText("Name", "", "","","");
+            setRequired(new boolean[]{true});
         }else if(entity instanceof MedicalFacilityEntity) {
             setLabeksText("Name", "Address", "Type", "Order doctor","");
-
+            setRequired(new boolean[]{true,true,true,true});
             showFirstComboBox();
 
         }else if(entity instanceof OccupiedBedsEntity){
             setLabeksText("Id room", "Since", "To","","");
+            setRequired(new boolean[]{true,true,false});
         }else if(entity instanceof OfficeEntity){
             setLabeksText("Id department", "Id doctor", "","","");
+            setRequired(new boolean[]{true,true});
         }else if(entity instanceof PatienceEntity){
             setLabeksText("First name", "Last name", "Patronym","","");
+            setRequired(new boolean[]{true,true,true});
         }else if(entity instanceof PositionEntity){
             setLabeksText("Name", "", "","","");
+            setRequired(new boolean[]{true});
         }else if(entity instanceof RoomEntity){
             setLabeksText("Room number", "Number of beds", "Id department", "Id doctor","");
+            setRequired(new boolean[]{true,false,true,true});
         }else if(entity instanceof SpecialtyEntity){
             setLabeksText("Name", "Doctor", "Salary", "Degree", "Grade");
-
+            setRequired(new boolean[]{true,true,true,false,false});
             showSecondComboBox();
             showThirdComboBox();
         }else if(entity instanceof TypeOfAnalysisEntity){
             setLabeksText("Name", "", "","","");
+            setRequired(new boolean[]{true});
         }
 
 
@@ -111,6 +127,7 @@ public class StaffEditDialogController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
+
             if(entity instanceof StaffEntity) {
 
                 StaffEntity staffEntity = StaffEntity.class.cast(entity);
@@ -223,20 +240,20 @@ public class StaffEditDialogController {
         String errorMessage = "";
 
         String str  = firstField.getText();
-        if (firstField.disableProperty().getValue()==false && (firstField.getText() == null || firstField.getText().length() == 0))
+        if (required.get(0)==true && (firstField.getText() == null || firstField.getText().length() == 0))
             errorMessage += "No valid first field!\n";
 
-        if (secondField.disableProperty().getValue()==false && (secondField.getText() == null || secondField.getText().length() == 0))
+        if (required.get(1)==true && (secondField.getText() == null || secondField.getText().length() == 0))
             errorMessage += "No valid second field!\n";
 
-        if (thirdField.disableProperty().getValue()==false && (thirdField.getText() == null || thirdField.getText().length() == 0))
+        if (required.get(2)==true && ((thirdField.getText() == null || thirdField.getText().length() == 0) && (thirdComboBox.getValue() == null || thirdComboBox.getValue().isEmpty())))
             errorMessage += "No valid third field!\n";
-        if(fouthField.disableProperty().getValue()==false && (fouthField.getText() == null || fouthField.getText().length() == 0))
+        if(required.get(3)==true && ((fouthField.getText() == null || fouthField.getText().length() == 0) && (fouthComboBox.getValue() == null || fouthComboBox.getValue().isEmpty())))
             errorMessage += "No valid fouth field!\n";
-        if(fifthField.disableProperty().getValue()==false && (fifthField.getText() == null || fifthField.getText().length() == 0))
+        if(required.get(4)==true && ((fifthField.getText() == null || fifthField.getText().length() == 0) && (fifthCombobox.getValue() == null || fifthCombobox.getValue().isEmpty())))
             errorMessage += "No valid fifth field!\n";
 
-        if (errorMessage.length() == 0) {
+        if (errorMessage.length() == 0 && chechFields()) {
             return true;
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -282,7 +299,49 @@ public class StaffEditDialogController {
         }
     }
 
-
+    private void setRequired(boolean[] fields){
+        for(int i=0;i< 5;i++){
+            if(fields.length <= i)
+            {
+                required.add(false);
+            }else {
+                required.add(fields[i]);
+            }
+        }
+        drawRequiredFields();
+    }
+    private void drawRequiredFields(){
+        for(int i=0;i<required.size();i++){
+            switch (i){
+                case 0:
+                    if(required.get(i))
+                        firstField.setStyle(STYLE_FOR_REQUIRED_FIELD);
+                    break;
+                case 1:
+                    if(required.get(i))
+                        secondField.setStyle(STYLE_FOR_REQUIRED_FIELD);
+                    break;
+                case 2:
+                    if(required.get(i)) {
+                        thirdField.setStyle(STYLE_FOR_REQUIRED_FIELD);
+                        thirdComboBox.setStyle(STYLE_FOR_REQUIRED_FIELD);
+                    }
+                    break;
+                case 3:
+                    if(required.get(i)) {
+                        fouthField.setStyle(STYLE_FOR_REQUIRED_FIELD);
+                        fouthComboBox.setStyle(STYLE_FOR_REQUIRED_FIELD);
+                    }
+                    break;
+                case 4:
+                    if(required.get(i)) {
+                        fifthField.setStyle(STYLE_FOR_REQUIRED_FIELD);
+                        fifthCombobox.setStyle(STYLE_FOR_REQUIRED_FIELD);
+                    }
+                    break;
+            }
+        }
+    }
 
     private void showFirstComboBox(){
         thirdComboBox.getItems().clear();
@@ -356,5 +415,57 @@ public class StaffEditDialogController {
             }
 
         }
+    }
+
+    public boolean chechFields(){
+        for(int i=0;i< required.size();i++){
+            if(i==0){
+                if(required.get(i))
+                    if(firstField.getText().isEmpty())
+                       return false;
+            }
+            if(i==1){
+                if(required.get(i))
+                    if(secondField.getText().isEmpty())
+                        return false;
+            }
+            if(i==2){
+                if(required.get(i)) {
+                    if(thirdComboBox.disableProperty().getValue()==false){
+                        if(thirdComboBox.getValue().isEmpty())
+                            return false;
+                    }
+                    if (thirdField.disabledProperty().getValue()==false){
+                        if(thirdField.getText().isEmpty())
+                            return false;
+                    }
+                }
+            }
+            if(i==3){
+                if(required.get(i)) {
+                    if(fouthComboBox.disableProperty().getValue()==false){
+                        if(fouthComboBox.getValue().isEmpty())
+                            return false;
+                    }
+                    if (fouthField.disabledProperty().getValue()==false){
+                        if(fouthField.getText().isEmpty())
+                            return false;
+                    }
+                }
+            }
+            if(i==4){
+                if(required.get(i)) {
+                    if(fifthCombobox.disableProperty().getValue()==false){
+                        if(fifthCombobox.getValue().isEmpty())
+                            return false;
+                    }
+                    if (fifthField.disabledProperty().getValue()==false){
+                        if(fifthField.getText().isEmpty())
+                            return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }

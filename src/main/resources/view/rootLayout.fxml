@@ -13,20 +13,20 @@
         <menus>
           <Menu mnemonicParsing="false" text="Administration">
             <items>
-                  <MenuItem fx:id="deleteUser" onAction="#administrationHandler" mnemonicParsing="false" text="delete user" />
-                  <MenuItem fx:id="addUser" onAction="#administrationHandler" mnemonicParsing="false" text="add user" />
-                  <MenuItem fx:id="addPermission" onAction="#administrationHandler" mnemonicParsing="false" text="add permission" />
-                  <MenuItem fx:id="deletePermission" onAction="#administrationHandler" mnemonicParsing="false" text="delete permission" />
+                  <MenuItem fx:id="deleteUser" mnemonicParsing="false" onAction="#administrationHandler" text="delete user" />
+                  <MenuItem fx:id="addUser" mnemonicParsing="false" onAction="#administrationHandler" text="add user" />
+                  <MenuItem fx:id="addPermission" mnemonicParsing="false" onAction="#administrationHandler" text="add permission" />
+                  <MenuItem fx:id="deletePermission" mnemonicParsing="false" onAction="#administrationHandler" text="delete permission" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Query">
             <items>
                   <Menu mnemonicParsing="false" text="Call Function">
                     <items>
-                      <MenuItem fx:id="firstMenuItem" mnemonicParsing="false" onAction="#menuItemHandler" text="get orderly doctors" />
-                        <MenuItem fx:id="secondMenuItem" mnemonicParsing="false" onAction="#menuItemHandler" text="get free beds" />
-                        <MenuItem fx:id="thirdMenuItem" mnemonicParsing="false" onAction="#menuItemHandler" text="check doctor by id" />
-                        <MenuItem fx:id="fouthMenuItem" mnemonicParsing="false" onAction="#menuItemHandler" text="now working" />
+                      <MenuItem fx:id="firstMenuItem" mnemonicParsing="false" onAction="#menuItemHandler" text="Get orderly doctors" />
+                        <MenuItem fx:id="secondMenuItem" mnemonicParsing="false" onAction="#menuItemHandler" text="Get free beds" />
+                        <MenuItem fx:id="thirdMenuItem" mnemonicParsing="false" onAction="#menuItemHandler" text="Check doctor by id" />
+                        <MenuItem fx:id="fouthMenuItem" mnemonicParsing="false" onAction="#menuItemHandler" text="Staff is working now" />
                     </items>
                   </Menu>
               <MenuItem mnemonicParsing="false" onAction="#queryHandler" text="Create" />
@@ -37,6 +37,12 @@
               <MenuItem mnemonicParsing="false" text="About" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Reports">
+              <items>
+                <MenuItem fx:id="cityMedicalFacilityReport" mnemonicParsing="false" onAction="#reportHandler" text="City medical facility" />
+                  <MenuItem fx:id="laboratoryWorkload" onAction="#reportHandler" mnemonicParsing="false" text="Laboratory workload" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>

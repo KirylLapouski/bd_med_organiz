@@ -110,7 +110,7 @@ CREATE TABLE place_of_work (
 	CONSTRAINT fk_place_of_work_medical_facility FOREIGN KEY(id_medical_facility) REFERENCES medical_facility(id) ON DELETE CASCADE,
 	CONSTRAINT fk_place_of_work_position FOREIGN KEY(id_position) REFERENCES position_(id) ON DELETE CASCADE,
     CONSTRAINT fk_place_of_work_department FOREIGN KEY(id_department) references department(id) ON DELETE CASCADE,
-    CONSTRAINT pk_place_of_work PRIMARY KEY ( id_staff,id_medical_facility,id_position, id_department)
+    CONSTRAINT pk_place_of_work PRIMARY KEY ( id_staff,id_medical_facility,id_position, id_department,since_)
 );
 
 CREATE TABLE room (
@@ -227,7 +227,7 @@ CREATE TABLE hospital_laboratory (
 	
 	CONSTRAINT fk_hospital_laboratory_hospital FOREIGN KEY(id_hospital) REFERENCES medical_facility(id) ON DELETE CASCADE,
 	CONSTRAINT fk_hospital_laboratory_laboratory FOREIGN KEY(id_laboratory) REFERENCES laboratory(id) ON DELETE CASCADE,
-	CONSTRAINT pk_hospital_laboratory PRIMARY KEY(id_hospital, id_laboratory)
+	CONSTRAINT pk_hospital_laboratory PRIMARY KEY(id_hospital, id_laboratory,contract_number)
 );
 	
 CREATE TABLE orderly_for_hospital_doctor (
@@ -236,7 +236,7 @@ CREATE TABLE orderly_for_hospital_doctor (
     to_ datetime NOT NULL,
 
     FOREIGN KEY(id_doctor) REFERENCES staff(id) ON DELETE CASCADE,
-    CONSTRAINT pk_order_for_hospital_doctor PRIMARY KEY(id_doctor,since_,to_)
+    CONSTRAINT pk_order_for_hospital_doctor PRIMARY KEY(id_doctor,since_)
 );
 
 
@@ -259,7 +259,7 @@ CREATE TABLE patiente_in_hospital (
 	foreign key(id_disease) references disease(id) ON DELETE CASCADE,
     FOREIGN KEY(id_medical_facility) references medical_facility(id) ON DELETE CASCADE,
     FOREIGN KEY(id_doctor) references staff(id) ON DELETE CASCADE,
-    primary key(id_patience,id_disease,since_)
+    primary key(id_patience,id_medical_facility,id_doctor,id_disease,since_)
 );
 /* CHECH office in medical_facility */
 CREATE TABLE appointment(
@@ -275,7 +275,7 @@ CREATE TABLE appointment(
     FOREIGN KEY(id_patience) REFERENCES patience(id) ON DELETE CASCADE,
     FOREIGN KEY(id_disease) REFERENCES disease(id) ON DELETE CASCADE,
     FOREIGN KEY(id_office) REFERENCES office(id) ON DELETE CASCADE,
-    PRIMARY KEY(id_doctor,id_patience,since_)
+    PRIMARY KEY(id_doctor,id_patience,id_office,since_)
 );
 /* CHECk IN HOSPITAL ONLY ONE doctor*/
 /* CHECk DOCTOR and working in this medical facility*/
@@ -305,7 +305,7 @@ CREATE TABLE operations(
     FOREIGN KEY(id_patience) REFERENCES patience(id) ON DELETE CASCADE,
     FOREIGN KEY(id_disease) references disease(id) ON DELETE CASCADE,
     FOREIGN KEY(id_medical_facility) references medical_facility(id) ON DELETE CASCADE,
-    PRIMARY KEY(id_staff,id_patience,since_)
+    PRIMARY KEY(id_staff,id_patience,id_disease,id_medical_facility,since_)
 );
 /* CHECK agreement laboratory and medical facility */
 CREATE TABLE survey(

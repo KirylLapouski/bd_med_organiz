@@ -30,6 +30,98 @@
                     </items>
                   </Menu>
               <MenuItem mnemonicParsing="false" onAction="#queryHandler" text="Create" />
+                  <Menu mnemonicParsing="false" text="Task Query">
+                    <items>
+                        <Menu mnemonicParsing="false" text="1 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 1" />
+                              <MenuItem mnemonicParsing="false" text="task 1 without MF" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="2 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 2" />
+                              <MenuItem mnemonicParsing="false" text="task 2 without MF" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="3 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 3" />
+                              <MenuItem mnemonicParsing="false" text="task 3 without MF" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="4 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 4" />
+                              <MenuItem mnemonicParsing="false" text="task 4 without MF" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="5 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 5" />
+                              <MenuItem mnemonicParsing="false" text="task 5 without MF" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="6 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 6" />
+                              <MenuItem mnemonicParsing="false" text="task 6 MF" />
+                              <MenuItem mnemonicParsing="false" text="task 6 Department" />
+                              <MenuItem mnemonicParsing="false" text="task 6 Room" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="7 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 7" />
+                              <MenuItem mnemonicParsing="false" text="task 7 Doctor" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="8 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 8" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="9 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 9" />
+                              <MenuItem mnemonicParsing="false" text="task 9 Department" />
+                              <MenuItem mnemonicParsing="false" text="task 9 Free" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="10 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 10" />
+                              <MenuItem mnemonicParsing="false" text="task 10 Date" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="11 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 11" />
+                              <MenuItem mnemonicParsing="false" text="task 11 MF" />
+                              <MenuItem mnemonicParsing="false" text="task 11 Specialty" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="12 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 12" />
+                              <MenuItem mnemonicParsing="false" text="task 12 MF" />
+                              <MenuItem mnemonicParsing="false" text="task 12 Specialty" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="13 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 13 Specialty" />
+                              <MenuItem mnemonicParsing="false" text="task 13 Staff" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="14 task">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="task 14" />
+                              <MenuItem mnemonicParsing="false" text="task 14 Laboratory" />
+                          </items>
+                        </Menu>
+                    </items>
+                  </Menu>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -40,7 +132,8 @@
             <Menu mnemonicParsing="false" text="Reports">
               <items>
                 <MenuItem fx:id="cityMedicalFacilityReport" mnemonicParsing="false" onAction="#reportHandler" text="City medical facility" />
-                  <MenuItem fx:id="laboratoryWorkload" onAction="#reportHandler" mnemonicParsing="false" text="Laboratory workload" />
+                  <MenuItem fx:id="laboratoryWorkloadReport" mnemonicParsing="false" onAction="#reportHandler" text="Laboratory workload" />
+                  <MenuItem fx:id="departmentsReport" mnemonicParsing="false" onAction="#reportHandler" text="Departments" />
               </items>
             </Menu>
         </menus>

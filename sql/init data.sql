@@ -87,12 +87,12 @@ INSERT INTO position_(name)
                         VALUES("глав. врач"),
                             ("врач-ординатор"),
                             ("зав. отделением");
-INSERT INTO place_of_work(id_staff,id_medical_facility,id_position,id_department,rate,since_)
-                        VALUES(1, 1, 1, 2,1,"2017-11-03 08:00:00"),
-                            (2,1,2,3,1,"2017-11-03 08:00:00"),
-                            (4,1,2,2,1,"2017-11-03 08:00:00"),
-                            (5,1,2,2,1,"2017-11-03 08:00:00"),
-                            (7,1,1,1,1,"2011-12-30 12:00:00","2020-12-30 12:00:00");
+INSERT INTO place_of_work(id_staff,id_medical_facility,id_position,id_department,rate,type_of_work,since_)
+                        VALUES(1, 1, 1, 2,1,'Работа',"2017-11-03 08:00:00"),
+                            (2,1,2,3,1,'Работа',"2017-11-03 08:00:00"),
+                            (4,1,2,2,1,'Работа',"2017-11-03 08:00:00"),
+                            (5,1,2,2,1,'Работа',"2017-11-03 08:00:00"),
+                            (7,1,1,1,1,'Работа',"2011-12-30 12:00:00");
 INSERT INTO staff_shedule(staff_id, since_,to_) 
                         VALUES (1,"2017-01-01 12:00:00","2018-01-01 12:00:00"),
                                 (2,"2017-01-01 12:00:00","2018-01-01 12:00:00");
@@ -148,12 +148,12 @@ INSERT INTO laboratory_laboratory_spec VALUES(1,1),
                                             (1,3),
                                             (2,1);
 /*Проверить является ли работником этого учереждения*/
-INSERT INTO office(id_department,id_responsible_doctor) VALUES(1,1),
-															(2,2),
-                                                            (3,3),
-                                                            (3,4),
-                                                            (4,5),
-                                                            (4,6);
+INSERT INTO office(id_department,room_number,id_responsible_doctor) VALUES(1,101,1),
+															(2,102,2),
+                                                            (3,103,3),
+                                                            (3,104,4),
+                                                            (4,105,5),
+                                                            (4,106,6);
 /* CHECK room in the medical facility, staff in ,medical facility */
 INSERT INTO patiente_in_hospital(id_patience,id_medical_facility,id_room,id_doctor,id_disease,type,complaints_at_admission,since_,to_) VALUES
                                         (1,1,1,1,1,'Амбулаторное лечение',"complaints 1","2016-11-03 12:00:00","2018-11-03 12:00:00"),

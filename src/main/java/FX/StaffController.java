@@ -153,7 +153,7 @@ public class StaffController {
             staff.addAll(dao.list());
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
+            alert.initOwner(mainApp.getStage());
             alert.setTitle("No selection");
             alert.setHeaderText("No item selected");
             alert.setContentText("Please select a item in the table");
@@ -371,7 +371,7 @@ public class StaffController {
 
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
+            alert.initOwner(mainApp.getStage());
             alert.setTitle("No Selection");
             alert.setHeaderText("No Staff Selected");
             alert.setContentText("Please select a object in the table.");
@@ -391,7 +391,7 @@ public class StaffController {
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Edit Person");
             dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(mainApp.getPrimaryStage());
+            dialogStage.initOwner(mainApp.getStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
@@ -419,7 +419,7 @@ public class StaffController {
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Edit Person");
             dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(mainApp.getPrimaryStage());
+            dialogStage.initOwner(mainApp.getStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 

@@ -1,13 +1,10 @@
 package main;
 
+import FX.AutorizationController;
 import FX.RootController;
 import FX.StaffController;
-import FX.StaffEditDialogController;
 import dao.daoImpl.*;
-import entity.*;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -17,15 +14,11 @@ import javafx.stage.Stage;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 public class Main extends Application {
-    private static final SessionFactory ourSessionFactory;
+    protected static SessionFactory ourSessionFactory;
 
     private static MedicalFacilityDao medicalFacilityDao;
     private static AnalysisDao analysisDao;
@@ -40,11 +33,10 @@ public class Main extends Application {
     private Stage stage;
     private BorderPane rootLayout;
 
-
     public BorderPane getRootLayout() {
         return rootLayout;
     }
-
+/*
     static {
         try {
             Configuration configuration = new Configuration();
@@ -53,7 +45,7 @@ public class Main extends Application {
         } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);
         }
-    }
+    }*/
 
     public static Session getSession() throws HibernateException {
         return ourSessionFactory.openSession();
@@ -63,15 +55,11 @@ public class Main extends Application {
     }
 
     public static void main(final String[] args) throws Exception {
-
             //JAVAFX
             launch(args);
             //JAVAFX ends
 
-
-
         ourSessionFactory.close();
-
     }
 
     //JAVAFX start
@@ -80,10 +68,34 @@ public class Main extends Application {
         this.stage = primaryStage;
         this.stage.setTitle("Staff");
 
+        setAuthorizationWindow();
         initRootLayout();
         showStaffOverview();
     }
 
+    public void setAuthorizationWindow(){
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/view/autorization.fxml"));
+            AnchorPane layout = (AnchorPane) loader.load();
+            Scene scene = new Scene(layout);
+
+            Stage newWindow = new Stage();
+            newWindow.setTitle("Authentication");
+            newWindow.setScene(scene);
+
+
+            AutorizationController controller = loader.getController();
+            controller.setStage(this.getStage());
+
+            newWindow.showAndWait();
+        } catch (IOException e) {
+
+        }
+
+
+    }
     public  void initRootLayout(){
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -120,7 +132,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-    public Stage getPrimaryStage() {
+    public Stage getStage() {
         return stage;
     }
 
@@ -128,5 +140,8 @@ public class Main extends Application {
         return ourSessionFactory;
     }
 
-
+    //TODO
+    public static void setOurSessionFactory(SessionFactory sessionFactory){
+        Main.ourSessionFactory = sessionFactory;
+    }
 }

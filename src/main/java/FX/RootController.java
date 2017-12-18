@@ -1,16 +1,12 @@
 package FX;
 
 import dao.daoImpl.*;
-import entity.AnalysisEntity;
-import entity.MedicalFacilityEntity;
-import entity.StaffEntity;
 import entity.util.Tables;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,10 +19,7 @@ import main.Main;
 import net.sf.jasperreports.engine.JRException;
 import reportGenerator.ReportGenerator;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by lapko on 25.11.2017.
@@ -67,7 +60,9 @@ public class RootController {
     @FXML
     private MenuItem cityMedicalFacilityReport;
     @FXML
-    private MenuItem laboratoryWorkload;
+    private MenuItem laboratoryWorkloadReport;
+    @FXML
+    private MenuItem departmentsReport;
 
     private static ObservableList<Tables> list =  FXCollections.observableArrayList();
 
@@ -245,11 +240,21 @@ public class RootController {
             } catch (JRException e) {
                 e.printStackTrace();
             }
-        }else if(event.getTarget() == laboratoryWorkload)
+        }else if(event.getTarget() == laboratoryWorkloadReport)
         {
             try {
                ReportGenerator rg = new ReportGenerator();
                 rg.setREPORT_pattern("src/main/resources/jrxml/SecondReport.jrxml");
+                rg.create();
+
+            } catch (JRException e) {
+                e.printStackTrace();
+            }
+        }else if(event.getTarget() == departmentsReport)
+        {
+            try {
+                ReportGenerator rg = new ReportGenerator();
+                rg.setREPORT_pattern("src/main/resources/jrxml/ThirdReport.jrxml");
                 rg.create();
 
             } catch (JRException e) {
@@ -268,7 +273,7 @@ public class RootController {
             Stage stage= new Stage();
             stage.setTitle("Query");
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(main.getPrimaryStage());
+            stage.initOwner(main.getStage());
 
             Scene scene = new Scene(pane);
             stage.setScene(scene);
@@ -292,7 +297,7 @@ public class RootController {
             Stage stage= new Stage();
             stage.setTitle("Query");
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(main.getPrimaryStage());
+            stage.initOwner(main.getStage());
 
             Scene scene = new Scene(pane);
             stage.setScene(scene);
@@ -316,7 +321,7 @@ public class RootController {
             Stage stage= new Stage();
             stage.setTitle("Query");
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(main.getPrimaryStage());
+            stage.initOwner(main.getStage());
 
             Scene scene = new Scene(pane);
             stage.setScene(scene);
@@ -341,7 +346,7 @@ public class RootController {
             Stage stage= new Stage();
             stage.setTitle("Query");
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(main.getPrimaryStage());
+            stage.initOwner(main.getStage());
 
             Scene scene = new Scene(pane);
             stage.setScene(scene);
@@ -365,7 +370,7 @@ public class RootController {
             Stage stage= new Stage();
             stage.setTitle("Query");
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(main.getPrimaryStage());
+            stage.initOwner(main.getStage());
 
             Scene scene = new Scene(pane);
             stage.setScene(scene);

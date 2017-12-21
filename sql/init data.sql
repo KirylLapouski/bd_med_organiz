@@ -40,8 +40,6 @@ INSERT INTO room(room_number,number_of_beds,id_department,id_responsible_doctor)
                             (201,6,3,1),
                             (202,4,3,1),
                             (203,5,3,2);
-/* ПРОВЕРИТЬ ЧТОБЫ НЕЛЬЗЯ БЫЛО ВСТАВИТЬ КОЛИЧЕСВТО КРОВАТЕЙ БОЛЬШЕ ЧЕМ В ПАЛАТЕ */
-/* ПРОВЕРИТЬ ЧТОБЫ ДАТА TO_ БЫЛА ПОЗЖА ЧЕМ ДАТА since_ */
 INSERT INTO occupied_beds(id_room,since_,to_) 
                          VALUES(1,"2017-01-01 12:00:00","2017-01-10 12:00:00"),
                             (1,"2017-11-03 12:00:00","2017-11-10 12:00:00"),
@@ -147,7 +145,6 @@ INSERT INTO laboratory_laboratory_spec VALUES(1,1),
 											(1,2),
                                             (1,3),
                                             (2,1);
-/*Проверить является ли работником этого учереждения*/
 INSERT INTO office(id_department,room_number,id_responsible_doctor) VALUES(1,101,1),
 															(2,102,2),
                                                             (3,103,3),

@@ -64,6 +64,16 @@ public class RootController {
     @FXML
     private MenuItem departmentsReport;
 
+    @FXML
+    private MenuItem firstTaskQuery,firstTaskQueryWithoutMF,secondTaskQuery,secondTaskQueryWithoutMF,thirdTaskQuery,thirdTaskQueryWithoutMF,fouthTaskQuery,fouthTaskQueryWithoutMF;
+    @FXML
+    private MenuItem fifthTaskQuery, fifthTaskQueryWithoutMF,sixTaskQuery,sixTaskQueryMF,sixTaskQueryDepartment,sixTaskQueryRoom,sevenTaskQuery,sevenTaskQueryDoctor;
+    @FXML
+    private MenuItem eightTask, nineTaskQuery,nineTaskQueryDepartment, nineTaskQueryFree,tenTaskQuery,tenTaskQueryDate,elevenTaskQuery,elevenTaskQueryMF,elevenTaskQuerySpecialrt;
+    @FXML
+    private MenuItem tvelweTaskQuery, tvelweTaskQueryMF,tvelweTaskQuerySpecialty,thirtynTaskQuerySpecialty,thirtynTaskQueryStaff,fouthinTaskQuery, fouthinTaskQueryLaboratory;
+
+
     private static ObservableList<Tables> list =  FXCollections.observableArrayList();
 
     public StaffController getStaffController() {
@@ -217,6 +227,74 @@ public class RootController {
         }
     }
 
+    @FXML
+    private void taskQueryHandler(Event event){
+        if(event.getTarget() ==firstTaskQuery){
+            showCallFunctionWindow("call query1(?,?)", new String[]{"Specialty id","Medical Facility id"});
+        }else if(event.getTarget() == firstTaskQueryWithoutMF){
+            showCallFunctionWindow("call query1WithoutMedicalFacility(?)", new String[]{"Specialty id"});
+        }else if(event.getTarget() == secondTaskQuery){
+            showCallFunctionWindow("call query2(?,?)", new String[]{"Specialty id","Medicak Facility id"});
+        }else if(event.getTarget()==secondTaskQueryWithoutMF){
+            showCallFunctionWindow("call query2WithoutMedicalfacility(?)", new String[]{"Specialty id"});
+        }else if(event.getTarget() == thirdTaskQuery){
+            showCallFunctionWindow("call query3(?,?,?)", new String[]{"Specialty id", "Medical Facility id","Count of operations"});
+        }else if(event.getTarget() == thirdTaskQueryWithoutMF){
+            showCallFunctionWindow("call query3WithoutMedicalFAcility(?,?)", new String[]{"Specialty id", "Count of operations"});
+        }else if(event.getTarget() == fouthTaskQuery){
+            showCallFunctionWindow("call query4(?,?)", new String[]{"Specialty id","Medical Facility id"});
+        }else if(event.getTarget() == fouthTaskQueryWithoutMF){
+            showCallFunctionWindow("call query4WithoutMedicalFacility(?)", new String[]{"Specialty id"});
+        }else if(event.getTarget()== fifthTaskQuery){
+            showCallFunctionWindow("call query5(?,?)", new String[]{"Specialty id","Medical Facility id"});
+        }else if(event.getTarget() == fifthTaskQueryWithoutMF){
+            showCallFunctionWindow("call query5WithoutMedicalFacility(?)", new String[]{"Specialty id"});
+        }else if(event.getTarget() == sixTaskQuery){
+            showCallFunctionWindow("call query6()");
+        }else if(event.getTarget()==sixTaskQueryMF){
+            showCallFunctionWindow("call query6MedicalFacility(?)", new String[]{"Medical Facility id"});
+        }else if(event.getTarget() == sixTaskQueryDepartment){
+            showCallFunctionWindow("call query6Department(?)", new String[]{"Department id"});
+        }else if(event.getTarget() == sixTaskQueryRoom){
+            showCallFunctionWindow("call query6Room(?)", new String[]{"Room id"});
+        }else if(event.getTarget() == sevenTaskQuery){
+            showCallFunctionWindow("call query7(?,?,?)", new String[]{"Medical Facility id","First time","Second Time"});
+        }else if(event.getTarget() == sevenTaskQueryDoctor){
+            showCallFunctionWindow("call query7Doctor(?,?,?)", new String[]{"Doctor id","First Time","Second Time"});
+        }else if(event.getTarget() == eightTask){
+            showCallFunctionWindow("call query8(?,?)", new String[]{"Specialty id","Medical Facility id"});
+        }else if(event.getTarget() == nineTaskQuery){
+            showCallFunctionWindow("call query9(?)", new String[]{"Medical Facility id"});
+        }else if(event.getTarget() == nineTaskQueryDepartment){
+            showCallFunctionWindow("call query9GroupByDepartment(?)", new String[]{"Medical Facility id"});
+        }else if(event.getTarget() == nineTaskQueryFree){
+            showCallFunctionWindow("call query9GroupByDepartmentAndFree(?)", new String[]{"Medical Facility id"});
+        }else if(event.getTarget() == tenTaskQuery){
+            showCallFunctionWindow("call query10(?)", new String[]{"Medical Facility id"});
+        }else if(event.getTarget() == tenTaskQueryDate){
+            showCallFunctionWindow("call query10WithDate(?,?)", new String[]{"firstDate","secondDate"});
+        }else if(event.getTarget() == elevenTaskQuery){
+            showCallFunctionWindow("call query11(?,?,?)", new String[]{"Doctor id","First Date","Second Date"});
+        }else if(event.getTarget() == elevenTaskQueryMF){
+            showCallFunctionWindow("call query11MedicalFacility(?,?,?)", new String[]{"Medical Facility id","First Date","Second Date"});
+        }else if(event.getTarget() == elevenTaskQuerySpecialrt){
+            showCallFunctionWindow("call query11Specialty(?,?,?)", new String[]{"Specialty id","First Date","Second Date"});
+        }else if(event.getTarget() == tvelweTaskQuery){
+            showCallFunctionWindow("call query12(?)", new String[]{"Doctor id"});
+        }else if(event.getTarget() == tvelweTaskQueryMF){
+            showCallFunctionWindow("call query12MedicalFacility(?)", new String[]{"Medical facility id"});
+        }else if(event.getTarget() == tvelweTaskQuerySpecialty){
+            showCallFunctionWindow("call query12Specialty(?)", new String[]{"Specialty id"});
+        }else if(event.getTarget() == thirtynTaskQuerySpecialty){
+            showCallFunctionWindow("call query13Specialty(?,?)",new String[]{"Medical Facility id","Time"});
+        }else if(event.getTarget() == thirtynTaskQueryStaff){
+            showCallFunctionWindow("call query13Staff(?,?)",new String[]{"Staff id","Time"});
+        }else if(event.getTarget() == fouthinTaskQuery){
+            showCallFunctionWindow("call query14(?,?,?,?)", new String[]{"Medical Facility id","Laboratory id","First date","Second date"});
+        }else if(event.getTarget() ==fouthinTaskQueryLaboratory){
+            showCallFunctionWindow("call query14Laboratory(?,?,?)", new String[]{"Laboratory id","First date","Second date"});
+        }
+    }
     @FXML
     private void administrationHandler(Event event){
         if(event.getTarget() == deleteUser){

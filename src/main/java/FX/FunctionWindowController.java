@@ -26,9 +26,18 @@ public class FunctionWindowController {
     @FXML
     Label label2;
     @FXML
+    Label label3;
+    @FXML
+    Label label4;
+    @FXML
     TextField textField;
     @FXML
     TextField textField2;
+    @FXML
+    TextField textField3;
+    @FXML
+    TextField textField4;
+
     @FXML
     TableView<String> table;
     @FXML
@@ -53,8 +62,6 @@ public class FunctionWindowController {
         list.clear();
         columns.clear();
         table.getColumns().clear();
-
-
 
         try {
             if(textField.getText().isEmpty())
@@ -92,7 +99,6 @@ public class FunctionWindowController {
                         return new ReadOnlyObjectWrapper<String>(param.getValue().split(";")[ finalI -1]);
                     }
                 });
-
             }
 
             table.getColumns().addAll(columns);
@@ -105,10 +111,8 @@ public class FunctionWindowController {
             alert.setHeaderText("Error when execute query");
             alert.setContentText("Try again");
 
-
             alert.showAndWait();
         }
-
         queryUtil.clearParams();
     }
 
@@ -120,11 +124,16 @@ public class FunctionWindowController {
             queryButtonHandler();
 
             setParamInvisible();
-
         }else if((pos = sql.indexOf('?'))!=-1){
             setVisibleFirstParam();
-            if(sql.indexOf('?',pos+1)!=-1){
+            if((pos = sql.indexOf('?',pos+1))!=-1){
                 setVisibleSecondParam();
+                if((pos = sql.indexOf('?',pos+1))!=-1){
+                    setVisibleThirdParam();
+                    if((pos = sql.indexOf('?',pos+1))!=-1){
+                        setVisibleFouthParam();
+                    }
+                }
             }
         }
     }
@@ -134,6 +143,12 @@ public class FunctionWindowController {
             label1.setText(str[0]);
             if(str.length>=2){
                 label2.setText(str[1]);
+                if(str.length>=3){
+                    label3.setText(str[2]);
+                    if(str.length>=4){
+                        label4.setText(str[3]);
+                    }
+                }
             }
         }
     }
@@ -148,8 +163,16 @@ public class FunctionWindowController {
         textField2.setVisible(false);
         textField2.disableProperty().setValue(true);
 
+        textField3.setVisible(false);
+        textField3.disableProperty().setValue(true);
+
+        textField4.setVisible(false);
+        textField4.disableProperty().setValue(true);
+
         label1.setText("");
         label2.setText("");
+        label4.setText("");
+        label4.setText("");
     }
 
     private void setVisibleFirstParam(){
@@ -163,5 +186,15 @@ public class FunctionWindowController {
     private void setVisibleSecondParam(){
         textField2.setVisible(true);
         textField2.disableProperty().setValue(false);
+    }
+
+    private void setVisibleThirdParam(){
+        textField3.setVisible(true);
+        textField3.disableProperty().setValue(false);
+    }
+
+    private void setVisibleFouthParam(){
+        textField4.setVisible(true);
+        textField4.disableProperty().setValue(false);
     }
 }

@@ -103,8 +103,8 @@ CREATE TABLE place_of_work (
     id_department INT unsigned not null,
     rate ENUM('1','0.25','0.5','0.75') not null, 
     type_of_work ENUM('Работа','Консультация') not null DEFAULT 'Работа',
-    since_ datetime not null,
-    to_ datetime not null DEFAULT NOW(),
+    since_ datetime not null DEFAULT NOW(),
+    to_ datetime not null DEFAULT null,
 
 	CONSTRAINT fk_place_of_work_staff FOREIGN KEY(id_staff) REFERENCES staff(id) ON DELETE CASCADE,
 	CONSTRAINT fk_place_of_work_medical_facility FOREIGN KEY(id_medical_facility) REFERENCES medical_facility(id) ON DELETE CASCADE,

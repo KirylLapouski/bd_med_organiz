@@ -13,7 +13,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Administration">
             <items>
-                  <MenuItem fx:id="deleteUser" mnemonicParsing="false" onAction="#administrationHandler" text="delete user" />
+                  <MenuItem fx:id="deleteUser"  mnemonicParsing="false" onAction="#administrationHandler" text="delete user" />
                   <MenuItem fx:id="addUser" mnemonicParsing="false" onAction="#administrationHandler" text="add user" />
                   <MenuItem fx:id="addPermission" mnemonicParsing="false" onAction="#administrationHandler" text="add permission" />
                   <MenuItem fx:id="deletePermission" mnemonicParsing="false" onAction="#administrationHandler" text="delete permission" />
@@ -34,90 +34,90 @@
                     <items>
                         <Menu mnemonicParsing="false" text="1 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 1" />
-                              <MenuItem mnemonicParsing="false" text="task 1 without MF" />
+                            <MenuItem fx:id="firstTaskQuery" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 1" />
+                              <MenuItem fx:id="firstTaskQueryWithoutMF" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 1 without MF" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="2 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 2" />
-                              <MenuItem mnemonicParsing="false" text="task 2 without MF" />
+                            <MenuItem fx:id="secondTaskQuery" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 2" />
+                              <MenuItem fx:id="secondTaskQueryWithoutMF" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 2 without MF" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="3 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 3" />
-                              <MenuItem mnemonicParsing="false" text="task 3 without MF" />
+                            <MenuItem fx:id="thirdTaskQuery" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 3" />
+                              <MenuItem fx:id="thirdTaskQueryWithoutMF" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 3 without MF" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="4 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 4" />
-                              <MenuItem mnemonicParsing="false" text="task 4 without MF" />
+                            <MenuItem fx:id="fouthTaskQuery" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 4" />
+                              <MenuItem fx:id="fouthTaskQueryWithoutMF" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 4 without MF" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="5 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 5" />
-                              <MenuItem mnemonicParsing="false" text="task 5 without MF" />
+                            <MenuItem fx:id="fifthTaskQuery" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 5" />
+                              <MenuItem fx:id="fifthTaskQueryWithoutMF" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 5 without MF" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="6 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 6" />
-                              <MenuItem mnemonicParsing="false" text="task 6 MF" />
-                              <MenuItem mnemonicParsing="false" text="task 6 Department" />
-                              <MenuItem mnemonicParsing="false" text="task 6 Room" />
+                            <MenuItem fx:id="sixTaskQuery" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 6" />
+                              <MenuItem fx:id="sixTaskQueryMF" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 6 MF" />
+                              <MenuItem fx:id="sixTaskQueryDepartment" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 6 Department" />
+                              <MenuItem fx:id="sixTaskQueryRoom" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 6 Room" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="7 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 7" />
-                              <MenuItem mnemonicParsing="false" text="task 7 Doctor" />
+                            <MenuItem fx:id="sevenTaskQuery" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 7" />
+                              <MenuItem fx:id="sevenTaskQueryDoctor" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 7 Doctor" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="8 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 8" />
+                            <MenuItem fx:id="eightTask" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 8" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="9 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 9" />
-                              <MenuItem mnemonicParsing="false" text="task 9 Department" />
-                              <MenuItem mnemonicParsing="false" text="task 9 Free" />
+                            <MenuItem fx:id="nineTaskQuery" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 9" />
+                              <MenuItem fx:id="nineTaskQueryDepartment" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 9 Department" />
+                              <MenuItem fx:id="nineTaskQueryFree" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 9 Free" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="10 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 10" />
-                              <MenuItem mnemonicParsing="false" text="task 10 Date" />
+                            <MenuItem fx:id="tenTaskQuery" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 10" />
+                              <MenuItem fx:id="tenTaskQueryDate" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 10 Date" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="11 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 11" />
-                              <MenuItem mnemonicParsing="false" text="task 11 MF" />
-                              <MenuItem mnemonicParsing="false" text="task 11 Specialty" />
+                            <MenuItem fx:id="elevenTaskQuery" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 11" />
+                              <MenuItem fx:id="elevenTaskQueryMF" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 11 MF" />
+                              <MenuItem fx:id="elevenTaskQuerySpecialrt" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 11 Specialty" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="12 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 12" />
-                              <MenuItem mnemonicParsing="false" text="task 12 MF" />
-                              <MenuItem mnemonicParsing="false" text="task 12 Specialty" />
+                            <MenuItem fx:id="tvelweTaskQuery" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 12" />
+                              <MenuItem fx:id="tvelweTaskQueryMF" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 12 MF" />
+                              <MenuItem fx:id="tvelweTaskQuerySpecialty" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 12 Specialty" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="13 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 13 Specialty" />
-                              <MenuItem mnemonicParsing="false" text="task 13 Staff" />
+                            <MenuItem fx:id="thirtynTaskQuerySpecialty" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 13 Specialty" />
+                              <MenuItem fx:id="thirtynTaskQueryStaff" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 13 Staff" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="14 task">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="task 14" />
-                              <MenuItem mnemonicParsing="false" text="task 14 Laboratory" />
+                            <MenuItem fx:id="fouthinTaskQuery" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 14" />
+                              <MenuItem fx:id="fouthinTaskQueryLaboratory" onAction="#taskQueryHandler" mnemonicParsing="false" text="task 14 Laboratory" />
                           </items>
                         </Menu>
                     </items>

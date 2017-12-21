@@ -44,15 +44,14 @@ public class AutorizationController {
             configuration.configure();
             SessionFactory ourSessionFactory = configuration.buildSessionFactory();
             Main.setOurSessionFactory(ourSessionFactory);
+            cancelHandler();
         } catch (Throwable ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initOwner(stage);
             alert.setTitle("Authentication error");
             alert.setHeaderText("Login or password is incorrect");
 
             alert.showAndWait();
         }
-        cancelHandler();
     }
 
     @FXML

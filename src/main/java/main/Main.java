@@ -1,6 +1,7 @@
 package main;
 
 import FX.AutorizationController;
+import FX.LaborantController;
 import FX.RootController;
 import FX.StaffController;
 import dao.daoImpl.*;
@@ -20,6 +21,9 @@ import java.io.IOException;
 public class Main extends Application {
     protected static SessionFactory ourSessionFactory;
 
+    public static int  windowToShow = 0;
+    public static String loggedUserLogin;
+    public static String loggedUserPassword;
     private static MedicalFacilityDao medicalFacilityDao;
     private static AnalysisDao analysisDao;
     private static DiseaseDao diseaseDao;
@@ -32,6 +36,8 @@ public class Main extends Application {
 
     private Stage stage;
     private BorderPane rootLayout;
+
+
 
     public BorderPane getRootLayout() {
         return rootLayout;
@@ -69,8 +75,13 @@ public class Main extends Application {
         this.stage.setTitle("Staff");
 
         setAuthorizationWindow();
-        initRootLayout();
-        showStaffOverview();
+        switch (windowToShow){
+            case 1:   initRootLayout();
+                showStaffOverview(); break;
+            case 2: showLaborantWindow();break;
+            case 3: showDoctorWindow();break;
+        }
+
     }
 
     public void setAuthorizationWindow(){
@@ -93,8 +104,44 @@ public class Main extends Application {
         } catch (IOException e) {
 
         }
+    }
+
+    public void showLaborantWindow(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/view/laborant.fxml"));
+            AnchorPane layout = (AnchorPane) loader.load();
+            Scene scene = new Scene(layout);
+
+            Stage newWindow = new Stage();
+            newWindow.setTitle("Laborant");
+            newWindow.setScene(scene);
 
 
+
+            newWindow.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showDoctorWindow(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/view/doctor.fxml"));
+            AnchorPane layout = (AnchorPane) loader.load();
+            Scene scene = new Scene(layout);
+
+            Stage newWindow = new Stage();
+            newWindow.setTitle("Doctor");
+            newWindow.setScene(scene);
+
+
+
+            newWindow.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public  void initRootLayout(){
         try {
@@ -144,4 +191,5 @@ public class Main extends Application {
     public static void setOurSessionFactory(SessionFactory sessionFactory){
         Main.ourSessionFactory = sessionFactory;
     }
+
 }

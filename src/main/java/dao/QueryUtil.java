@@ -41,6 +41,20 @@ public class QueryUtil {
         return result[0];
     }
 
+    public void createUpdate(String SQLQuery){
+        Session sesssion = sessionFactory.openSession();
+        Transaction transaction = sesssion.beginTransaction();
+
+        sesssion.doWork(new Work() {
+            @Override
+            public void execute(Connection connection) throws SQLException {
+                 connection.createStatement().executeUpdate(SQLQuery);
+
+            }
+        });
+        transaction.commit();
+    }
+
    /* public ResultSet createQueryWithParam(String SQLQuery,String param){
         final ResultSet[] result = new ResultSet[1];
         Session sesssion = sessionFactory.openSession();

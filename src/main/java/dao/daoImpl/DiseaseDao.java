@@ -18,10 +18,18 @@ public class DiseaseDao extends CrudDao<Integer, DiseaseEntity> {
     }
 
 
+    public DiseaseEntity getDisesaeByName(String name) {
+        List<DiseaseEntity> diseases = this.list();
+        for(DiseaseEntity dis:diseases){
+            if(dis.getName().equals(name))
+                return dis;
+        }
+        return null;
+    }
     public void delete(Integer integer){
         Session session;
 
-            session = sessionFactory.openSession();
+        session = sessionFactory.openSession();
 
         Transaction transaction = null;
 

@@ -108,7 +108,12 @@ INSERT INTO patience(FIO) values("Петухов Иван Агафонович")
 INSERT INTO analysis(id_type_of_analysis,id_patience)
                         VALUES (1,1),
                                 (2,1),
-                                (2,1);
+                                (2,1),
+                                (3,3),
+                                (4,2),
+                                (5,1),
+                                (5,2);
+INSERt INTO disease(id,name) VALUE(null,"здоров");
 INSERT INTO disease(name) VALUES("disease1"),
 								("disease2"),
 								("disease3"),
@@ -172,5 +177,8 @@ INSERT INTO operations(id_staff,id_patience,id_disease,id_medical_facility,since
                                                                         (1,1,3,1,"2017-01-01 20:00:00","2018-12-30 23:00:00");
 INSERT INTO survey(id_laboratory,id_medical_facility,id_analysis,since_,to_) VALUES (1,1,1,"2017-12-08 12:00:00","2017-12-08 13:00:00"),
                                                                         (1,2,2,"2017-12-08 12:00:00","2017-12-08 13:00:00"),
-                                                                        (1,2,3,"2017-12-08 12:00:00","2017-12-08 13:00:00");
+                                                                        (1,2,3,"2017-12-08 12:00:00","2017-12-08 13:00:00"),
+                                                                        (1,1,3,"2017-12-08 12:00:00",null),
+                                                                        (1,2,6,"2017-12-08 12:00:00",null),
+                                                                        (1,2,7,"2017-12-08 12:00:00",null);
                                     

@@ -206,7 +206,7 @@ BEFORE INSERT ON  survey FOR EACH ROW
 BEGIN 
 IF(isnull((SELECT DISTINCT hospital_laboratory.id_hospital
 							FROM hospital_laboratory
-							WHERE hospital_laboratory.id_hospital = NEW.id_medical_facility AND  hospital_laboratory.id_laboratry = NEW.id_laboratory AND NOW() BETWEEN hospital_laboratory.since_ AND hospital_laboratory.to_)))THEN
+							WHERE hospital_laboratory.id_hospital = NEW.id_medical_facility AND  hospital_laboratory.id_laboratory = NEW.id_laboratory AND NOW() >= hospital_laboratory.since_)))THEN
 	insert into ERROR_Med_Facility_and_laboratory_doesnot_have_a_contract VALUES();
 END IF;
 END;

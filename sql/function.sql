@@ -137,3 +137,30 @@ BEGIN
 END;
 $$
 delimiter ;
+
+delimiter $$
+use medicine$$
+drop procedure if exists selectLabarantTasks$$
+CREATE procedure selectLabarantTasks(IN laboratory int)
+BEGIN
+Select distinct survey.id_analysis as Analysis, type_of_analysis.name as Type,survey.id_medical_facility as Medical_Facility, patience.FIO as Patience, survey.since_ as Since
+ FROM survey INNER JOIN analysis ON survey.id_analysis = analysis.id
+					INNER JOIN type_of_analysis ON type_of_analysis.id = analysis.id_type_of_analysis
+					INNER JOIN patience ON analysis.id_patience = patience.id
+			WHERE survey.id_laboratory = laboratory and isnull(survey.to_);
+END;
+$$
+delimiter ;
+
+delimiter $$
+use medicine$$
+drop procedure if exists selectDoctorTasks$$
+CREATE procedure selectDoctorTasks(IN doctor int)
+BEGIN
+Select distinct patience.id as ID_patience, patience.FIO as Patience,appointment.complaints as Complaints , appointment.since_ as Since
+ FROM appointment 
+					INNER JOIN patience ON appointment.id_patience = patience.id
+			WHERE appointment.id_doctor = doctor and isnull(appointment.to_);
+END;
+$$
+delimiter ;

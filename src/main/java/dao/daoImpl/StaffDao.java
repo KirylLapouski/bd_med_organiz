@@ -40,6 +40,15 @@ public class StaffDao extends CrudDao<Integer, StaffEntity> {
 
     }
 
+    public StaffEntity getByFIO(String FIO){
+        List<StaffEntity> staffes = this.list();
+        for(StaffEntity staff:staffes){
+            if(staff.getFio().equals(FIO)){
+                return staff;
+            }
+        }
+        return null;
+    }
     public List list(){
         Session session;
 

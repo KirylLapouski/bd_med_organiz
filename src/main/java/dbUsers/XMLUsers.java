@@ -20,11 +20,11 @@ import java.util.List;
 public class XMLUsers {
 
     private static String fileName = "src/main/resources/db/users.xml";
-    public static void writeToXMLusingJDOM(List<String> users) throws IOException {
+    public static void write(List<String> users) throws IOException {
         Document doc = new Document();
-        // создаем корневой элемент с пространством имен
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         doc.setRootElement(new Element("Users", Namespace.getNamespace("http://javadevblog.com/users")));
-        // формируем JDOM документ из объектов Student
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ JDOM пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Student
         Iterator keys =  users.iterator();
         while (keys.hasNext()) {
             String user = (String) keys.next();
@@ -32,14 +32,42 @@ public class XMLUsers {
             Element userElement = new Element("User", Namespace.getNamespace("http://javadevblog.com/users"));
             userElement.addContent(new Element("login", Namespace.getNamespace("http://javadevblog.com/users")).setText("" + user.split(";")[0]));
             userElement.addContent(new Element("password", Namespace.getNamespace("http://javadevblog.com/users")).setText(user.split(";")[1]));
-
+            if(user.split(";").length==3){
+                userElement.addContent(new Element(user.split(";")[2].split(":")[0], Namespace.getNamespace("http://javadevblog.com/users")).setText( user.split(";")[2]));
+            }
+            if(user.split(";").length==4){
+                userElement.addContent(new Element(user.split(";")[3].split(":")[0], Namespace.getNamespace("http://javadevblog.com/users")).setText( user.split(";")[3]));
+            }
             doc.getRootElement().addContent(userElement);
         }
-        // Документ JDOM сформирован и готов к записи в файл
+
         XMLOutputter xmlWriter = new XMLOutputter(Format.getPrettyFormat());
-        // сохнаряем в файл
+
         xmlWriter.output(doc, new FileOutputStream(fileName));
     }
+
+    public static void addUser(String user) throws IOException {
+        Document doc = new Document();
+        doc.setRootElement(new Element("Users", Namespace.getNamespace("http://javadevblog.com/users")));
+
+
+            Element userElement = new Element("User", Namespace.getNamespace("http://javadevblog.com/users"));
+            userElement.addContent(new Element("login", Namespace.getNamespace("http://javadevblog.com/users")).setText("" + user.split(";")[0]));
+            userElement.addContent(new Element("password", Namespace.getNamespace("http://javadevblog.com/users")).setText(user.split(";")[1]));
+            if(user.split(";").length>=3){
+                userElement.addContent(new Element(user.split(";")[2].split(":")[0], Namespace.getNamespace("http://javadevblog.com/users")).setText( user.split(";")[2].split(":")[1]));
+            }
+            if(user.split(";").length>=4){
+                userElement.addContent(new Element(user.split(";")[3].split(":")[0], Namespace.getNamespace("http://javadevblog.com/users")).setText( user.split(";")[3].split(":")[1]));
+            }
+            doc.getRootElement().addContent(userElement);
+
+
+        XMLOutputter xmlWriter = new XMLOutputter(Format.getPrettyFormat());
+
+        xmlWriter.output(doc, new FileOutputStream(fileName));
+    }
+
 
     public static boolean read(String login,String password) {
 

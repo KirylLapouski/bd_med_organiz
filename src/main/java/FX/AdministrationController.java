@@ -100,7 +100,7 @@ public class AdministrationController {
 
         try {
             XMLUsers.addUser(param);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
 
             Alert alert = new Alert(Alert.AlertType.ERROR);

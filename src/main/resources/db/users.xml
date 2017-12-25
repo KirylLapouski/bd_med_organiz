@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Users xmlns="http://javadevblog.com/users">
   <User>
+    <login>root</login>
+    <password>1331</password>
+  </User>
+  <User>
     <login>kirill</login>
     <password>1331</password>
-    <doctor>1</doctor>
-    <office>1</office>
   </User>
 </Users>

@@ -46,21 +46,24 @@ public class XMLUsers {
         xmlWriter.output(doc, new FileOutputStream(fileName));
     }
 
-    public static void addUser(String user) throws IOException {
-        Document doc = new Document();
-        doc.setRootElement(new Element("Users", Namespace.getNamespace("http://javadevblog.com/users")));
+    public static void addUser(String user) throws IOException, JDOMException {
+        SAXBuilder saxBuilder = new SAXBuilder();
+
+        Document doc = saxBuilder.build(fileName);
+        if(doc.getRootElement()==null)
+            doc.setRootElement(new Element("Users", Namespace.getNamespace("http://javadevblog.com/users")));
 
 
-            Element userElement = new Element("User", Namespace.getNamespace("http://javadevblog.com/users"));
-            userElement.addContent(new Element("login", Namespace.getNamespace("http://javadevblog.com/users")).setText("" + user.split(";")[0]));
-            userElement.addContent(new Element("password", Namespace.getNamespace("http://javadevblog.com/users")).setText(user.split(";")[1]));
-            if(user.split(";").length>=3){
-                userElement.addContent(new Element(user.split(";")[2].split(":")[0], Namespace.getNamespace("http://javadevblog.com/users")).setText( user.split(";")[2].split(":")[1]));
-            }
-            if(user.split(";").length>=4){
-                userElement.addContent(new Element(user.split(";")[3].split(":")[0], Namespace.getNamespace("http://javadevblog.com/users")).setText( user.split(";")[3].split(":")[1]));
-            }
-            doc.getRootElement().addContent(userElement);
+        Element userElement = new Element("User", Namespace.getNamespace("http://javadevblog.com/users"));
+        userElement.addContent(new Element("login", Namespace.getNamespace("http://javadevblog.com/users")).setText("" + user.split(";")[0]));
+        userElement.addContent(new Element("password", Namespace.getNamespace("http://javadevblog.com/users")).setText(user.split(";")[1]));
+        if (user.split(";").length >= 3) {
+            userElement.addContent(new Element(user.split(";")[2].split(":")[0], Namespace.getNamespace("http://javadevblog.com/users")).setText(user.split(";")[2].split(":")[1]));
+        }
+        if (user.split(";").length >= 4) {
+            userElement.addContent(new Element(user.split(";")[3].split(":")[0], Namespace.getNamespace("http://javadevblog.com/users")).setText(user.split(";")[3].split(":")[1]));
+        }
+        doc.getRootElement().addContent(userElement);
 
 
         XMLOutputter xmlWriter = new XMLOutputter(Format.getPrettyFormat());

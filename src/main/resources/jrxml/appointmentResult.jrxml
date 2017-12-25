@@ -38,7 +38,7 @@
 				</textElement>
 				<text><![CDATA[Результат обследования]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" isBlankWhenNull="true">
 				<reportElement x="10" y="0" width="150" height="30" forecolor="#FFFFFF" backcolor="#006699" uuid="b74b9bac-c683-43f3-b45e-14afbba1ea01"/>
 				<textElement>
 					<font size="12"/>
@@ -66,14 +66,14 @@
 				</textElement>
 				<text><![CDATA[Заключение врача]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="60" y="0" width="494" height="30" uuid="d18ad839-d17e-4257-838f-6a0ccdc8dbcc"/>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" isBlankWhenNull="true">
+				<reportElement x="60" y="0" width="494" height="30" isPrintWhenDetailOverflows="true" uuid="d18ad839-d17e-4257-838f-6a0ccdc8dbcc"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{FIOpatience}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" isBlankWhenNull="true">
 				<reportElement x="130" y="30" width="424" height="30" uuid="25cc440f-f3eb-47f8-849b-486250a5d969"/>
 				<textElement>
 					<font size="12"/>
@@ -108,7 +108,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField evaluationTime="Report" isBlankWhenNull="true">
 				<reportElement x="473" y="0" width="72" height="30" uuid="490efffd-36f2-4409-b9ee-48b47cea0e3c"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$P{DoctorFIO}]]></textFieldExpression>
